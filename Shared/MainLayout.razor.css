@@ -24,7 +24,7 @@
     margin-bottom: 10px;
 }
 
-.center-flex{
+::deep .center-flex{
     align-items: center;
     justify-content: center;
 }
