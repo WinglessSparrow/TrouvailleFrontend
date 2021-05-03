@@ -1,6 +1,13 @@
 @page "/"
 
 <div class="page">
-    <div class="side-panel"></div>
-    <div class="main-container"></div>
+    <div class="side-panel">
+        <IndexSideMenu />
+    </div>
+    <div class="main-container center-flex-horizontal">
+        @for (int i = 0; i < 4; i++)
+        {
+            <div style="border: solid 2px black; width: 45%; height: 200px"></div>
+        }
+    </div>
 </div>

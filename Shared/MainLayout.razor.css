@@ -9,8 +9,8 @@
   width: 100%;
   min-height: 100vh;
 
-  padding-left: 2%;
-  padding-right: 2%;
+  /* padding-left: 2%;
+  padding-right: 2%; */
 }
 
 .content {
@@ -19,7 +19,7 @@
   /* temp */
   border: solid 2px yellowgreen;
 
-  width: 95%;
+  width: 75%;
   height: 100vh;
   min-height: 100vh;
   max-height: 200vh;
