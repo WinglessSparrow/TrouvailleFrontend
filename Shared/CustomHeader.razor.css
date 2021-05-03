@@ -14,11 +14,11 @@
 .grid-main{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-areas: "logo" "search" "variable-icons";
+    grid-template-areas: "logo search variable-icons";
 }
 
 .variable-icons{
-    grid-area: "variable-icons";
+    grid-area: variable-icons;
     display: flex;
 }
 
@@ -27,11 +27,11 @@
 }
 
 .logo {
-    grid-area: "logo";
+    grid-area: logo;
 }
 
 .search-bar{
-    grid-area: "search";
+    grid-area: search;
     display: flex;
 }
 
