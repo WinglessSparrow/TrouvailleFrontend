@@ -2,15 +2,14 @@
   display: flex;
 
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   flex-direction: column;
 
   width: 100%;
   min-height: 100vh;
+  /* height: 100%; */
 
-  /* padding-left: 2%;
-  padding-right: 2%; */
 }
 
 .content {
@@ -20,9 +19,7 @@
   border: solid 2px yellowgreen;
 
   width: 75%;
-  height: 100vh;
-  min-height: 100vh;
-  max-height: 200vh;
+  height: 100%;
 
   margin-top: 10px;
   margin-bottom: 10px;

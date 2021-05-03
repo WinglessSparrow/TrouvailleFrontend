@@ -1,0 +1,75 @@
+.product {
+  display: flex;
+
+  gap: 10px;
+
+  align-content: center;
+  justify-content: flex-start;
+
+  padding: 10px;
+
+  width: 49%;
+  height: 200px;
+
+  border: solid 2px black;
+}
+
+.product-picture {
+  display: flex;
+
+  width: 30%;
+  object-fit: contain;
+
+  border: solid 2px red;
+}
+
+.info-wrapper {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "name" "cost", "amount" "stars", "info" "info";
+  gap: 2px;
+
+  width: 70%;
+  height: 100%;
+}
+
+.product-name {
+  area: "name";
+
+  width: 100%;
+  height: 100%;
+  height: 1fr;
+  background-color: rgb(255, 0, 85);
+}
+
+.product-stars {
+  area: "stars";
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 255, 191);
+}
+
+.product-cost {
+  area: "cost";
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(132, 0, 255);
+}
+
+.product-amount-left {
+  area: "amount";
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 195, 255);
+}
+.product-short-info {
+  area: "info";
+
+  width: 200%;
+  height: 100%;
+  background-color: cyan;
+}

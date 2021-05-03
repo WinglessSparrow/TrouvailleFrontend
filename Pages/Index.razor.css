@@ -26,6 +26,10 @@
   flex-wrap: wrap;
   align-content: flex-start;
 
+  gap: 20px;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   width: 100%;
   height: 100%;
@@ -33,6 +37,19 @@
   border: solid 2px blue;
 }
 
-.main-container > div {
-  margin: 10px;
+.collumn{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  gap: 20px;
+
+  
+  width: 100%;
+  height: 100%;
+
 }
+
+/* .main-container > div {
+  margin: 10px;
+} */

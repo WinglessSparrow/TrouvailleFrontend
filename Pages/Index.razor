@@ -5,9 +5,20 @@
         <IndexSideMenu />
     </div>
     <div class="main-container center-flex-horizontal">
-        @for (int i = 0; i < 4; i++)
+        @for (int i = 0; i < 39; i++)
         {
-            <div style="border: solid 2px black; width: 45%; height: 200px"></div>
+            @if (i % 2 == 0)
+            {
+                <div class="collumn">
+                    <ProductSmall />
+                </div>
+            }
+            else
+            {
+                <div class="collumn">
+                    <ProductSmall />
+                </div>
+            }
         }
     </div>
 </div>
