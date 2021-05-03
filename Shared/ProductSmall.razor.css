@@ -9,15 +9,21 @@
   padding: 10px;
 
   width: 49%;
-  height: 200px;
+  min-height: 200px;
+  max-height: 200px;
 
   border: solid 2px black;
+}
+
+.product:hover {
+  border: solid 4px rgb(255, 0, 212);
+  transition: 0.5s;
 }
 
 .product-picture {
   display: flex;
 
-  width: 30%;
+  width: 40%;
   object-fit: contain;
 
   border: solid 2px red;
@@ -25,13 +31,31 @@
 
 .info-wrapper {
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas: "name cost" "amount stars" "info info";
+  grid-template-columns: repeat(1fr, 5);
+  /* grid-template-rows: repeat(minmax(0, 1fr), 2) minmax(0, 2fr); */
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-areas:
+    "name name name cost cost"
+    "amount amount stars stars stars"
+    "info info info info info";
   gap: 2px;
 
-  width: 70%;
+  width: 60%;
   height: 100%;
+}
+
+.info-field {
+  display: flex;
+
+  max-height: 100%;
+  overflow: hidden;
+
+  padding-top: 10px;
+}
+
+.info-field > p {
+  width: 100%;
+  text-align: center;
 }
 
 .product-name {
@@ -49,7 +73,7 @@
 .product-cost {
   grid-area: cost;
 
-  background-color: rgb(132, 0, 255);
+  background-color: rgb(188, 139, 235);
 }
 
 .product-amount-left {
@@ -61,4 +85,8 @@
   grid-area: info;
 
   background-color: cyan;
+
+  overflow-y: scroll;
+
+  margin-top: 0;
 }

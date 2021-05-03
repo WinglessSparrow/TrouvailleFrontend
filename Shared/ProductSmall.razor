@@ -2,11 +2,21 @@
     <img class="product-picture center-flex" src="assets/svg/trouvailleLogoBucketMinimized.svg"
         alt="Image loading Error">
     <div class="info-wrapper">
-        <div class="product-name info-field"></div>
-        <div class="product-stars info-field"></div>
-        <div class="product-cost info-field"></div>
-        <div class="product-amount-left info-field"></div>
-        <div class="product-short-info info-field"></div>
+        <div class="product-name info-field">
+            <p>@Name</p>
+        </div>
+        <div class="product-stars info-field">
+            <p>@Stars</p>
+        </div>
+        <div class="product-cost info-field">
+            <p>@Cost</p>
+        </div>
+        <div class="product-amount-left info-field">
+            <p>@Amount</p>
+        </div>
+        <div class="product-short-info info-field">
+            <p>@ShortInfo</p>
+        </div>
     </div>
 </div>
 
@@ -14,8 +24,11 @@
     [ParameterAttribute]
     public string Name { get; set; }
     [ParameterAttribute]
-    public string Vost { get; set; }
+    public string Cost { get; set; }
     [ParameterAttribute]
     public string ShortInfo { get; set; }
-    //TODO props for stars, info, amount-left will
+    [ParameterAttribute]
+    public string Stars { get; set; }
+    [ParameterAttribute]
+    public string Amount { get; set; }
 }
