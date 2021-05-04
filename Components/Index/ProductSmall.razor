@@ -1,6 +1,10 @@
+@namespace TrouvailleFrontend.Components.Index
+
 @using TrouvailleFrontend.Shared.Models
 
-<div class="product">
+@inject NavigationManager NavMan
+
+<div class="product" @onclick="Do">
     <img class="product-picture center-flex" src="assets/svg/trouvailleLogoBucketMinimized.svg"
         alt="Image loading Error">
     <div class="info-wrapper">
@@ -25,4 +29,8 @@
 @code{
     [ParameterAttribute]
     public Product product { get; set; }
+
+    private void Do(){
+        NavMan.NavigateTo($"/product/{product.Pid}");
+    }
 }
