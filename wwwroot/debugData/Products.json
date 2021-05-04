@@ -1,37 +1,37 @@
 [
     {
         "name":"Brush",
-        "cost":"1.50€",
-        "shortInfo":"Cool Brush",
-        "stars":"4",
-        "amount":"30 pieces"
+        "price":"1.50",
+        "description":"Cool Brush",
+        "rating":"4",
+        "stock":"30"
     },
     {
         "name":"Brush 2",
-        "cost":"20.50€",
+        "price":"20.50",
         "shortInfo":"Cool Brush $$$",
-        "stars":"4",
-        "amount":"30 pieces"
+        "rating":"4",
+        "stock":"30"
     },
     {
         "name":"Brush 3",
-        "cost":"5.50€",
+        "price":"5.50",
         "shortInfo":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, sunt.",
-        "stars":"4",
-        "amount":"30 pieces"
+        "rating":"4",
+        "stock":"30"
     },
     {
         "name":"Brush 4",
-        "cost":"3.50€",
+        "price":"3.50",
         "shortInfo":"unCool Brush",
-        "stars":"1",
-        "amount":"30 pieces"
+        "rating":"1",
+        "stock":"30"
     },
     {
         "name":"Brush 5",
-        "cost":"1.40€",
+        "price":"1.40",
         "shortInfo":"very Cool Brush",
-        "stars":"5",
-        "amount":"30 pieces"
+        "rating":"5",
+        "stock":"30"
     }
 ]

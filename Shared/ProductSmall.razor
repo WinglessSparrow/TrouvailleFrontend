@@ -1,3 +1,5 @@
+@using TrouvailleFrontend.Shared.Models
+
 <div class="product">
     <img class="product-picture center-flex" src="assets/svg/trouvailleLogoBucketMinimized.svg"
         alt="Image loading Error">
@@ -6,16 +8,16 @@
             <p>@product.Name</p>
         </div>
         <div class="product-stars info-field">
-            <p>@product.Stars</p>
+            <p>@product.Rating</p>
         </div>
         <div class="product-cost info-field">
-            <p>@product.Cost</p>
+            <p>@product.Price</p>
         </div>
         <div class="product-amount-left info-field">
-            <p>@product.Amount</p>
+            <p>@product.Stock</p>
         </div>
         <div class="product-short-info info-field">
-            <p>@product.ShortInfo</p>
+            <p>@product.Description</p>
         </div>
     </div>
 </div>
