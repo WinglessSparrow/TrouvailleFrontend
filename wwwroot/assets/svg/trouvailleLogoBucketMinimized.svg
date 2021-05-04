@@ -1,1 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="61.311" height="55.468" viewBox="0 0 16.222 14.676"  xmlns:v="https://vecta.io/nano"><style><![CDATA[.B{stroke-linecap:round}.C{stroke-linejoin:round}.D{stroke-width:.479}.E{stroke-width:.484}.F{stroke-width:.277}]]></style><text xml:space="preserve" x="44.355" y="124.28" font-size="19.609" font-family="sans-serif" letter-spacing="0" word-spacing="0" fill="#000"><tspan x="-111.681" y="-3.773" font-weight="normal" font-family="Bodoni MT">trouvaille</tspan></text><g fill="none"><g stroke="#000"><path d="M-17.792-2.227v-15.214" stroke-width=".7"/><g stroke-width=".334"><path d="M.748 11.307l-.339 2.62 2.086-1.64" class="C"/><path d="M.748 11.307s.162.006.447.149c.293.147.171.426.325.514s.324-.122.618.018.356.298.356.298m-1.901.58l.662.387"/><path d="M.748 11.307l2.637-4.553.78-1.363m-.011 3.996l-1.66 2.9" class="B"/><path d="M3.572 6.191l.648.374m-.229-1.013l.312.17"/><path d="M3.996 7.563l.235-.471m-2.597 4.677L3.6 8.299" class="B"/></g></g><g stroke="#010101"><path d="M3.921 2.884s-.406.222-.627.285c-.23.065-.473.113-.711.092s-.473-.097-.678-.217a1.63 1.63 0 0 1-.544-.504c-.123-.189-.181-.417-.219-.639-.034-.193.007-.393-.008-.589-.009-.113-.012-.229-.048-.336C1.038.834.977.687.87.583.779.494.651.446.529.408.421.373.191.364.191.364s.56-.156.847-.17c.264-.013.531.023.79.079.218.048.434.118.632.219a2.78 2.78 0 0 1 .639.45c.181.172.336.373.465.587.121.201.224.418.284.645s.073.709.073.709z" stroke-width=".382" class="C"/><g class="B"><path d="M2.497 2.582l-.209-.075c-.103-.049-.209-.101-.292-.179-.065-.062-.111-.142-.152-.221-.05-.096-.114-.305-.114-.305" stroke-width=".273"/><path d="M3.759 3.059l.577.743c.218.247.697.69.96.91" class="D"/><path d="M4.015 2.861l1.118.246 1.165.356c.365.133.685.28 1.02.437l.989.503c.342.196.861.572 1.188.814" stroke-width=".51"/></g><path d="M5.519 4.822s.321-.297.44-.516.235-.784.235-.784" class="D"/></g><g stroke="#000"><path d="M4.167 3.687c.032-1.126 3.091-1.591 4.761-1.595s4.732.416 4.738 1.595c.003.603-.816 1.02-1.841 1.282-.98.251-2.148.362-2.966.358-1.675-.006-4.723-.515-4.692-1.641z" class="C E"/><path d="M13.643 3.826l-.023 9.059" stroke-width=".477"/><path d="M4.167 3.687v8.967" class="D"/><path d="M4.167 12.654s.04 1.793 4.715 1.78 4.738-1.549 4.738-1.549M7.935 7.061s1.022 1.281 3.074 2.588 2.612 1.317 2.612 1.317" class="B E"/><path d="M13.62 10.967s.721.213 1.086.162.657-.082.901-.37.395-.693.37-1.225-.407-1.333-.67-1.895a10.34 10.34 0 0 0-.832-1.456c-.279-.407-.809-.994-.809-.994m-6.126.006s-.361.254-.36.423L7.173 7.86c0 .164-.005.539-.348.541-.319.003-.345-.371-.347-.535v-.844c.001-.158.006-.486-.324-.494-.357-.008-.338.327-.339.48l-.031 3.148c-.001.182-.257.331-.439.324-.164-.007-.364-.16-.37-.324V5.097c0-.323-.235-.62-.235-.62" class="E"/><path d="M12.187 13.301s.451-.144.693-.277.74-.532.74-.532m-4.394 1.244s-.782.022-1.172-.007c-.535-.04-1.075-.09-1.593-.228-.449-.119-.895-.277-1.295-.513-.37-.219-.994-.823-.994-.823" class="B F"/><path d="M5.554 4.796s1.124-.615 3.305-.578c2.628.045 3.397.578 3.397.578" class="F"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="61.311"
+   height="55.468"
+   viewBox="0 0 16.222 14.676"
+   version="1.1"
+   id="svg56"
+   sodipodi:docname="trouvailleLogoBucketMinimized.svg"
+   inkscape:export-filename="C:\Users\Pavel\Desktop\favicon.png"
+   inkscape:export-xdpi="187.8945"
+   inkscape:export-ydpi="187.8945"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata62">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs60" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview58"
+     showgrid="false"
+     inkscape:zoom="4.2547055"
+     inkscape:cx="30.6555"
+     inkscape:cy="27.733999"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg56" />
+  <style
+     id="style2"><![CDATA[.B{stroke-linecap:round}.C{stroke-linejoin:round}.D{stroke-width:.479}.E{stroke-width:.484}.F{stroke-width:.277}]]></style>
+  <text
+     xml:space="preserve"
+     x="44.355"
+     y="124.28"
+     font-size="19.609"
+     font-family="sans-serif"
+     letter-spacing="0"
+     word-spacing="0"
+     fill="#000"
+     id="text6"><tspan
+       x="-111.681"
+       y="-3.773"
+       font-weight="normal"
+       font-family="Bodoni MT"
+       id="tspan4">trouvaille</tspan></text>
+  <g
+     fill="none"
+     id="g54">
+    <g
+       stroke="#000"
+       id="g22">
+      <path
+         d="M-17.792-2.227v-15.214"
+         stroke-width=".7"
+         id="path8" />
+      <g
+         stroke-width=".334"
+         id="g20">
+        <path
+           d="M.748 11.307l-.339 2.62 2.086-1.64"
+           class="C"
+           id="path10" />
+        <path
+           d="M.748 11.307s.162.006.447.149c.293.147.171.426.325.514s.324-.122.618.018.356.298.356.298m-1.901.58l.662.387"
+           id="path12" />
+        <path
+           d="M.748 11.307l2.637-4.553.78-1.363m-.011 3.996l-1.66 2.9"
+           class="B"
+           id="path14" />
+        <path
+           d="M3.572 6.191l.648.374m-.229-1.013l.312.17"
+           id="path16" />
+        <path
+           d="M3.996 7.563l.235-.471m-2.597 4.677L3.6 8.299"
+           class="B"
+           id="path18" />
+      </g>
+    </g>
+    <g
+       stroke="#010101"
+       id="g36">
+      <path
+         d="M3.921 2.884s-.406.222-.627.285c-.23.065-.473.113-.711.092s-.473-.097-.678-.217a1.63 1.63 0 0 1-.544-.504c-.123-.189-.181-.417-.219-.639-.034-.193.007-.393-.008-.589-.009-.113-.012-.229-.048-.336C1.038.834.977.687.87.583.779.494.651.446.529.408.421.373.191.364.191.364s.56-.156.847-.17c.264-.013.531.023.79.079.218.048.434.118.632.219a2.78 2.78 0 0 1 .639.45c.181.172.336.373.465.587.121.201.224.418.284.645s.073.709.073.709z"
+         stroke-width=".382"
+         class="C"
+         id="path24" />
+      <g
+         class="B"
+         id="g32">
+        <path
+           d="M2.497 2.582l-.209-.075c-.103-.049-.209-.101-.292-.179-.065-.062-.111-.142-.152-.221-.05-.096-.114-.305-.114-.305"
+           stroke-width=".273"
+           id="path26" />
+        <path
+           d="M3.759 3.059l.577.743c.218.247.697.69.96.91"
+           class="D"
+           id="path28" />
+        <path
+           d="M4.015 2.861l1.118.246 1.165.356c.365.133.685.28 1.02.437l.989.503c.342.196.861.572 1.188.814"
+           stroke-width=".51"
+           id="path30" />
+      </g>
+      <path
+         d="M5.519 4.822s.321-.297.44-.516.235-.784.235-.784"
+         class="D"
+         id="path34" />
+    </g>
+    <g
+       stroke="#000"
+       id="g52">
+      <path
+         d="M4.167 3.687c.032-1.126 3.091-1.591 4.761-1.595s4.732.416 4.738 1.595c.003.603-.816 1.02-1.841 1.282-.98.251-2.148.362-2.966.358-1.675-.006-4.723-.515-4.692-1.641z"
+         class="C E"
+         id="path38" />
+      <path
+         d="M13.643 3.826l-.023 9.059"
+         stroke-width=".477"
+         id="path40" />
+      <path
+         d="M4.167 3.687v8.967"
+         class="D"
+         id="path42" />
+      <path
+         d="M4.167 12.654s.04 1.793 4.715 1.78 4.738-1.549 4.738-1.549M7.935 7.061s1.022 1.281 3.074 2.588 2.612 1.317 2.612 1.317"
+         class="B E"
+         id="path44" />
+      <path
+         d="M13.62 10.967s.721.213 1.086.162.657-.082.901-.37.395-.693.37-1.225-.407-1.333-.67-1.895a10.34 10.34 0 0 0-.832-1.456c-.279-.407-.809-.994-.809-.994m-6.126.006s-.361.254-.36.423L7.173 7.86c0 .164-.005.539-.348.541-.319.003-.345-.371-.347-.535v-.844c.001-.158.006-.486-.324-.494-.357-.008-.338.327-.339.48l-.031 3.148c-.001.182-.257.331-.439.324-.164-.007-.364-.16-.37-.324V5.097c0-.323-.235-.62-.235-.62"
+         class="E"
+         id="path46" />
+      <path
+         d="M12.187 13.301s.451-.144.693-.277.74-.532.74-.532m-4.394 1.244s-.782.022-1.172-.007c-.535-.04-1.075-.09-1.593-.228-.449-.119-.895-.277-1.295-.513-.37-.219-.994-.823-.994-.823"
+         class="B F"
+         id="path48" />
+      <path
+         d="M5.554 4.796s1.124-.615 3.305-.578c2.628.045 3.397.578 3.397.578"
+         class="F"
+         id="path50" />
+    </g>
+  </g>
+</svg>
