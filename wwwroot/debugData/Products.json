@@ -1,0 +1,37 @@
+[
+    {
+        "name":"Brush",
+        "price":"1.50",
+        "description":"Cool Brush",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "name":"Brush 2",
+        "price":"20.50",
+        "shortInfo":"Cool Brush $$$",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "name":"Brush 3",
+        "price":"5.50",
+        "shortInfo":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, sunt.",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "name":"Brush 4",
+        "price":"3.50",
+        "shortInfo":"unCool Brush",
+        "rating":"1",
+        "stock":"30"
+    },
+    {
+        "name":"Brush 5",
+        "price":"1.40",
+        "shortInfo":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    }
+]

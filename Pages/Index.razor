@@ -1,5 +1,30 @@
-﻿@page "/"
+@using System.Net.Http.Json
+@using TrouvailleFrontend.Shared.Models
 
-<h1>Hello, world!</h1>
+@inject HttpClient Http
 
-Welcome to your new app.
+@page "/"
+
+
+<div class="page">
+    <div class="side-panel">
+        <IndexSideMenu />
+    </div>
+    <div class="main-container">
+
+    @if(_products != null){
+        @foreach(Product p in _products){
+            <ProductSmall product=p/>
+        }
+    }
+
+    </div>
+</div>
+
+@code{
+    private Product[] _products;
+    
+    protected override async Task OnInitializedAsync(){
+        _products = await Http.GetFromJsonAsync<Product[]>("debugData/products.json");
+    }
+}
