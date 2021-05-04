@@ -1,3 +1,51 @@
-@page "/product"
+@page "/product/{Id}"
+@inject HttpClient Http
 
-<div>jo</div>
+<div>
+    <div class="product">
+
+        <div class="productLeft">
+            <div class="pImage">
+                <img class="pLogo" src="assets/svg/trouvailleLogoBucket.svg" alt="">
+            </div>
+        </div>
+
+        <div class="productMiddle">
+            <div class="productName">
+                <h1>Produktname ID: @Id</h1>
+            </div>
+            <div class="productDesciption">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, vitae facere id asperiores aperiam
+                    beatae inventore. Ipsa obcaecati est quasi doloribus animi qui voluptates fugit architecto, vero
+                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam? Velit
+                    hic quidem laboriosam, vel molestias quae optio tenetur libero non officiis dicta architecto
+                    possimus iste minima aspernatur dolor commodi unde autem voluptatem. Quisquam excepturi libero
+                    ratione amet? Molestiae dolorem vel corrupti eius, quaerat non quibusdam fuga reprehenderit est
+                    accusantium eos minima, earum iusto nostrum! Laudantium harum error dolor deleniti molestiae quidem
+                    atque, veritatis eos sapiente adipisci. Porro, recusandae?</p>
+            </div>
+        </div>
+
+        <div class="productRight">
+            <div class="price">
+                <p>19,99 €</p>
+            </div>
+            <div class="stock">
+                <p>Vorrätig</p>
+            </div>
+            <div class="toSCart">
+                <button class="btn-toSCart">In den Warenkorb</button>
+            </div>
+        </div>
+    </div>
+    <div class="rating">
+        <!-- Not Implemented -->
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string Id {get; set;}
+
+}
