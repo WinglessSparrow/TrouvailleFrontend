@@ -1,0 +1,17 @@
+{
+    "pid": 18740937,
+    "cid": [
+        1234,
+        345,
+        457,
+        568,
+        679
+    ],
+    "name": "pinsel",
+    "description": "this is a description",
+    "price": 12,
+    "stock": 5,
+    "minStock": 1,
+    "vat": 19,
+    "iid": 91284
+}

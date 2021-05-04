@@ -1,0 +1,64 @@
+@page "/product"
+@inject HttpClient Http
+
+<div>
+    <div class="product">
+        <div class="productLeft box">
+            <div class="pImage">
+                <img class="pLogo" src="assets/svg/trouvailleLogoBucket.svg" alt="">
+                adada
+            </div>
+        </div>
+        <div class="productMiddle box">
+            adadadad
+        </div>
+        <div class="productRight box">
+            adadad
+        </div>
+    </div>
+    <div class="rating">
+        <!-- Not yet Implemented -->
+    </div>
+</div>
+
+
+
+
+@code {
+    //[Parameter]
+    //public int Id { get; set; }
+
+    private Product product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await Http.GetFromJsonAsync<Product>("debugData/product.json");
+    }
+
+
+
+
+    public class Product
+    {
+
+        //Product Id
+        public int Pid { get; set; }
+
+        //Categories Id
+        public int[] Cid { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
+        public int Stock { get; set; }
+        public int MinStock { get; set; }
+
+        public int Vat { get; set; }
+
+        //Image Id
+        public int IId { get; set; }
+
+    }
+
+
+
+}

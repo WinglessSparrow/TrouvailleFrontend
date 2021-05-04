@@ -7,24 +7,34 @@
   flex-direction: column;
 
   width: 100%;
+  min-height: 100vh;
 
   padding-left: 2%;
   padding-right: 2%;
 }
 
-.content{
-    display: flex;
+.content {
+  display: block;
 
-    height: 200vh;
-    width: 95%;
+  /* temp */
+  border: solid 2px yellowgreen;
 
-    border: solid 2px yellowgreen;
+  width: 95%;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 200vh;
 
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  padding: 0;
 }
 
-::deep .center-flex{
-    align-items: center;
-    justify-content: center;
+::deep .center-flex {
+  align-items: center;
+  justify-content: center;
+}
+
+::deep .center-flex-horizontal {
+  justify-content: center;
 }

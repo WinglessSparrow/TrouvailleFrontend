@@ -1,0 +1,64 @@
+.page {
+    display: grid;
+  
+    width: 100%;
+    height: 100%;
+    
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 100%;
+    grid-template-areas: "side" "main";
+    gap: 10px;
+  }
+  
+  .side-panel {
+    grid-area: "side";
+  
+    width: 100%;
+    height: 100%;
+  
+    border: solid 2px red;
+  }
+  
+  .main-container {
+    grid-area: "main";
+  
+    width: 100%;
+    height: 100%;
+  
+    border: solid 2px blue;
+  }
+  
+  .product {
+    display: grid;
+    grid-template-columns: 2fr 3fr 3fr;
+    grid-template-areas: "left middle right";
+  }
+
+  .productLeft {
+    grid-area: left;
+  }
+
+  .productMiddle {
+    grid-area: middle;
+  }
+
+  .productRight {
+    grid-area: right;
+  }
+
+  .product> div {
+    border: 2px solid red;
+    height: 100%;
+    margin: 1%;
+    padding: 1%;
+  }
+
+
+
+
+  /*Picture*/
+  .pLogo{
+    height: 100%;
+    width: 100%;
+   
+  }
