@@ -46,14 +46,12 @@
     grid-area: right;
   }
 
-  .product> div {
+  .product> * {
     border: 2px solid red;
     height: 100%;
     margin: 1%;
-    padding: 1%;
+    padding: 5%;
   }
-
-
 
 
   /*Picture*/
@@ -61,4 +59,35 @@
     height: 100%;
     width: 100%;
    
+  }
+
+  .price {
+    font-size: 50px;
+    margin-bottom: 0px;
+  }
+
+  .stock{
+    font-size: 20px;
+    color: green;
+  }
+
+  .btn-toSCart {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    cursor: pointer;
+    float: left;
+  }
+
+  .btn-toSCart:hover {
+    background-color: #3e8e41;
+  }
+
+  p {
+    margin: 0px;
   }
