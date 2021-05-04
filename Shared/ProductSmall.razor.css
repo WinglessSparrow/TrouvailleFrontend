@@ -1,0 +1,98 @@
+.product {
+  display: flex;
+
+  gap: 10px;
+
+  align-content: center;
+  justify-content: flex-start;
+
+  padding: 10px;
+
+  width: 49%;
+  min-height: 200px;
+  max-height: 200px;
+
+  border: solid 2px black;
+}
+
+.product:hover {
+  border: solid 2px rgb(255, 0, 212);
+  transition: 0.5s;
+}
+
+.product-picture {
+  display: flex;
+
+  width: 40%;
+  object-fit: contain;
+
+  border: solid 2px red;
+}
+
+.info-wrapper {
+  display: grid;
+  grid-template-columns: repeat(1fr, 5);
+  /* grid-template-rows: repeat(minmax(0, 1fr), 2) minmax(0, 2fr); */
+  grid-template-rows: 1fr 1fr 2fr;
+  grid-template-areas:
+    "name name name name cost"
+    "amount amount stars stars stars"
+    "info info info info info";
+  gap: 2px;
+
+  width: 60%;
+  height: 100%;
+}
+
+.info-field {
+  display: flex;
+
+  max-height: 100%;
+  overflow: hidden;
+
+  padding-top: 10px;
+}
+
+.info-field > p {
+  width: 100%;
+  text-align: center;
+}
+
+.product-name {
+  grid-area: name;
+
+  background-color: rgb(255, 0, 85);
+}
+
+.product-name > p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-stars {
+  grid-area: stars;
+
+  background-color: rgb(0, 255, 191);
+}
+
+.product-cost {
+  grid-area: cost;
+
+  background-color: rgb(188, 139, 235);
+}
+
+.product-amount-left {
+  grid-area: amount;
+
+  background-color: rgb(0, 195, 255);
+}
+.product-short-info {
+  grid-area: info;
+
+  background-color: cyan;
+
+  overflow-y: scroll;
+
+  margin-top: 0;
+}

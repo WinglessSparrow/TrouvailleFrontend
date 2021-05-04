@@ -1,0 +1,28 @@
+@using TrouvailleFrontend.Shared.Models
+
+<div class="product">
+    <img class="product-picture center-flex" src="assets/svg/trouvailleLogoBucketMinimized.svg"
+        alt="Image loading Error">
+    <div class="info-wrapper">
+        <div class="product-name info-field">
+            <p>@product.Name</p>
+        </div>
+        <div class="product-stars info-field">
+            <p>@product.Rating</p>
+        </div>
+        <div class="product-cost info-field">
+            <p>@product.Price</p>
+        </div>
+        <div class="product-amount-left info-field">
+            <p>@product.Stock</p>
+        </div>
+        <div class="product-short-info info-field">
+            <p>@product.Description</p>
+        </div>
+    </div>
+</div>
+
+@code{
+    [ParameterAttribute]
+    public Product product { get; set; }
+}
