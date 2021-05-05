@@ -4,17 +4,8 @@
 @using TrouvailleFrontend.Shared.Models;
 @using System.Net.Http.Headers;
 @using System.Text.Json
+@using System.Collections.Generic;
 
-
-
-<div class="card text-center m-3">
-    <h5 class="card-header">GET request with headers set</h5>
-    <div class="card-body">
-        <p>Total: @response?.Pid</p>
-    </div>
-</div>
-
-<br><br><br><br>
 
 <div>
     <div class="product">
@@ -48,8 +39,14 @@
             <div class="stock">
                 <p>Vorrätig</p>
             </div>
+            <div>
+                <input type="number" name="amount" id="amount" min="0", max="20">
+            </div>
             <div class="toSCart">
-                <button class="btn-toSCart">In den Warenkorb</button>
+                <button class="btn-toSCart"  @onclick="addToCart">In den Warenkorb</button>
+            </div>
+            <div>
+                <p>Anzahl im Warenkorb: @alreadyInShoppingCart</p>
             </div>
         </div>
     </div>
@@ -64,15 +61,25 @@
     public string Id {get; set;}
 
     //Only for test
+    
+    private Product product;
+    private int alreadyInShoppingCart = 0;
+     List<ShoppingCartItem> shoppingCart;
 
-    private Product response;
+
+    public async void addToCart() {
+        //Get LocalStorage ShoppingCart
+        shoppingCart.Add(new ShoppingCartItem(product.Pid, 2));
+        shoppingCart.Add(new ShoppingCartItem(1244, 321));
+
+        await JSRuntime.InvokeAsync<string>("localStorage.setItem", "shoppingCart", JsonSerializer.Serialize(shoppingCart));
+
+    }
 
 
 
     protected override async Task OnInitializedAsync()
     {
-        
-
         // create request object
         var request = new HttpRequestMessage(HttpMethod.Get, "debugData/Product.json");
 
@@ -86,14 +93,56 @@
         using var httpResponse = await Http.SendAsync(request);
 
         // convert http response data to UsersResponse object
-        response = await httpResponse.Content.ReadFromJsonAsync<Product>();
+        product = await httpResponse.Content.ReadFromJsonAsync<Product>();
+        
+        
         
 
+        var jsonSC = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "shoppingCart");
+        shoppingCart = JsonSerializer.Deserialize<List<ShoppingCartItem>>(jsonSC);
+        
+        foreach(var item in shoppingCart) {
+            Console.WriteLine("itemPid:" + item.Pid + "      productPid:" + product.Pid);
+            if(item.Pid == product.Pid) {
+                alreadyInShoppingCart = item.Amount;
+            }
+        }
+        
+        
+        
+        
+        
+        /*
         //Local Storage Test
-        var set = await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
-        //var get = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "key");
+        //var set = await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
+        //var get = await JSRuntime.InvokeAsync<Product>("localStorage.getItem", "key");
+
+        //Console.WriteLine(get.Pid);
         //var delete = await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "key");    
+        await set("key", JsonSerializer.Serialize(response));
+        Console.WriteLine("GET: " + await get("key"));
+        await delete("key");
+
+        */
     }
+
+
+    /*
+
+    public async Task set(string key, string value) {
+        await JSRuntime.InvokeAsync<string>("localStorage.setItem", key, value);
+    }
+
+    public async Task<string> get(string key) {
+        string get = await JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
+        return get;
+    }
+
+    public async Task delete(string key) {
+        await JSRuntime.InvokeAsync<string>("localStorage.removeItem", key);  
+    } 
+ */   
+ 
 
 
 }
