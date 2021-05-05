@@ -23,12 +23,7 @@
             <div class="productDesciption">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, vitae facere id asperiores aperiam
                     beatae inventore. Ipsa obcaecati est quasi doloribus animi qui voluptates fugit architecto, vero
-                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam? Velit
-                    hic quidem laboriosam, vel molestias quae optio tenetur libero non officiis dicta architecto
-                    possimus iste minima aspernatur dolor commodi unde autem voluptatem. Quisquam excepturi libero
-                    ratione amet? Molestiae dolorem vel corrupti eius, quaerat non quibusdam fuga reprehenderit est
-                    accusantium eos minima, earum iusto nostrum! Laudantium harum error dolor deleniti molestiae quidem
-                    atque, veritatis eos sapiente adipisci. Porro, recusandae?</p>
+                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam?</p>
             </div>
         </div>
 
@@ -39,14 +34,15 @@
             <div class="stock">
                 <p>Vorrätig</p>
             </div>
-            <div>
-                <input type="number" name="amount" id="amount" min="0", max="20">
+            <div class="amountToAdd">
+                <input type="number" min="1" max="20" value="1"
+                    @onchange="@((ChangeEventArgs e) => Amount = int.Parse((string) e.Value))" />
             </div>
             <div class="toSCart">
-                <button class="btn-toSCart"  @onclick="addToCart">In den Warenkorb</button>
+                <button class="btn-toSCart" @onclick="@addToCart">In den Warenkorb</button>
             </div>
-            <div>
-                <p>Anzahl im Warenkorb: @alreadyInShoppingCart</p>
+            <div class="amountInSC">
+                <p>Anzahl im Warenkorb: @amountInShoppingCart</p>
             </div>
         </div>
     </div>
@@ -58,29 +54,46 @@
 
 @code {
     [Parameter]
-    public string Id {get; set;}
+    public string Id { get; set; }
 
     //Only for test
-    
+
     private Product product;
-    private int alreadyInShoppingCart = 0;
-     List<ShoppingCartItem> shoppingCart;
+    private int amountInShoppingCart = 0;
+    public int Amount { get; set; } = 1;
+    public string AmountS { get; set; }
 
 
-    public async void addToCart() {
-        //Get LocalStorage ShoppingCart
-        shoppingCart.Add(new ShoppingCartItem(product.Pid, 2));
-        shoppingCart.Add(new ShoppingCartItem(1244, 321));
+    List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
+
+
+    public async void addToCart()
+    {
+        bool alreadyInShoppingCart = false;
+        foreach (var item in shoppingCart)
+        {
+            if (item.Pid == product.Pid)
+            {
+                alreadyInShoppingCart = true;
+                item.Amount += Amount;
+                amountInShoppingCart = item.Amount;
+            }
+        }
+        if (!alreadyInShoppingCart)
+        {
+            shoppingCart.Add(new ShoppingCartItem(product.Pid, Amount));
+            amountInShoppingCart += Amount;
+        }
 
         await JSRuntime.InvokeAsync<string>("localStorage.setItem", "shoppingCart", JsonSerializer.Serialize(shoppingCart));
 
     }
 
 
-
     protected override async Task OnInitializedAsync()
     {
-        // create request object
+
+        //=========CUSTOM HEADER FOR AUTHENTIFICATION==================================================
         var request = new HttpRequestMessage(HttpMethod.Get, "debugData/Product.json");
 
         // add authorization header
@@ -94,55 +107,48 @@
 
         // convert http response data to UsersResponse object
         product = await httpResponse.Content.ReadFromJsonAsync<Product>();
-        
-        
-        
 
-        var jsonSC = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "shoppingCart");
-        shoppingCart = JsonSerializer.Deserialize<List<ShoppingCartItem>>(jsonSC);
+        //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
+        product.Pid = int.Parse(Id);
         
-        foreach(var item in shoppingCart) {
-            Console.WriteLine("itemPid:" + item.Pid + "      productPid:" + product.Pid);
-            if(item.Pid == product.Pid) {
-                alreadyInShoppingCart = item.Amount;
+        //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
+
+
+
+        shoppingCart = await getSCfromLS();
+        foreach (var item in shoppingCart)
+        {
+            Console.WriteLine("itemPid:" + item.Pid + " productPid:" + product.Pid);
+            if (item.Pid == product.Pid)
+            {
+                amountInShoppingCart = item.Amount;
             }
         }
-        
-        
-        
-        
-        
+
+
+
+
+
         /*
         //Local Storage Test
-        //var set = await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
+        //await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
         //var get = await JSRuntime.InvokeAsync<Product>("localStorage.getItem", "key");
-
-        //Console.WriteLine(get.Pid);
-        //var delete = await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "key");    
-        await set("key", JsonSerializer.Serialize(response));
-        Console.WriteLine("GET: " + await get("key"));
-        await delete("key");
-
+        //var delete = await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "key");
         */
     }
 
 
-    /*
 
-    public async Task set(string key, string value) {
-        await JSRuntime.InvokeAsync<string>("localStorage.setItem", key, value);
+    private async Task<List<ShoppingCartItem>> getSCfromLS()
+    {
+        List<ShoppingCartItem> sc;
+        var jsonSC = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "shoppingCart");
+        if (jsonSC == null)
+        {
+            jsonSC = "[]";
+        }
+        sc = JsonSerializer.Deserialize<List<ShoppingCartItem>>(jsonSC);
+        return sc;
     }
-
-    public async Task<string> get(string key) {
-        string get = await JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
-        return get;
-    }
-
-    public async Task delete(string key) {
-        await JSRuntime.InvokeAsync<string>("localStorage.removeItem", key);  
-    } 
- */   
- 
-
 
 }
