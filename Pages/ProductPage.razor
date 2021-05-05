@@ -1,5 +1,20 @@
 @page "/product/{Id}"
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@using TrouvailleFrontend.Shared.Models;
+@using System.Net.Http.Headers;
+@using System.Text.Json
+
+
+
+<div class="card text-center m-3">
+    <h5 class="card-header">GET request with headers set</h5>
+    <div class="card-body">
+        <p>Total: @response?.Pid</p>
+    </div>
+</div>
+
+<br><br><br><br>
 
 <div>
     <div class="product">
@@ -47,5 +62,38 @@
 @code {
     [Parameter]
     public string Id {get; set;}
+
+    //Only for test
+
+    private Product response;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+        // create request object
+        var request = new HttpRequestMessage(HttpMethod.Get, "debugData/Product.json");
+
+        // add authorization header
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "my-token");
+
+        // add custom http header
+        //request.Headers.Add("My-Custom-Header", "foobar");
+
+        // send request
+        using var httpResponse = await Http.SendAsync(request);
+
+        // convert http response data to UsersResponse object
+        response = await httpResponse.Content.ReadFromJsonAsync<Product>();
+        
+
+        //Local Storage Test
+        var set = await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
+        //var get = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "key");
+        //var delete = await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "key");    
+    }
+
 
 }

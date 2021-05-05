@@ -1,0 +1,8 @@
+{
+    "pid": "12345",
+    "name":"Brush",
+    "price":"111.50",
+    "description":"Cool Brush",
+    "rating":"4",
+    "stock":"30"
+}
