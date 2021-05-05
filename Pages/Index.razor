@@ -32,12 +32,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        @* _products = await Http.GetFromJsonAsync<Product[]>("debugData/Products.json"); *@
-           _products = iterator.GetNextProducts();
-    }
-
-    protected async void GetFurtherProducts()
-    {
-
+        _products = await iterator.GetNextProductsAsync();
     }
 }

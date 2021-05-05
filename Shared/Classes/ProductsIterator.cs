@@ -12,18 +12,23 @@ namespace TrouvailleFrontend.Shared.Classes
         private Product[] _products;
         private int _index = 0;
         private int _numberProductsPerIteration = 10;
+
+        private HttpClient _http;
         public ProductsIterator(HttpClient http)
         {
-            Task.Run(async () =>
-            {
-                _products = await http.GetFromJsonAsync<Product[]>("debugData/Products.json");
-            });
+            // var t = Task.Run(async () =>
+            // {
+            //     _products = await http.GetFromJsonAsync<Product[]>("debugData/Products.json");
+            // });
 
+            _http = http;
             Console.WriteLine("Hi, I'm yout iterator for this night");
         }
 
-        public List<Product> GetNextProducts()
+        public async Task<List<Product>> GetNextProductsAsync()
         {
+            _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
+
             _index++;
             if (_index * +_numberProductsPerIteration >= _products.Length)
             {
