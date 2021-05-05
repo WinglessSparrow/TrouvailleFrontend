@@ -1,11 +1,10 @@
+@page "/"
+
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Components.Index
 @using TrouvailleFrontend.Shared.Classes
 
 @inject IProductIterator iterator
-
-@page "/"
-
 
 <div class="page">
     <div class="side-panel">
@@ -21,6 +20,8 @@
             }
         }
 
+        <button @onclick="next">next</button>
+        <button @onclick="prev">prev</button>
     </div>
 </div>
 
@@ -30,5 +31,13 @@
     protected override async Task OnInitializedAsync()
     {
         _products = await iterator.GetNextProductsAsync();
+    }
+
+    protected async Task next(){
+        _products = await iterator.GetNextProductsAsync();
+    }
+
+     protected async Task prev(){
+        _products = await iterator.GetPreviousProductsAsync();
     }
 }

@@ -10,17 +10,11 @@ namespace TrouvailleFrontend.Shared.Classes
     public class ProductsIterator : IProductIterator
     {
         private Product[] _products;
-        private int _index = 0;
-        private int _numberProductsPerIteration = 10;
-
+        private int _index = -1;
+        private int _numberProductsPerIteration = 5;
         private HttpClient _http;
         public ProductsIterator(HttpClient http)
         {
-            // var t = Task.Run(async () =>
-            // {
-            //     _products = await http.GetFromJsonAsync<Product[]>("debugData/Products.json");
-            // });
-
             _http = http;
             Console.WriteLine("Hi, I'm yout iterator for this night");
         }
@@ -42,12 +36,14 @@ namespace TrouvailleFrontend.Shared.Classes
             return CopyArrayToList(offset, limit);
         }
 
-        public List<Product> GetPreviousProducts()
+        public async Task<List<Product>> GetPreviousProductsAsync()
         {
+            _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
+
             _index--;
-            if (_index <= 0)
+            if (_index < 0)
             {
-                _index = 1;
+                _index = 0;
                 return null;
             }
 
@@ -57,9 +53,19 @@ namespace TrouvailleFrontend.Shared.Classes
             return CopyArrayToList(offset, limit);
         }
 
-        public List<Product> GetProductIndexed(int index)
+        public async Task<List<Product>> GetProductIndexedAsync(int index)
         {
-            return null;
+            _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
+
+            if (index < 0 || index >= _products.Length)
+            {
+                return null;
+            }
+
+            int offset = _index * _numberProductsPerIteration;
+            int limit = offset + _numberProductsPerIteration;
+
+            return CopyArrayToList(offset, limit);
         }
 
         private List<Product> CopyArrayToList(int from, int to)
