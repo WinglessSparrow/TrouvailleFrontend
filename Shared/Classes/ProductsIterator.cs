@@ -11,12 +11,12 @@ namespace TrouvailleFrontend.Shared.Classes
     {
         private Product[] _products;
         private int _index = -1;
-        private int _numberProductsPerIteration = 5;
+        private int _numberProductsPerIteration = 7;
         private HttpClient _http;
+
         public ProductsIterator(HttpClient http)
         {
             _http = http;
-            Console.WriteLine("Hi, I'm yout iterator for this night");
         }
 
         public async Task<List<Product>> GetNextProductsAsync()
@@ -24,28 +24,35 @@ namespace TrouvailleFrontend.Shared.Classes
             _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
 
             _index++;
-            if (_index * +_numberProductsPerIteration >= _products.Length)
-            {
-                _index--;
-                return null;
-            }
+            if (_index * _numberProductsPerIteration > _products.Length) return null;
+
+            Console.WriteLine(_index);
 
             int offset = _index * _numberProductsPerIteration;
             int limit = offset + _numberProductsPerIteration;
 
             return CopyArrayToList(offset, limit);
         }
-
         public async Task<List<Product>> GetPreviousProductsAsync()
         {
             _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
 
             _index--;
-            if (_index < 0)
-            {
-                _index = 0;
-                return null;
-            }
+            if (_index < 0) return null;
+
+            Console.WriteLine(_index);
+
+            int offset = _index * _numberProductsPerIteration;
+            int limit = offset + _numberProductsPerIteration;
+
+            return CopyArrayToList(offset, limit);
+        }
+        public async Task<List<Product>> GetProductIndexedAsync(int index)
+        {
+            _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
+
+            if (index < 0 || index >= _products.Length) return null;
+            _index = index;
 
             int offset = _index * _numberProductsPerIteration;
             int limit = offset + _numberProductsPerIteration;
@@ -53,19 +60,10 @@ namespace TrouvailleFrontend.Shared.Classes
             return CopyArrayToList(offset, limit);
         }
 
-        public async Task<List<Product>> GetProductIndexedAsync(int index)
+        public async Task<ProductsNumbers> GetProductNumbersAsync()
         {
             _products = await _http.GetFromJsonAsync<Product[]>("debugData/Products.json");
-
-            if (index < 0 || index >= _products.Length)
-            {
-                return null;
-            }
-
-            int offset = _index * _numberProductsPerIteration;
-            int limit = offset + _numberProductsPerIteration;
-
-            return CopyArrayToList(offset, limit);
+            return new ProductsNumbers() { NumberOfProduct = _products.Length, NumberProductsPerIteration = _numberProductsPerIteration };
         }
 
         private List<Product> CopyArrayToList(int from, int to)

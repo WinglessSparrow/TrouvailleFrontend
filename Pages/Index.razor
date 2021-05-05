@@ -20,24 +20,48 @@
             }
         }
 
-        <button @onclick="next">next</button>
+    </div>
+    <div class="indexed-navigation">
         <button @onclick="prev">prev</button>
+        <div class="page-numbers-container">
+            @if (_numbers != null)
+            {
+                @for (int i = 1; i <= (_numbers.NumberOfProduct / _numbers.NumberProductsPerIteration) + 1; i++)
+                {
+                    var temp = i - 1;
+                    <div class="page-number" @onclick="()=>ChangeToIndex(temp)">@i</div>
+                }
+            }
+        </div>
+        <button @onclick="next">next</button>
     </div>
 </div>
 
 @code{
     private List<Product> _products;
+    private ProductsNumbers _numbers;
 
     protected override async Task OnInitializedAsync()
     {
         _products = await iterator.GetNextProductsAsync();
+        _numbers = await iterator.GetProductNumbersAsync();
     }
 
-    protected async Task next(){
+    private async void next()
+    {
         _products = await iterator.GetNextProductsAsync();
+        this.StateHasChanged();
     }
 
-     protected async Task prev(){
+    private async void prev()
+    {
         _products = await iterator.GetPreviousProductsAsync();
+        this.StateHasChanged();
+    }
+
+    private async void ChangeToIndex(int index)
+    {
+        _products = await iterator.GetProductIndexedAsync(index);
+        this.StateHasChanged();
     }
 }
