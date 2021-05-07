@@ -58,9 +58,9 @@ namespace TrouvailleFrontend.Shared.Classes {
             return CopyArrayToList(offset, limit);
         }
 
-        public async Task<ProductsNumbers> GetProductNumbersAsync() {
+        public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
             _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
-            return new ProductsNumbers() { NumberOfProduct = _products.Length, NumberProductsPerIteration = _numberProductsPerIteration };
+            return new ProductsNumbersModel() { NumberOfProduct = _products.Length, NumberProductsPerIteration = _numberProductsPerIteration };
         }
 
         private List<ProductModel> CopyArrayToList(int from, int to) {

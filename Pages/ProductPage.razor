@@ -65,7 +65,7 @@
     private int amountInShoppingCart = 0;
     public int Amount { get; set; } = 1;
 
-    List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
+    List<ShoppingCartItemModel> shoppingCart = new List<ShoppingCartItemModel>();
 
 
     public async void addToCart()
@@ -82,11 +82,11 @@
         }
         if (!alreadyInShoppingCart)
         {
-            shoppingCart.Add(new ShoppingCartItem(product.Pid, Amount));
+            shoppingCart.Add(new ShoppingCartItemModel(product.Pid, Amount));
             amountInShoppingCart += Amount;
         }
 
-        await localStorage.SetStorageAsync<List<ShoppingCartItem>>("shoppingCart", shoppingCart);
+        await localStorage.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", shoppingCart);
 
     }
 
@@ -118,7 +118,7 @@
 
         //shoppingCart = await getSCfromLS();
 
-        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
+        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
             if (item.ProductId == product.Pid)

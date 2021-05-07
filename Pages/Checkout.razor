@@ -10,9 +10,14 @@
 
 <div class="page">
     <div class="content">
+
+        <EditForm Model="@_order" OnValidSubmit="PostOrder">
+
+        </EditForm>
+
         <div class="addresses">
-            <Address AddressFor="Billing Address" @bind-AddressM="_adresses[0]" />
-            <Address AddressFor="Delivery Address" @bind-AddressM="_adresses[1]" />
+            <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+            <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
         </div>
         @* <div class="payment">
             </div>
@@ -29,12 +34,18 @@
 
 
 @code{
-    @* TODO: Theese will change, namely will be stored in LocalStorage *@
-    private AddressModel[] _adresses = {new AddressModel(), new AddressModel()};
-    @* TODO: *@
-    private List<ShoppingCartItem> _products { get; set; }
+
+    private OrderModel _order;
+
+
+    private List<ShoppingCartItemModel> _products { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        _products = await local.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
+        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+    }
+
+    protected override async Task PostData()
+    {
     }
 }

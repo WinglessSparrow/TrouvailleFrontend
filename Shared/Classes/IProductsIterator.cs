@@ -7,6 +7,6 @@ namespace TrouvailleFrontend.Shared.Classes {
         Task<List<ProductModel>> GetNextProductsAsync();
         Task<List<ProductModel>> GetPreviousProductsAsync();
         Task<List<ProductModel>> GetProductIndexedAsync(int index);
-        Task<ProductsNumbers> GetProductNumbersAsync();
+        Task<ProductsNumbersModel> GetProductNumbersAsync();
     }
 }

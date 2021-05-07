@@ -1,6 +1,6 @@
 namespace TrouvailleFrontend.Shared.Models
 {
-    public class ProductsNumbers
+    public class ProductsNumbersModel
     {
         public int NumberProductsPerIteration { get; set; }
         public int NumberOfProduct { get; set; }

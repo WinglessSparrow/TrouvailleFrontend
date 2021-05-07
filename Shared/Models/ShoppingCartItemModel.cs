@@ -1,7 +1,7 @@
 namespace TrouvailleFrontend.Shared.Models {
-    public class ShoppingCartItem {
+    public class ShoppingCartItemModel {
 
-        public ShoppingCartItem(int pid, int amount) {
+        public ShoppingCartItemModel(int pid, int amount) {
             this.ProductId = pid;
             this.Cardinality = amount;
         }
