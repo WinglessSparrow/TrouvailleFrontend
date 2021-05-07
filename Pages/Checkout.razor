@@ -1,0 +1,37 @@
+@page "/checkout"
+
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Shared.Classes
+@using TrouvailleFrontend.Components.Checkout
+@using System.Net.Http
+
+@inject ILocalStorage local
+@inject HttpClient http
+
+<div class="page">
+    <div class="content">
+        @* <div class="adresses">
+        </div>
+        <div class="payment">
+        </div>
+        <div class="sent-methode">
+        </div>
+        <div class="products-view">
+        </div> *@
+
+        <Address />
+        <Address />
+    </div>
+    <div class="side-menu">
+        @* <div class="sticky-container"></div> *@
+    </div>
+</div>
+
+
+@code{
+    private List<ShoppingCartItem> _products { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await local.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
+    }
+}

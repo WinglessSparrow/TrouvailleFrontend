@@ -1,0 +1,36 @@
+.page {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 100%;
+  grid-template-areas: "content side";
+  gap: 10px;
+
+  height: 100%;
+}
+
+.content {
+  grid-area: content;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0;
+
+  height: 100%;
+  width: 100%;
+
+  border: solid 2px red;
+}
+
+.side-menu {
+  grid-area: side;
+
+  height: 100%;
+  width: 100%;
+
+  border: solid 2px red;
+}

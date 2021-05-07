@@ -1,14 +1,14 @@
 @page "/product/{Id}"
 
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+@using System.Collections.Generic
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Shared.Classes
+
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
-@inject ILocalStorage localStorage;
-
-@using System.Net.Http.Headers;
-@using System.Collections.Generic;
-@using TrouvailleFrontend.Shared.Models;
-@using TrouvailleFrontend.Shared.Classes;
-
+@inject ILocalStorage localStorage
 
 <div>
     <div class="product">
@@ -111,13 +111,13 @@
 
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.Pid = int.Parse(Id);
-        
+
         //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
 
 
 
         //shoppingCart = await getSCfromLS();
-        
+
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {

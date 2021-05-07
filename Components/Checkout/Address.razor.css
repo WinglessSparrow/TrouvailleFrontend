@@ -1,0 +1,49 @@
+.adress {
+  display: grid;
+  grid-template-columns: repeat(1fr, 6);
+  grid-template-rows: repeat(1fr, 3);
+  gap: 10px;
+
+  width: 45%;
+  height: 300px;
+}
+.land {
+  grid-area: land;
+  grid-column: 1 / 6;
+  grid-row: 1;
+
+  border: solid 2px red;
+}
+
+.post-code {
+  grid-area: pcode;
+  grid-column: 1 / 3;
+  grid-row: 2;
+
+  border: solid 2px red;
+}
+
+.city {
+  grid-area: city;
+  grid-column: 3 / 6;
+  grid-row: 2;
+
+  border: solid 2px red;
+}
+
+.street {
+  grid-area: street;
+  grid-column: 1 / 5;
+  grid-row: 3;
+
+
+  border: solid 2px red;
+}
+
+.street-number {
+  grid-area: number;
+  grid-column: 5 / 6;
+  grid-row: 3;
+
+  border: solid 2px red;
+}
