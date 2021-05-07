@@ -1,10 +1,13 @@
 @page "/product/{Id}"
+
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
-@using TrouvailleFrontend.Shared.Models;
+@inject ILocalStorage localStorage;
+
 @using System.Net.Http.Headers;
-@using System.Text.Json
 @using System.Collections.Generic;
+@using TrouvailleFrontend.Shared.Models;
+@using TrouvailleFrontend.Shared.Classes;
 
 
 <div>
@@ -61,8 +64,6 @@
     private Product product;
     private int amountInShoppingCart = 0;
     public int Amount { get; set; } = 1;
-    public string AmountS { get; set; }
-
 
     List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
 
@@ -85,7 +86,7 @@
             amountInShoppingCart += Amount;
         }
 
-        await JSRuntime.InvokeAsync<string>("localStorage.setItem", "shoppingCart", JsonSerializer.Serialize(shoppingCart));
+        await localStorage.SetStorageAsync<List<ShoppingCartItem>>("shoppingCart", shoppingCart);
 
     }
 
@@ -115,40 +116,16 @@
 
 
 
-        shoppingCart = await getSCfromLS();
+        //shoppingCart = await getSCfromLS();
+        
+        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
-            Console.WriteLine("itemPid:" + item.Pid + " productPid:" + product.Pid);
             if (item.Pid == product.Pid)
             {
                 amountInShoppingCart = item.Amount;
             }
         }
 
-
-
-
-
-        /*
-        //Local Storage Test
-        //await JSRuntime.InvokeAsync<string>("localStorage.setItem", "key", JsonSerializer.Serialize(response));
-        //var get = await JSRuntime.InvokeAsync<Product>("localStorage.getItem", "key");
-        //var delete = await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "key");
-        */
     }
-
-
-
-    private async Task<List<ShoppingCartItem>> getSCfromLS()
-    {
-        List<ShoppingCartItem> sc;
-        var jsonSC = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "shoppingCart");
-        if (jsonSC == null)
-        {
-            jsonSC = "[]";
-        }
-        sc = JsonSerializer.Deserialize<List<ShoppingCartItem>>(jsonSC);
-        return sc;
-    }
-
 }
