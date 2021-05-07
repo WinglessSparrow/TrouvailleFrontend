@@ -1,12 +1,11 @@
 .adress {
   display: grid;
-  grid-template-columns: repeat(1fr, 6);
-  grid-template-rows: repeat(1fr, 3);
   gap: 10px;
 
   width: 45%;
   height: 300px;
 }
+
 .land {
   grid-area: land;
   grid-column: 1 / 6;

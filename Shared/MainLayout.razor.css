@@ -11,9 +11,10 @@
 
 .content {
   display: block;
-
+  
   /* temp */
   border: solid 2px yellowgreen;
+
 
   min-height: 100vh;
 
