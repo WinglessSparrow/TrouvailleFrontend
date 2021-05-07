@@ -1,12 +1,10 @@
-@using System.Net.Http.Json
-@using TrouvailleFrontend.Shared.Models
-@using TrouvailleFrontend.Components.Index
-
-
-@inject HttpClient Http
-
 @page "/"
 
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Components.Index
+@using TrouvailleFrontend.Shared.Classes
+
+@inject IProductIterator iterator
 
 <div class="page">
     <div class="side-panel">
@@ -14,19 +12,71 @@
     </div>
     <div class="main-container">
 
-    @if(_products != null){
-        @foreach(Product p in _products){
-            <ProductSmall product=p/>
+        @if (_products != null)
+        {
+            @foreach (Product p in _products)
+            {
+                <ProductSmall product=p />
+            }
         }
-    }
 
+    </div>
+    <div class="indexed-navigation">
+        <button @onclick="prev" disabled="@_prevButton">prev</button>
+        <div class="page-numbers-container">
+            @if (_numbers != null)
+            {
+                @for (int i = 1; i <= (_numbers.NumberOfProduct / _numbers.NumberProductsPerIteration) + 1; i++)
+                {
+                    var temp = i - 1;
+                    <div class="page-number" @onclick="()=>ChangeToIndex(temp)">@i</div>
+                }
+            }
+        </div>
+        <button @onclick="next" disabled="@_nextButton">next</button>
     </div>
 </div>
 
 @code{
-    private Product[] _products;
-    
-    protected override async Task OnInitializedAsync(){
-        _products = await Http.GetFromJsonAsync<Product[]>("debugData/products.json");
+    private List<Product> _products;
+    private ProductsNumbers _numbers;
+
+    private bool _nextButton = false;
+    private bool _prevButton = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await iterator.GetNextProductsAsync();
+        _numbers = await iterator.GetProductNumbersAsync();
+    }
+
+    private async void next()
+    {
+        var temp = await iterator.GetNextProductsAsync();
+
+        if (temp == null) _nextButton = true;
+        else _products = temp;
+
+        if (_prevButton) _prevButton = false;
+        this.StateHasChanged();
+    }
+
+    private async void prev()
+    {
+        var temp = await iterator.GetPreviousProductsAsync();
+
+        if (temp == null) _prevButton = true;
+        else _products = temp;
+
+        if (_nextButton) _nextButton = false;
+        this.StateHasChanged();
+    }
+
+    private async void ChangeToIndex(int index)
+    {
+        _products = await iterator.GetProductIndexedAsync(index);
+        if (_nextButton) _nextButton = false;
+        if (_prevButton) _prevButton = false;
+        this.StateHasChanged();
     }
 }
