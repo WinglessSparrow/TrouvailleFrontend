@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TrouvailleFrontend.Shared.Classes;
 
 namespace TrouvailleFrontend
 {
@@ -19,6 +20,7 @@ namespace TrouvailleFrontend
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton<ILocalStorage, LocalStorage>();
 
             await builder.Build().RunAsync();
         }

@@ -1,5 +1,14 @@
 @page "/product/{Id}"
+
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject ILocalStorage localStorage;
+
+@using System.Net.Http.Headers;
+@using System.Collections.Generic;
+@using TrouvailleFrontend.Shared.Models;
+@using TrouvailleFrontend.Shared.Classes;
+
 
 <div>
     <div class="product">
@@ -17,12 +26,7 @@
             <div class="productDesciption">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, vitae facere id asperiores aperiam
                     beatae inventore. Ipsa obcaecati est quasi doloribus animi qui voluptates fugit architecto, vero
-                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam? Velit
-                    hic quidem laboriosam, vel molestias quae optio tenetur libero non officiis dicta architecto
-                    possimus iste minima aspernatur dolor commodi unde autem voluptatem. Quisquam excepturi libero
-                    ratione amet? Molestiae dolorem vel corrupti eius, quaerat non quibusdam fuga reprehenderit est
-                    accusantium eos minima, earum iusto nostrum! Laudantium harum error dolor deleniti molestiae quidem
-                    atque, veritatis eos sapiente adipisci. Porro, recusandae?</p>
+                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam?</p>
             </div>
         </div>
 
@@ -33,8 +37,15 @@
             <div class="stock">
                 <p>Vorrätig</p>
             </div>
+            <div class="amountToAdd">
+                <input type="number" min="1" max="20" value="1"
+                    @onchange="@((ChangeEventArgs e) => Amount = int.Parse((string) e.Value))" />
+            </div>
             <div class="toSCart">
-                <button class="btn-toSCart">In den Warenkorb</button>
+                <button class="btn-toSCart" @onclick="@addToCart">In den Warenkorb</button>
+            </div>
+            <div class="amountInSC">
+                <p>Anzahl im Warenkorb: @amountInShoppingCart</p>
             </div>
         </div>
     </div>
@@ -46,6 +57,75 @@
 
 @code {
     [Parameter]
-    public string Id {get; set;}
+    public string Id { get; set; }
 
+    //Only for test
+
+    private Product product;
+    private int amountInShoppingCart = 0;
+    public int Amount { get; set; } = 1;
+
+    List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
+
+
+    public async void addToCart()
+    {
+        bool alreadyInShoppingCart = false;
+        foreach (var item in shoppingCart)
+        {
+            if (item.Pid == product.Pid)
+            {
+                alreadyInShoppingCart = true;
+                item.Amount += Amount;
+                amountInShoppingCart = item.Amount;
+            }
+        }
+        if (!alreadyInShoppingCart)
+        {
+            shoppingCart.Add(new ShoppingCartItem(product.Pid, Amount));
+            amountInShoppingCart += Amount;
+        }
+
+        await localStorage.SetStorageAsync<List<ShoppingCartItem>>("shoppingCart", shoppingCart);
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //=========CUSTOM HEADER FOR AUTHENTIFICATION==================================================
+        var request = new HttpRequestMessage(HttpMethod.Get, "debugData/Product.json");
+
+        // add authorization header
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "my-token");
+
+        // add custom http header
+        //request.Headers.Add("My-Custom-Header", "foobar");
+
+        // send request
+        using var httpResponse = await Http.SendAsync(request);
+
+        // convert http response data to UsersResponse object
+        product = await httpResponse.Content.ReadFromJsonAsync<Product>();
+
+        //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
+        product.Pid = int.Parse(Id);
+        
+        //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
+
+
+
+        //shoppingCart = await getSCfromLS();
+        
+        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
+        foreach (var item in shoppingCart)
+        {
+            if (item.Pid == product.Pid)
+            {
+                amountInShoppingCart = item.Amount;
+            }
+        }
+
+    }
 }
