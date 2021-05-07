@@ -61,7 +61,7 @@
 
     //Only for test
 
-    private Product product;
+    private ProductModel product;
     private int amountInShoppingCart = 0;
     public int Amount { get; set; } = 1;
 
@@ -73,11 +73,11 @@
         bool alreadyInShoppingCart = false;
         foreach (var item in shoppingCart)
         {
-            if (item.Pid == product.Pid)
+            if (item.ProductId == product.Pid)
             {
                 alreadyInShoppingCart = true;
-                item.Amount += Amount;
-                amountInShoppingCart = item.Amount;
+                item.Cardinality += Amount;
+                amountInShoppingCart = item.Cardinality;
             }
         }
         if (!alreadyInShoppingCart)
@@ -107,7 +107,7 @@
         using var httpResponse = await Http.SendAsync(request);
 
         // convert http response data to UsersResponse object
-        product = await httpResponse.Content.ReadFromJsonAsync<Product>();
+        product = await httpResponse.Content.ReadFromJsonAsync<ProductModel>();
 
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.Pid = int.Parse(Id);
@@ -121,9 +121,9 @@
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
-            if (item.Pid == product.Pid)
+            if (item.ProductId == product.Pid)
             {
-                amountInShoppingCart = item.Amount;
+                amountInShoppingCart = item.Cardinality;
             }
         }
 

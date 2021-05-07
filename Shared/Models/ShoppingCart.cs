@@ -2,11 +2,11 @@ namespace TrouvailleFrontend.Shared.Models {
     public class ShoppingCartItem {
 
         public ShoppingCartItem(int pid, int amount) {
-            this.Pid = pid;
-            this.Amount = amount;
+            this.ProductId = pid;
+            this.Cardinality = amount;
         }
 
-        public int Pid { get; set; }
-        public int Amount { get; set; }
+        public int ProductId { get; set; }
+        public int Cardinality { get; set; }
     }
 }

@@ -1,13 +1,24 @@
 @namespace TrouvailleFrontend.Components.Checkout
 
-<div class="adress">
-    <div class="land"></div>
-    <div class="post-code"></div>
-    <div class="city"></div>
-    <div class="street"></div>
-    <div class="street-number"></div>
+@using TrouvailleFrontend.Shared.Models
+
+@* TODO Check for value beign correct, bind address class *@
+
+<div class="address-container">
+    <h4 class="header">@AddressFor</h4>
+    <input class="country" type="text" @bind-value=AddressM.Country @bind-value:event="oninput" />
+    <input class="post-code" type="text" @bind-value=AddressM.PostalCode @bind-value:event="oninput" />
+    <input class="city" type="text" @bind-value=AddressM.CityName @bind-value:event="oninput" />
+    <input class="state" type="text" @bind-value=AddressM.State @bind-value:event="oninput" />
+    <input class="street" type="text" @bind-value=AddressM.Street @bind-value:event="oninput" />
+    <input class="street-number" type="text" @bind-value=AddressM.StreetNumber @bind-value:event="oninput" />
 </div>
 
 @code{
-
+    [Parameter]
+    public string AddressFor { get; set; }
+    [Parameter]
+    public AddressModel AddressM { get; set; }
+    [Parameter]
+    public EventCallback<AddressModel> AddressMChanged { get; set; }
 }

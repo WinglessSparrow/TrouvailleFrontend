@@ -14,7 +14,7 @@
 
         @if (_products != null)
         {
-            @foreach (Product p in _products)
+            @foreach (ProductModel p in _products)
             {
                 <ProductSmall product=p />
             }
@@ -38,7 +38,7 @@
 </div>
 
 @code{
-    private List<Product> _products;
+    private List<ProductModel> _products;
     private ProductsNumbers _numbers;
 
     private bool _nextButton = false;

@@ -11,8 +11,8 @@
 <div class="page">
     <div class="content">
         <div class="addresses">
-            <Address />
-            <Address />
+            <Address AddressFor="Billing Address" @bind-AddressM="_adresses[0]" />
+            <Address AddressFor="Delivery Address" @bind-AddressM="_adresses[1]" />
         </div>
         @* <div class="payment">
             </div>
@@ -29,6 +29,9 @@
 
 
 @code{
+    @* TODO: Theese will change, namely will be stored in LocalStorage *@
+    private AddressModel[] _adresses = {new AddressModel(), new AddressModel()};
+    @* TODO: *@
     private List<ShoppingCartItem> _products { get; set; }
     protected override async Task OnInitializedAsync()
     {
