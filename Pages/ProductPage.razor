@@ -1,13 +1,12 @@
 @page "/product/{Id}"
 
-@inject HttpClient Http
-@inject IJSRuntime JSRuntime
-@inject ILocalStorage localStorage;
+@using System.Collections.Generic
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Shared.Classes
 
-@using System.Net.Http.Headers;
-@using System.Collections.Generic;
-@using TrouvailleFrontend.Shared.Models;
-@using TrouvailleFrontend.Shared.Classes;
+@inject IJSRuntime JSRuntime
+@inject ILocalStorage localStorage
+@inject IHttpRequest httpRequest
 
 
 <div>
@@ -92,32 +91,23 @@
 
 
     protected override async Task OnInitializedAsync()
-    {
+    {   
+        Token token = new Token();
+        token.AuthToken = "293862934582983523958";
+        //await localStorage.SetStorageAsync<Token>("authToken", token);
 
-        //=========CUSTOM HEADER FOR AUTHENTIFICATION==================================================
-        var request = new HttpRequestMessage(HttpMethod.Get, "debugData/Product.json");
-
-        // add authorization header
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", "my-token");
-
-        // add custom http header
-        //request.Headers.Add("My-Custom-Header", "foobar");
-
-        // send request
-        using var httpResponse = await Http.SendAsync(request);
-
-        // convert http response data to UsersResponse object
-        product = await httpResponse.Content.ReadFromJsonAsync<Product>();
-
+        var response = await httpRequest.GetRequestAsync("debugData/Product.json");
+        product = await response.Content.ReadFromJsonAsync<Product>();
+        
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.Pid = int.Parse(Id);
-        
+
         //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
 
 
 
         //shoppingCart = await getSCfromLS();
-        
+
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
@@ -126,6 +116,8 @@
                 amountInShoppingCart = item.Amount;
             }
         }
+
+        var response1 = await httpRequest.PostRequestAsync("debugData/Product1.json", shoppingCart);
 
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace TrouvailleFrontend.Shared.Classes {
-    interface IProductIterator {
+    public interface IProductIterator {
         Task<List<Product>> GetNextProductsAsync();
         Task<List<Product>> GetPreviousProductsAsync();
         Task<List<Product>> GetProductIndexedAsync(int index);
