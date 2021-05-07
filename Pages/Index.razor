@@ -22,7 +22,7 @@
 
     </div>
     <div class="indexed-navigation">
-        <button @onclick="prev">prev</button>
+        <button @onclick="prev" disabled="@_prevButton">prev</button>
         <div class="page-numbers-container">
             @if (_numbers != null)
             {
@@ -33,13 +33,16 @@
                 }
             }
         </div>
-        <button @onclick="next">next</button>
+        <button @onclick="next" disabled="@_nextButton">next</button>
     </div>
 </div>
 
 @code{
     private List<Product> _products;
     private ProductsNumbers _numbers;
+
+    private bool _nextButton = false;
+    private bool _prevButton = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,19 +52,31 @@
 
     private async void next()
     {
-        _products = await iterator.GetNextProductsAsync();
+        var temp = await iterator.GetNextProductsAsync();
+
+        if (temp == null) _nextButton = true;
+        else _products = temp;
+
+        if (_prevButton) _prevButton = false;
         this.StateHasChanged();
     }
 
     private async void prev()
     {
-        _products = await iterator.GetPreviousProductsAsync();
+        var temp = await iterator.GetPreviousProductsAsync();
+
+        if (temp == null) _prevButton = true;
+        else _products = temp;
+
+        if (_nextButton) _nextButton = false;
         this.StateHasChanged();
     }
 
     private async void ChangeToIndex(int index)
     {
         _products = await iterator.GetProductIndexedAsync(index);
+        if (_nextButton) _nextButton = false;
+        if (_prevButton) _prevButton = false;
         this.StateHasChanged();
     }
 }
