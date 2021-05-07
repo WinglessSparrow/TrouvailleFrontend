@@ -11,6 +11,8 @@
 <div class="page">
     <div class="content">
 
+        @* TODO, make it work *@
+
         <EditForm Model="@_order" OnValidSubmit="PostOrder">
 
         </EditForm>
@@ -45,7 +47,7 @@
         _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
     }
 
-    protected override async Task PostData()
+    protected async Task PostOrder()
     {
     }
 }
