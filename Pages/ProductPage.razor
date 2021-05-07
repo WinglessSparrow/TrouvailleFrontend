@@ -58,7 +58,6 @@
     [Parameter]
     public string Id { get; set; }
 
-    //Only for test
 
     private Product product;
     private int amountInShoppingCart = 0;
@@ -92,9 +91,10 @@
 
     protected override async Task OnInitializedAsync()
     {   
+        //set Token
         Token token = new Token();
         token.AuthToken = "293862934582983523958";
-        //await localStorage.SetStorageAsync<Token>("authToken", token);
+        await localStorage.SetStorageAsync<Token>("authToken", token);
 
         var response = await httpRequest.GetRequestAsync("debugData/Product.json");
         product = await response.Content.ReadFromJsonAsync<Product>();
@@ -105,9 +105,6 @@
         //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
 
 
-
-        //shoppingCart = await getSCfromLS();
-
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
@@ -117,7 +114,8 @@
             }
         }
 
-        var response1 = await httpRequest.PostRequestAsync("debugData/Product1.json", shoppingCart);
+        //Post Request Example
+        var testResponse = await httpRequest.PostRequestAsync("debugData/PostExample", shoppingCart);
 
     }
 }

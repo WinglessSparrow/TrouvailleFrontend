@@ -40,7 +40,7 @@ namespace TrouvailleFrontend.Shared.Classes {
         }
 
 
-        public async Task DeleteStorageAsync(string key) {
+        public async Task RemoveStorageAsync(string key) {
             await _JSRuntime.InvokeAsync<string>("localStorage.removeItem", key);
         }
 
