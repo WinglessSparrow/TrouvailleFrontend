@@ -1,0 +1,24 @@
+.collapsable-container {
+  height: auto;
+
+  padding: 0;
+
+  border: solid 1px black;
+}
+
+.collapsable-container.collapse {
+  height: 0;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+
+  border: solid 1px black;
+}
+
+.button-wrapper > button {
+}
