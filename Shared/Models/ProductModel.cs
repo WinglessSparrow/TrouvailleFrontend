@@ -1,7 +1,7 @@
 
 namespace TrouvailleFrontend.Shared.Models
 {
-    public class Product
+    public class ProductModel
     {
         //Product Id
         public int Pid { get; set; }

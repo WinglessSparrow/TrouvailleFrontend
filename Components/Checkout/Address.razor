@@ -1,0 +1,45 @@
+@namespace TrouvailleFrontend.Components.Checkout
+
+@using TrouvailleFrontend.Shared.Models
+
+@* TODO Check for value beign correct, bind address class *@
+
+<div class="address-container">
+    <h4 class="header">@AddressFor</h4>
+    <InputSelect @bind-Value=AddressM.Country @bind-Value:event="oninput" class="country">
+        <option value="" selected disabled hidden>Select Your Country</option>
+        <option value="Germany">Germany</option>
+        <option value="Estonia">Estonia</option>
+        <option value="Great Britain">Great Britain</option>
+        <option value="USA">USA</option>
+        <option value="Polland">Polland</option>
+    </InputSelect>
+    <InputNumber @bind-Value=AddressM.PostalCode @bind-Value:event="oninput" class="post-code" placeholder="Postal"/>
+    <InputText @bind-Value=AddressM.CityName @bind-Value:event="oninput" class="city" placeholder="City" />
+    <InputText @bind-Value=AddressM.State @bind-Value:event="oninput" class="state" placeholder="State" />
+    <InputText @bind-Value=AddressM.Street @bind-Value:event="oninput" class="street" placeholder="Street" />
+    <InputNumber @bind-Value=AddressM.StreetNumber @bind-Value:event="oninput" class="street-number"
+        placeholder="Str. Nr." />
+</div>
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+@code{
+    [Parameter]
+    public string AddressFor { get; set; }
+    [Parameter]
+    public AddressModel AddressM { get; set; }
+    [Parameter]
+    public EventCallback<AddressModel> AddressMChanged { get; set; }
+}

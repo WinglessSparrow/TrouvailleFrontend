@@ -4,10 +4,10 @@
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes
 
+
 @inject IJSRuntime JSRuntime
 @inject ILocalStorage localStorage
 @inject IHttpRequest httpRequest
-
 
 <div>
     <div class="product">
@@ -59,11 +59,11 @@
     public string Id { get; set; }
 
 
-    private Product product;
+    private ProductModel product;
     private int amountInShoppingCart = 0;
     public int Amount { get; set; } = 1;
 
-    List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
+    List<ShoppingCartItemModel> shoppingCart = new List<ShoppingCartItemModel>();
 
 
     public async void addToCart()
@@ -71,20 +71,20 @@
         bool alreadyInShoppingCart = false;
         foreach (var item in shoppingCart)
         {
-            if (item.Pid == product.Pid)
+            if (item.ProductId == product.Pid)
             {
                 alreadyInShoppingCart = true;
-                item.Amount += Amount;
-                amountInShoppingCart = item.Amount;
+                item.Cardinality += Amount;
+                amountInShoppingCart = item.Cardinality;
             }
         }
         if (!alreadyInShoppingCart)
         {
-            shoppingCart.Add(new ShoppingCartItem(product.Pid, Amount));
+            shoppingCart.Add(new ShoppingCartItemModel(){ProductId = product.Pid, Cardinality = Amount});
             amountInShoppingCart += Amount;
         }
 
-        await localStorage.SetStorageAsync<List<ShoppingCartItem>>("shoppingCart", shoppingCart);
+        await localStorage.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", shoppingCart);
 
     }
 
@@ -102,20 +102,16 @@
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.Pid = int.Parse(Id);
 
-        //=====END CUSTOM HEADER FOR AUTHENTIFICATION==================================================
-
-
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
-            if (item.Pid == product.Pid)
+            if (item.ProductId == product.Pid)
             {
-                amountInShoppingCart = item.Amount;
+                amountInShoppingCart = item.Cardinality;
             }
         }
 
         //Post Request Example
         var testResponse = await httpRequest.PostRequestAsync("debugData/PostExample", shoppingCart);
-
     }
 }

@@ -28,9 +28,10 @@
 
 @code{
     [ParameterAttribute]
-    public Product product { get; set; }
+    public ProductModel product { get; set; }
 
-    private void Do(){
+    private void Do()
+    {
         NavMan.NavigateTo($"/product/{product.Pid}");
     }
 }

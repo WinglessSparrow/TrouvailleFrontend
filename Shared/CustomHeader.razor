@@ -8,7 +8,7 @@
             <input type="text" style="width: 70%;">
         </div>
         <div class="variable-icons center-flex">
-            <div class="shoping-cart">shoping</div>
+            <a class="shoping-cart" href="/checkout">shoping-cart</a>
             @if (Token != null)
             {
                 <div class="username">user</div>
@@ -28,7 +28,8 @@
     [ParameterAttribute]
     public string Token { get; set; }
 
-    private void ToMain(){
+    private void ToMain()
+    {
         NavMan.NavigateTo("/");
     }
 }
