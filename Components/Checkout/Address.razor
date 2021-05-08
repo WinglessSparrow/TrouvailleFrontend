@@ -6,7 +6,7 @@
 
 <div class="address-container">
     <h4 class="header">@AddressFor</h4>
-    <InputSelect @bind-Value=AddressM.Country @bind-Value:event="oninput" class="country">
+    <InputSelect @bind-Value=AddressM.Country @bind-Value-oniput="AddressM.Country" class="country">
         <option value="" selected disabled hidden>Select Your Country</option>
         <option value="Germany">Germany</option>
         <option value="Estonia">Estonia</option>
@@ -14,13 +14,15 @@
         <option value="USA">USA</option>
         <option value="Polland">Polland</option>
     </InputSelect>
-    <InputNumber @bind-Value=AddressM.PostalCode @bind-Value:event="oninput" class="post-code" placeholder="Postal"/>
-    <InputText @bind-Value=AddressM.CityName @bind-Value:event="oninput" class="city" placeholder="City" />
-    <InputText @bind-Value=AddressM.State @bind-Value:event="oninput" class="state" placeholder="State" />
-    <InputText @bind-Value=AddressM.Street @bind-Value:event="oninput" class="street" placeholder="Street" />
-    <InputNumber @bind-Value=AddressM.StreetNumber @bind-Value:event="oninput" class="street-number"
+    <InputNumber @bind-Value=AddressM.PostalCode @bind-Value-oniput="AddressM.PostalCode" class="post-code"
+        placeholder="Postal" />
+    <InputText @bind-Value="AddressM.CityName" @bind-Value-oniput="AddressM.CityName" class="city" placeholder="City" />
+    <InputText @bind-Value=AddressM.State @bind-Value-oniput="AddressM.State" class="state" placeholder="State" />
+    <InputText @bind-Value=AddressM.Street @bind-Value-oniput="AddressM.Street" class="street" placeholder="Street" />
+    <InputNumber @bind-Value=AddressM.StreetNumber @bind-Value-oniput="AddressM.StreetNumber" class="street-number"
         placeholder="Str. Nr." />
 </div>
+
 
 <style>
     input::-webkit-outer-spin-button,

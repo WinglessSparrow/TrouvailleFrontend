@@ -14,16 +14,22 @@
         @* TODO, make it work *@
 
         <EditForm Model="@_order" OnValidSubmit="PostOrder">
-            <div class="addresses">
-                <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
-                <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
-            </div>
-            <div class="payment">
-            </div>
-            <div class="sent-methode">
-            </div>
-            <div class="products-view">
-            </div>
+            @* <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="addresses"> *@
+            @* <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" /> *@
+            <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
+            @* </div>
+                <div class="payment">
+                </div>
+                <div class="sent-methode">
+                </div>
+                <div class="products-view">
+                </div>*@
+            <button type="submit">gg</button>
+            @* <InputText @bind-Value="_order.DeliveryAddress.CityName" @bind-Value:event="oninput"/> *@
+            @* <InputText @bind-Value="_order.DeliveryAddress.CityName"
+                @bind-Value-oninput="_order.DeliveryAddress.CityName"/> *@
         </EditForm>
     </div>
     <div class="side-menu">
@@ -33,19 +39,16 @@
 
 
 @code{
+    @* public EventCallback<AddressModel> AddressMChanged { get; set; } *@
 
-    private OrderModel _order = new OrderModel();
-
-
+    private OrderModel _order = new();
     private List<ShoppingCartItemModel> _products { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
     }
-
     protected async Task PostOrder()
     {
-        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        Console.WriteLine(_order.DeliveryAddress);
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class OrderModel {
