@@ -11,25 +11,29 @@
 <div class="page">
     <div class="content">
 
-        @* TODO, make it work *@
-
         <EditForm Model="@_order" OnValidSubmit="PostOrder">
-            @* <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="addresses"> *@
-            @* <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" /> *@
-            <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
+            <DataAnnotationsValidator />
+
+            <div class="addresses">
+                <div class="addresses-input-wrapper">
+                    <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+                    <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
+                        IsDisabled=@IsDeliverySameInvoice />
+                </div>
+                <label for="address-equal-chck">
+                    <InputCheckbox id="address-equal-chck" @bind-Value=IsDeliverySameInvoice />
+                    Delivery address same as Invoivce address
+                </label>
+            </div>
+
+            <Payment @bind-PaymentMethod=_order.PaymentMethod />
+
+            <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
+
             @* </div>
-                <div class="payment">
-                </div>
-                <div class="sent-methode">
-                </div>
                 <div class="products-view">
                 </div>*@
-            <button type="submit">gg</button>
-            @* <InputText @bind-Value="_order.DeliveryAddress.CityName" @bind-Value:event="oninput"/> *@
-            @* <InputText @bind-Value="_order.DeliveryAddress.CityName"
-                @bind-Value-oninput="_order.DeliveryAddress.CityName"/> *@
+            @* <button type="submit">gg</button> *@
         </EditForm>
     </div>
     <div class="side-menu">
@@ -41,6 +45,8 @@
 @code{
     @* public EventCallback<AddressModel> AddressMChanged { get; set; } *@
 
+    public bool IsDeliverySameInvoice { get; set; } = true;
+
     private OrderModel _order = new();
     private List<ShoppingCartItemModel> _products { get; set; }
     protected override async Task OnInitializedAsync()
@@ -49,6 +55,8 @@
     }
     protected async Task PostOrder()
     {
+        //TODO if IsDeliverySameInvoice => delivery = invoice
+        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         Console.WriteLine(_order.DeliveryAddress);
     }
 }

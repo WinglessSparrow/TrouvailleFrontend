@@ -16,7 +16,7 @@ namespace TrouvailleFrontend.Shared.Models {
         [StringLength(50, MinimumLength = 3, ErrorMessage = "City Name too long")]
         public string CityName { get; set; }
         [Required]
-        [StringLength(3, ErrorMessage = "Street Name too long")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Street Name too long")]
         public string Street { get; set; }
         [Required]
         [Range(10000, 99999, ErrorMessage = "Postal Code must be 5 characters")]

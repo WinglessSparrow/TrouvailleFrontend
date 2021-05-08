@@ -4,10 +4,10 @@
 
 
 <div class="radio-group-container">
-    <h4>Payment Method</h4>
+    <h4>Shipping Method</h4>
     <div class="radio-container">
-        <InputRadioGroup @bind-Value=PaymentMethod>
-            @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
+        <InputRadioGroup @bind-Value=ShippingMethod>
+            @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
             {
                 <div class="radio-wraper">
                     <InputRadio id="@method" Value="@method" />
@@ -20,7 +20,7 @@
 
 @code{
     [Parameter]
-    public PaymentMethod PaymentMethod { get; set; }
+    public ShipmentMethod ShippingMethod { get; set; }
     [Parameter]
-    public EventCallback<PaymentMethod> PaymentMethodChanged { get; set; }
+    public EventCallback<ShipmentMethod> ShippingMethodChanged { get; set; }
 }
