@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace TrouvailleFrontend.Shared.Classes {
     public interface IProductIterator {
-        Task<List<Product>> GetNextProductsAsync();
-        Task<List<Product>> GetPreviousProductsAsync();
-        Task<List<Product>> GetProductIndexedAsync(int index);
-        Task<ProductsNumbers> GetProductNumbersAsync();
+        Task<List<ProductModel>> GetNextProductsAsync();
+        Task<List<ProductModel>> GetPreviousProductsAsync();
+        Task<List<ProductModel>> GetProductIndexedAsync(int index);
+        Task<ProductsNumbersModel> GetProductNumbersAsync();
     }
 }

@@ -97,12 +97,12 @@
         await localStorage.SetStorageAsync<Token>("authToken", token);
 
         var response = await httpRequest.GetRequestAsync("debugData/Product.json");
-        product = await response.Content.ReadFromJsonAsync<Product>();
+        product = await response.Content.ReadFromJsonAsync<ProductModel>();
         
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.Pid = int.Parse(Id);
 
-        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItem>>("shoppingCart");
+        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
             if (item.ProductId == product.Pid)
