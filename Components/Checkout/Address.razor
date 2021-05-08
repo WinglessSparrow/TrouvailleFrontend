@@ -6,13 +6,34 @@
 
 <div class="address-container">
     <h4 class="header">@AddressFor</h4>
-    <input class="country" type="text" @bind-value=AddressM.Country @bind-value:event="oninput" />
-    <input class="post-code" type="text" @bind-value=AddressM.PostalCode @bind-value:event="oninput" />
-    <input class="city" type="text" @bind-value=AddressM.CityName @bind-value:event="oninput" />
-    <input class="state" type="text" @bind-value=AddressM.State @bind-value:event="oninput" />
-    <input class="street" type="text" @bind-value=AddressM.Street @bind-value:event="oninput" />
-    <input class="street-number" type="text" @bind-value=AddressM.StreetNumber @bind-value:event="oninput" />
+    <InputSelect @bind-Value=AddressM.Country @bind-Value:event="oninput" class="country">
+        <option value="" selected disabled hidden>Select Your Country</option>
+        <option value="Germany">Germany</option>
+        <option value="Estonia">Estonia</option>
+        <option value="Great Britain">Great Britain</option>
+        <option value="USA">USA</option>
+        <option value="Polland">Polland</option>
+    </InputSelect>
+    <InputNumber @bind-Value=AddressM.PostalCode @bind-Value:event="oninput" class="post-code" placeholder="Postal"/>
+    <InputText @bind-Value=AddressM.CityName @bind-Value:event="oninput" class="city" placeholder="City" />
+    <InputText @bind-Value=AddressM.State @bind-Value:event="oninput" class="state" placeholder="State" />
+    <InputText @bind-Value=AddressM.Street @bind-Value:event="oninput" class="street" placeholder="Street" />
+    <InputNumber @bind-Value=AddressM.StreetNumber @bind-Value:event="oninput" class="street-number"
+        placeholder="Str. Nr." />
 </div>
+
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 
 @code{
     [Parameter]

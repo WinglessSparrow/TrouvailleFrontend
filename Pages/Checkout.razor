@@ -14,20 +14,17 @@
         @* TODO, make it work *@
 
         <EditForm Model="@_order" OnValidSubmit="PostOrder">
-
-        </EditForm>
-
-        <div class="addresses">
-            <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
-            <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
-        </div>
-        @* <div class="payment">
+            <div class="addresses">
+                <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+                <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
+            </div>
+            <div class="payment">
             </div>
             <div class="sent-methode">
             </div>
             <div class="products-view">
-            </div> *@
-
+            </div>
+        </EditForm>
     </div>
     <div class="side-menu">
         @* <div class="sticky-container"></div> *@
@@ -37,7 +34,7 @@
 
 @code{
 
-    private OrderModel _order;
+    private OrderModel _order = new OrderModel();
 
 
     private List<ShoppingCartItemModel> _products { get; set; }
@@ -49,5 +46,6 @@
 
     protected async Task PostOrder()
     {
+        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
     }
 }

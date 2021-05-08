@@ -82,7 +82,7 @@
         }
         if (!alreadyInShoppingCart)
         {
-            shoppingCart.Add(new ShoppingCartItemModel(product.Pid, Amount));
+            shoppingCart.Add(new ShoppingCartItemModel(){ProductId = product.Pid, Cardinality = Amount});
             amountInShoppingCart += Amount;
         }
 
