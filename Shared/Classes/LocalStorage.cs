@@ -4,27 +4,20 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace TrouvailleFrontend.Shared.Classes
-{
-    public class LocalStorage : ILocalStorage
-    {
+namespace TrouvailleFrontend.Shared.Classes {
+    public class LocalStorage : ILocalStorage {
         private IJSRuntime _JSRuntime;
-        public LocalStorage(IJSRuntime JSRuntime)
-        {
+        public LocalStorage(IJSRuntime JSRuntime) {
             _JSRuntime = JSRuntime;
         }
 
-        public async Task<T> GetStorageAsync<T>(string key)
-        {
+        public async Task<T> GetStorageAsync<T>(string key) {
 
             T _localStorage;
             var jsonString = await _JSRuntime.InvokeAsync<string>("localStorage.getItem", key);
-            if (jsonString == null)
-            {
-                if (typeof(T).IsGenericType)
-                {
-                    if (typeof(T).GetGenericTypeDefinition() == typeof(List<>))
-                    {
+            if (jsonString == null) {
+                if (typeof(T).IsGenericType) {
+                    if (typeof(T).GetGenericTypeDefinition() == typeof(List<>)) {
                         //await _JSRuntime.InvokeAsync<string>("console.log", "TYPE: LIST");
                         jsonString = "[]";
                     }
@@ -41,14 +34,13 @@ namespace TrouvailleFrontend.Shared.Classes
         }
 
 
-        public async Task SetStorageAsync<T>(string key, T value)
-        {
+        public async Task SetStorageAsync<T>(string key, T value) {
 
             await _JSRuntime.InvokeAsync<string>("localStorage.setItem", key, JsonSerializer.Serialize(value));
         }
 
 
-        public async Task DeleteStorageAsync(string key) {
+        public async Task RemoveStorageAsync(string key) {
             await _JSRuntime.InvokeAsync<string>("localStorage.removeItem", key);
         }
 

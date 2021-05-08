@@ -17,7 +17,9 @@ namespace TrouvailleFrontend {
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddSingleton<ILocalStorage, LocalStorage>();
+            builder.Services.AddTransient<ILocalStorage, LocalStorage>();
+            builder.Services.AddTransient<IHttpRequest, HttpRequest>();
+
             builder.Services.AddTransient<IProductIterator, ProductsIterator>();
 
             await builder.Build().RunAsync();
