@@ -6,7 +6,7 @@
 @using System.Net.Http
 
 @inject ILocalStorage local
-@inject HttpClient http
+@inject IProductsRetriever productsRetriever
 
 <div class="page">
     <div class="content">
@@ -30,7 +30,7 @@
 
             <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
 
-            <CHProductsOverview />
+            <CHProductsOverview Products=@_products ItemData=@_cartItems />
         </EditForm>
     </div>
     <div class="side-menu">
@@ -48,15 +48,17 @@
     public bool IsDeliverySameInvoice { get; set; } = true;
 
     private OrderModel _order = new();
-    private List<ShoppingCartItemModel> _products { get; set; }
+    private List<ShoppingCartItemModel> _cartItems { get; set; }
+    private List<ProductModel> _products { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
     }
     protected async Task PostOrder()
     {
         //TODO if IsDeliverySameInvoice => delivery = invoice
-        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         Console.WriteLine(_order.DeliveryAddress);
     }
 }

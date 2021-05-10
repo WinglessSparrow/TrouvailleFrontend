@@ -3,8 +3,14 @@
 @using TrouvailleFrontend.Shared.Models
 
 <CollapseAccordion Name="Products Overview">
-    @for(int i = 0; i < Products.Count; i++){
-        <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock Cardinality=@ItemData[i].Cardinality />
+    @if (Products != null && ItemData != null)
+    {
+
+        @for (int i = 0; i < ItemData.Count(); i++)
+        {
+            <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock
+        Cardinality=@ItemData[i].Cardinality />
+        }
     }
 </CollapseAccordion>
 
@@ -13,4 +19,10 @@
     public List<ProductModel> Products { get; set; }
     [Parameter]
     public List<ShoppingCartItemModel> ItemData { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine(Products);
+        Console.WriteLine(ItemData);
+    }
 }
