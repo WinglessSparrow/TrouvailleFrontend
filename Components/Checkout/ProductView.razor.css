@@ -15,6 +15,7 @@
   margin-bottom: 10px;
 
   width: 100%;
+  transition: 1s;
 }
 
 .product-view > * {
@@ -22,7 +23,7 @@
   justify-content: center;
   align-items: center;
 
-  height: 100%;
+  height: auto;
 
   border: solid 2px red;
 }

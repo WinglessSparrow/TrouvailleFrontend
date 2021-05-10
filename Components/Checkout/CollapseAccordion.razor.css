@@ -1,13 +1,17 @@
 .collapsable-container {
-  height: auto;
+  /* height: auto; */
 
   padding: 0;
 
   border: solid 1px black;
+  animation-name: expand;
+  animation-duration: 1s;
 }
 
-.collapsable-container.collapse {
-  height: 0;
+.collapse {
+  /* height: 0; */
+  animation-name: collapse;
+  animation-duration: 1s;
 }
 
 .button-wrapper {
@@ -20,5 +24,21 @@
   border: solid 1px black;
 }
 
-.button-wrapper > button {
+/* WHY DONT YOU WORK!?!??!!??! */
+@keyframes collapse {
+  from {
+    height: auto;
+  }
+  to {
+    height: 0%;
+  }
+}
+
+@keyframes expand {
+  from {
+    height: 0%;
+  }
+  to {
+    height: auto;
+  }
 }
