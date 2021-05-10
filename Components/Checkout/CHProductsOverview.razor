@@ -1,9 +1,16 @@
 @namespace TrouvailleFrontend.Components.Checkout
 
+@using TrouvailleFrontend.Shared.Models
+
 <CollapseAccordion Name="Products Overview">
-    <p>here be products, I swear</p>
+    @for(int i = 0; i < Products.Count; i++){
+        <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock Cardinality=@ItemData[i].Cardinality />
+    }
 </CollapseAccordion>
 
 @code{
-
+    [Parameter]
+    public List<ProductModel> Products { get; set; }
+    [Parameter]
+    public List<ShoppingCartItemModel> ItemData { get; set; }
 }

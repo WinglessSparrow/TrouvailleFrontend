@@ -1,3 +1,7 @@
+.content{
+  padding: 0;
+}
+
 .page {
   display: grid;
   grid-template-columns: 4fr 1fr;

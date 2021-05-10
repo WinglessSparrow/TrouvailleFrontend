@@ -1,0 +1,30 @@
+@namespace TrouvailleFrontend.Components.Checkout
+
+@using TrouvailleFrontend.Shared.Models
+
+<div class="product-view">
+    <img src="assets/svg/trouvailleLogoBucketMinimized.svg" alt="image error" class="image">
+    <div class="name">
+        <p>@Name</p>
+    </div>
+    <div class="stock">
+        <p>@Stock</p>
+    </div>
+    <div class="price">
+        <p>@Price</p>
+    </div>
+    <div class="cardinality">
+        <p>@Cardinality</p>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public string Name { get; set; } = "sd;oajdjasjkspojkajdjsaopjfsajfposdajpofkdspojopdsjpogjksdpofkj";
+    [Parameter]
+    public int Stock { get; set; }
+    [Parameter]
+    public double Price { get; set; }
+    [Parameter]
+    public int Cardinality { get; set; }
+}
