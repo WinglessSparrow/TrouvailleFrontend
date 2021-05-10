@@ -2,11 +2,13 @@
 
 @using TrouvailleFrontend.Shared.Models
 
+@* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
+
 <div>
     <CollapseAccordion Name="Products Overview">
         @if (Products != null && ItemData != null)
         {
-            @for (int i = 0; i < ItemData.Count(); i++)
+            @for (int i = 0; i < Products.Count(); i++)
             {
                 <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock
             Cardinality=@ItemData[i].Cardinality />

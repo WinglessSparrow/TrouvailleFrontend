@@ -7,11 +7,10 @@ using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes {
     public class ProductsRetriever : IProductsRetriever {
+        private HttpClient _http;
 
-        private IProductIterator _iterator;
-
-        public ProductsRetriever(IProductIterator iterator) {
-            _iterator = iterator;
+        public ProductsRetriever(HttpClient http) {
+            _http = http;
         }
 
         public async Task<List<ProductModel>> GetProductsByIdAsync(List<ShoppingCartItemModel> items) {
@@ -19,13 +18,21 @@ namespace TrouvailleFrontend.Shared.Classes {
             //use this when API actually does what it should
             // var response = await _http.PostRequestAsync<List<int>>("", CreateListOfId(items));
             // var output = response.Content.ReadFromJsonAsync<List<ProductModel>>();
-            // return await output;
+            // return await _iterator.GetNextProductsAsync();
 
-            foreach (ShoppingCartItemModel shpm in items) {
-                Console.WriteLine($"{shpm.Cardinality} + {shpm.ProductId};");
+            List<ProductModel> allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
+            List<ProductModel> outputProducts = new();
+
+            foreach (ProductModel p in allProducts) {
+                foreach (ShoppingCartItemModel shmp in items) {
+                    if (p.Pid == shmp.ProductId) {
+                        outputProducts.Add(p);
+                        break;
+                    }
+                }
             }
 
-            return await _iterator.GetNextProductsAsync();
+            return outputProducts;
         }
 
         private List<int> CreateListOfId(List<ShoppingCartItemModel> scItems) {
