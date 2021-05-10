@@ -5,7 +5,7 @@
   justify-content: flex-start;
   align-items: center; */
 
-  grid-template-columns: 0.3fr minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  grid-template-columns: 0.3fr minmax(0, 2fr) minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
 
   gap: 30px;
 
@@ -15,7 +15,6 @@
   margin-bottom: 10px;
 
   width: 100%;
-  transition: 1s;
 }
 
 .product-view > * {
@@ -30,11 +29,12 @@
 
 p {
   margin: 0;
+
   width: 100%;
+
   text-align: center;
-  white-space: nowrap;
-  overflow-y: clip;
-  text-overflow: ellipsis;
+
+  /* font-size: 1.2rem; */
 }
 
 img {
@@ -53,16 +53,20 @@ img {
 .name {
   grid-column: 2;
   font-size: 1.5rem;
-}
 
-.stock {
-  grid-column: 3;
+  white-space: nowrap;
+  overflow-y: clip;
+  text-overflow: ellipsis;
 }
 
 .price {
-  grid-column: 4;
+  grid-column: 3 / 4;
 }
 
 .cardinality {
+  grid-column: 4;
+}
+
+.stock {
   grid-column: 5;
 }

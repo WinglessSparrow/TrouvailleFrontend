@@ -7,6 +7,7 @@
 
 @inject ILocalStorage local
 @inject IProductsRetriever productsRetriever
+@inject IHttpRequest http
 
 <div class="page">
     <div class="content">
@@ -18,10 +19,10 @@
                 <div class="addresses-input-wrapper">
                     <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
                     <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
-                        IsDisabled=@IsDeliverySameInvoice />
+                        IsDisabled=@_isDeliverySameInvoice />
                 </div>
                 <label for="address-equal-chck">
-                    <InputCheckbox id="address-equal-chck" @bind-Value=IsDeliverySameInvoice />
+                    <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice />
                     Delivery address same as Invoivce address
                 </label>
             </div>
@@ -31,34 +32,36 @@
             <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
 
             <CHProductsOverview Products=@_products ItemData=@_cartItems />
+
         </EditForm>
+
+
     </div>
     <div class="side-menu">
         @* <div class="sticky-container"></div> *@
     </div>
 </div>
 
-
-@* TODO, GET ITEMS FROM SHOPING CART / SHOW ERROR WHEN NO ITEMS IN IT! *@
 @* TODO ERROR SYSTEM *@
 
 @code{
-    @* public EventCallback<AddressModel> AddressMChanged { get; set; } *@
-
-    public bool IsDeliverySameInvoice { get; set; } = true;
-
+    private bool _isDeliverySameInvoice = true;
     private OrderModel _order = new();
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
     protected override async Task OnInitializedAsync()
     {
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        //TODO this right here is bullshit, because it doesn't get anything
         _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
     }
     protected async Task PostOrder()
     {
+        //TODO Post over HttpRequest
         //TODO if IsDeliverySameInvoice => delivery = invoice
-        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        Console.WriteLine(_order.DeliveryAddress);
+
+        if (_isDeliverySameInvoice) _order.DeliveryAddress = _order.InvoiceAddress;
+        _order.Products = _cartItems;
+        var response = await http.PostRequestAsync<OrderModel>("", _order);
     }
 }

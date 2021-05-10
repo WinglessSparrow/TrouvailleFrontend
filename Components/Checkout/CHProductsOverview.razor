@@ -2,27 +2,41 @@
 
 @using TrouvailleFrontend.Shared.Models
 
-<CollapseAccordion Name="Products Overview">
-    @if (Products != null && ItemData != null)
-    {
-
-        @for (int i = 0; i < ItemData.Count(); i++)
+<div>
+    <CollapseAccordion Name="Products Overview">
+        @if (Products != null && ItemData != null)
         {
-            <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock
-        Cardinality=@ItemData[i].Cardinality />
+            @for (int i = 0; i < ItemData.Count(); i++)
+            {
+                <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].Stock
+            Cardinality=@ItemData[i].Cardinality />
+            }
         }
-    }
-</CollapseAccordion>
+    </CollapseAccordion>
+    <div class="products-overview-under">
+        <div class="total">
+            <p>Total: @_totalPrice</p>
+        </div>
+    </div>
+</div>
 
 @code{
+    private string _totalPrice;
+
     [Parameter]
     public List<ProductModel> Products { get; set; }
     [Parameter]
     public List<ShoppingCartItemModel> ItemData { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
-        Console.WriteLine(Products);
-        Console.WriteLine(ItemData);
+        double tempTotal = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (ItemData != null) tempTotal += ItemData[i].Cardinality * Products[i].Price;
+        }
+
+        _totalPrice = String.Format("{0:C}", tempTotal);
     }
 }

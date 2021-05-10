@@ -5,18 +5,21 @@
     <div class="name">
         <p>@Name</p>
     </div>
-    <div class="stock">
-        <p>@Stock</p>
-    </div>
     <div class="price">
-        <p>@Price</p>
+        <p>Price: @_priceCalculated <br /><sub>per item: @_price</sub></p>
     </div>
     <div class="cardinality">
-        <p>@Cardinality</p>
+        <p>Shopping cart: @Cardinality</p>
+    </div>
+    <div class="stock">
+        <p>Stock: @Stock</p>
     </div>
 </div>
 
 @code{
+    private string _priceCalculated;
+    private string _price;
+
     [Parameter]
     public string Name { get; set; }
     [Parameter]
@@ -25,4 +28,10 @@
     public double Price { get; set; }
     [Parameter]
     public int Cardinality { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _priceCalculated = String.Format("{0:C}", Price * Cardinality);
+        _price = String.Format("{0:C}", Price);
+    }
 }

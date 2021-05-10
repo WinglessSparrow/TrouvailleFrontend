@@ -1,0 +1,19 @@
+.products-overview-under {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+
+  height: 50px;
+  width: 20%;
+
+  border: solid 2px red;
+}
+
+p {
+  margin: 0;
+}

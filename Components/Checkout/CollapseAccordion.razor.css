@@ -1,17 +1,17 @@
 .collapsable-container {
-  /* height: auto; */
+  height: auto;
 
   padding: 0;
 
   border: solid 1px black;
-  animation-name: expand;
-  animation-duration: 1s;
+  /* animation-name: expand; */
+  /* animation-duration: 1s; */
 }
 
 .collapse {
-  /* height: 0; */
-  animation-name: collapse;
-  animation-duration: 1s;
+  height: 0;
+  /* animation-name: collapse; */
+  /* animation-duration: 1s; */
 }
 
 .button-wrapper {
