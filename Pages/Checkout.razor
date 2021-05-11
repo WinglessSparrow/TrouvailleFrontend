@@ -11,7 +11,6 @@
 
 <div class="page">
     <div class="content">
-
         <EditForm id="order-form" Model="@_order" OnValidSubmit="PostOrder">
             <DataAnnotationsValidator />
 
@@ -27,9 +26,37 @@
                 </label>
             </div>
 
-            <Payment @bind-PaymentMethod=_order.PaymentMethod />
+            <div class="radio-group-container">
+                <h4>Payment Method</h4>
+                <div class="radio-container">
+                    <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
+                        @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
+                        {
+                            var temp = method;
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
+                                <label for=@temp>@temp</label>
+                            </div>
+                        }
+                    </InputRadioGroup>
+                </div>
+            </div>
 
-            <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
+            <div class="radio-group-container">
+                <h4>Shipping Method</h4>
+                <div class="radio-container">
+                    <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
+                        @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
+                        {
+                            var temp = method;
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
+                                <label for=@temp>@temp</label>
+                            </div>
+                        }
+                    </InputRadioGroup>
+                </div>
+            </div>
 
             <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
         </EditForm>
@@ -59,11 +86,10 @@
         {
             _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
 
-            double tax = _products[i].Vat / 100;
+            double tax = ((double)_products[i].Vat) / 100.0;
             _totalPriceWithoutTax += (_products[i].Price - tax) * _cartItems[i].Cardinality;
         }
     }
-
     protected async Task PostOrder()
     {
         //TODO Post over HttpRequest

@@ -20,12 +20,12 @@ namespace TrouvailleFrontend.Shared.Classes {
             // var output = response.Content.ReadFromJsonAsync<List<ProductModel>>();
             // return await _iterator.GetNextProductsAsync();
 
-            List<ProductModel> allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
-            List<ProductModel> outputProducts = new();
+            var allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
+            var outputProducts = new List<ProductModel>();
 
             foreach (ProductModel p in allProducts) {
 
-                Console.WriteLine("Tax: " + p.Vat);
+                Console.WriteLine("Vat: " + p.Vat);
 
                 foreach (ShoppingCartItemModel shmp in items) {
                     if (p.Pid == shmp.ProductId) {

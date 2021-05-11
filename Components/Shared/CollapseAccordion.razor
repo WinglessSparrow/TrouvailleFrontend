@@ -2,7 +2,7 @@
 <div>
     <div class="button-wrapper">
         <h4>@Name</h4>
-        <button @onclick="Collpase" type="button">expand</button>
+        <button @onclick="Collpase" type="button">@(_isCollapsed ? "expand" : "collapse")</button>
     </div>
     <div class='collapsable-container @(_isCollapsed ? "collapse" : "")'>@ChildContent</div>
 </div>
