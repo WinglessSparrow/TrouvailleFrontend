@@ -1,0 +1,21 @@
+@namespace TrouvailleFrontend.Components.Shared
+<div>
+    <div class="button-wrapper">
+        <h4>@Name</h4>
+        <button @onclick="Collpase" type="button">@(_isCollapsed ? "expand" : "collapse")</button>
+    </div>
+    <div class='collapsable-container @(_isCollapsed ? "collapse" : "")'>@ChildContent</div>
+</div>
+
+@code{
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Name { get; set; } = "Collapseable Accordion";
+    private bool _isCollapsed = true;
+    private void Collpase()
+    {
+        _isCollapsed = !_isCollapsed;
+    }
+}
