@@ -24,11 +24,8 @@ namespace TrouvailleFrontend.Shared.Classes {
             var outputProducts = new List<ProductModel>();
 
             foreach (ProductModel p in allProducts) {
-
-                Console.WriteLine("Vat: " + p.Vat);
-
                 foreach (ShoppingCartItemModel shmp in items) {
-                    if (p.Pid == shmp.ProductId) {
+                    if (p.ProductId == shmp.ProductId) {
                         outputProducts.Add(p);
                         break;
                     }

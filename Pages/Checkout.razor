@@ -2,17 +2,22 @@
 
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes
+@using TrouvailleFrontend.Shared.Enums
 @using TrouvailleFrontend.Components.Checkout
 @using TrouvailleFrontend.Components.Shared
 
 @inject ILocalStorage local
 @inject IProductsRetriever productsRetriever
 @inject IHttpRequest http
+@inject NavigationManager navMan
 
 <div class="page">
     <div class="content">
-        <EditForm id="order-form" Model="@_order" OnValidSubmit="PostOrder">
-            <DataAnnotationsValidator />
+        @* <EditForm id="order-form" Model=@_order OnValidSubmit="PostOrder"> *@
+        <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder"
+            OnInvalidSubmit=@(()=>{Console.WriteLine("Test");})>
+            @* <DataAnnotationsValidator /> *@
+            <ObjectGraphDataAnnotationsValidator />
 
             <div class="addresses">
                 <div class="addresses-input-wrapper">
@@ -21,7 +26,7 @@
                         IsDisabled=@_isDeliverySameInvoice />
                 </div>
                 <label for="address-equal-chck">
-                    <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice />
+                    <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
                     Delivery address same as Invoivce address
                 </label>
             </div>
@@ -71,12 +76,19 @@
 @* TODO ERROR SYSTEM *@
 
 @code{
+    private EditContext _eContext;
     private double _totalPriceWithoutTax;
     private double _totalPrice;
-    private bool _isDeliverySameInvoice = true;
-    private OrderModel _order = new();
+    private bool _isDeliverySameInvoice = false;
+    private OrderModel _order;
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
+
+    private void SetDelivery()
+    {
+        _order.DeliveryAddress = (!_isDeliverySameInvoice) ? _order.InvoiceAddress : new AddressModel();
+        this.StateHasChanged();
+    }
     protected override async Task OnInitializedAsync()
     {
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
@@ -86,25 +98,29 @@
         {
             _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
 
-            double tax = ((double)_products[i].Vat) / 100.0;
-            _totalPriceWithoutTax += (_products[i].Price - tax) * _cartItems[i].Cardinality;
+            //calculating tax
+            double tax = ((double)_products[i].Tax) / 100.0;
+            _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
         }
     }
+
+    protected override void OnInitialized()
+    {
+        _order = new();
+        _eContext = new(_order);
+    }
+
     protected async Task PostOrder()
     {
-        //TODO Post over HttpRequest
+        //if (_order.DeliveryAddress.GetType().GetProperties().All(p => p.GetValue(_order.InvoiceAddress) != null))
 
-        if (_isDeliverySameInvoice) _order.DeliveryAddress = new AddressModel()
-        {
-            CityName = _order.InvoiceAddress.CityName,
-            Country = _order.InvoiceAddress.Country,
-            PostalCode = _order.InvoiceAddress.PostalCode,
-            State =
-        _order.InvoiceAddress.State,
-            Street = _order.InvoiceAddress.Street,
-            StreetNumber = _order.InvoiceAddress.StreetNumber
-        };
         _order.Products = _cartItems;
+
         var response = await http.PostRequestAsync<OrderModel>("", _order);
+        _order = new();
+
+        //TODO Navigate to thank you page or error, depending on the recieved code
+        navMan.NavigateTo("");
+
     }
 }
