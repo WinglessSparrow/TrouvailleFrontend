@@ -3,7 +3,7 @@
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes
 @using TrouvailleFrontend.Components.Checkout
-@using System.Net.Http
+@using TrouvailleFrontend.Components.Shared
 
 @inject ILocalStorage local
 @inject IProductsRetriever productsRetriever
@@ -12,7 +12,7 @@
 <div class="page">
     <div class="content">
 
-        <EditForm Model="@_order" OnValidSubmit="PostOrder">
+        <EditForm id="order-form" Model="@_order" OnValidSubmit="PostOrder">
             <DataAnnotationsValidator />
 
             <div class="addresses">
@@ -32,13 +32,12 @@
             <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
 
             <CHProductsOverview Products=@_products ItemData=@_cartItems />
-
         </EditForm>
-
-
     </div>
     <div class="side-menu">
-        @* <div class="sticky-container"></div> *@
+        <SideMenu>
+            <SideMenuContent CostWithTax="30.5" ForForm="order-form" />
+        </SideMenu>
     </div>
 </div>
 
@@ -63,5 +62,6 @@
         if (_isDeliverySameInvoice) _order.DeliveryAddress = _order.InvoiceAddress;
         _order.Products = _cartItems;
         var response = await http.PostRequestAsync<OrderModel>("", _order);
+        Console.WriteLine("KK");
     }
 }

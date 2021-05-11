@@ -1,8 +1,8 @@
-@namespace TrouvailleFrontend.Components.Checkout
+@namespace TrouvailleFrontend.Components.Shared
 <div>
     <div class="button-wrapper">
         <h4>@Name</h4>
-        <button @onclick="Collpase">collapse</button>
+        <button @onclick="Collpase" type="button">expand</button>
     </div>
     <div class='collapsable-container @(_isCollapsed ? "collapse" : "")'>@ChildContent</div>
 </div>

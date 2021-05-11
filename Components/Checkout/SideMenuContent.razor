@@ -1,0 +1,25 @@
+<div class="main-wrapper">
+    <div class="cost">
+        <p>@CostWithTax</p>
+    </div>
+    <div class="order-info">
+        <ul>
+            <li>By ordering you comply with our services and conditions</li>
+            <li>blah</li>
+            <li>blah</li>
+            <li>blah</li>
+            <li>blah</li>
+        </ul>
+    </div>
+    <div class="submit-wrapper">
+        <button type="submit" form="@ForForm">Submit Order</button>
+    </div>
+</div>
+
+
+@code{
+    [Parameter]
+    public string ForForm { get; set; }
+    [Parameter]
+    public string CostWithTax { get; set; }
+}

@@ -12,6 +12,10 @@ namespace TrouvailleFrontend.Shared.Models {
         public AddressModel InvoiceAddress { get; set; } = new AddressModel();
         [Required]
         public List<ShoppingCartItemModel> Products { get; set; } = new List<ShoppingCartItemModel>();
+
+        // public override string ToString() {
+        //     return $"Payment: {PaymentMethod} | "
+        // }
     }
 
     public enum PaymentMethod {

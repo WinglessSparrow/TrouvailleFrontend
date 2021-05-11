@@ -1,4 +1,4 @@
-.content{
+.content {
   padding: 0;
 }
 
@@ -9,6 +9,7 @@
   grid-template-areas: "content side";
   gap: 10px;
 
+  min-height: 100vh;
   height: 100%;
 }
 
@@ -41,7 +42,7 @@
 
   padding: 0;
 
-  height: 100%;
+  height: auto;
 
   border: solid 2px blue;
 }
@@ -60,7 +61,7 @@
 
   padding: 0;
 
-  height: 100%;
+  height: auto;
 }
 
 .side-menu {
@@ -93,13 +94,13 @@
 
 ::deep .radio-container label {
   display: inline-block;
-  
+
   font-size: 16px;
-  
+
   border: 2px solid rgb(45, 199, 238);
   border-radius: 4px;
 
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 ::deep .radio-container input[type="radio"]:checked + label {

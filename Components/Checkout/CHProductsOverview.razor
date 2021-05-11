@@ -1,6 +1,7 @@
 @namespace TrouvailleFrontend.Components.Checkout
 
 @using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Components.Shared
 
 @* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
 
@@ -34,9 +35,12 @@
     {
         double tempTotal = 0;
 
-        for (int i = 0; i < 3; i++)
+        if (ItemData != null && Products != null)
         {
-            if (ItemData != null) tempTotal += ItemData[i].Cardinality * Products[i].Price;
+            for (int i = 0; i < ItemData.Count(); i++)
+            {
+                tempTotal += ItemData[i].Cardinality * Products[i].Price;
+            }
         }
 
         _totalPrice = String.Format("{0:C}", tempTotal);
