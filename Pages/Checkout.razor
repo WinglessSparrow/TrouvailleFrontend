@@ -31,12 +31,12 @@
 
             <Shipping @bind-ShippingMethod=_order.ShipmentMethod />
 
-            <CHProductsOverview Products=@_products ItemData=@_cartItems />
+            <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
         </EditForm>
     </div>
     <div class="side-menu">
         <SideMenu>
-            <SideMenuContent CostWithTax="30.5" ForForm="order-form" />
+            <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
         </SideMenu>
     </div>
 </div>
@@ -44,6 +44,8 @@
 @* TODO ERROR SYSTEM *@
 
 @code{
+    private double _totalPriceWithoutTax;
+    private double _totalPrice;
     private bool _isDeliverySameInvoice = true;
     private OrderModel _order = new();
     private List<ShoppingCartItemModel> _cartItems { get; set; }
@@ -51,17 +53,32 @@
     protected override async Task OnInitializedAsync()
     {
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        //TODO this right here is bullshit, because it doesn't get anything
         _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+
+        for (int i = 0; i < _cartItems.Count(); i++)
+        {
+            _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
+
+            double tax = _products[i].Vat / 100;
+            _totalPriceWithoutTax += (_products[i].Price - tax) * _cartItems[i].Cardinality;
+        }
     }
+
     protected async Task PostOrder()
     {
         //TODO Post over HttpRequest
-        //TODO if IsDeliverySameInvoice => delivery = invoice
 
-        if (_isDeliverySameInvoice) _order.DeliveryAddress = _order.InvoiceAddress;
+        if (_isDeliverySameInvoice) _order.DeliveryAddress = new AddressModel()
+        {
+            CityName = _order.InvoiceAddress.CityName,
+            Country = _order.InvoiceAddress.Country,
+            PostalCode = _order.InvoiceAddress.PostalCode,
+            State =
+        _order.InvoiceAddress.State,
+            Street = _order.InvoiceAddress.Street,
+            StreetNumber = _order.InvoiceAddress.StreetNumber
+        };
         _order.Products = _cartItems;
         var response = await http.PostRequestAsync<OrderModel>("", _order);
-        Console.WriteLine("KK");
     }
 }

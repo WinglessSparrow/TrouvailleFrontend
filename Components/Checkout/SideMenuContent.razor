@@ -1,6 +1,7 @@
 <div class="main-wrapper">
     <div class="cost">
-        <p>@CostWithTax</p>
+        <p>Price: @_totalPrice <br /><small>without tax: @_totalPriceWithoutTax</small> <br /><small>the tax:
+                @_pureTax</small></p>
     </div>
     <div class="order-info">
         <ul>
@@ -18,8 +19,22 @@
 
 
 @code{
+
+    private string _pureTax;
+    private string _totalPrice;
+    private string _totalPriceWithoutTax;
+
     [Parameter]
     public string ForForm { get; set; }
     [Parameter]
-    public string CostWithTax { get; set; }
+    public double TotalPriceWithoutTax { get; set; }
+    [Parameter]
+    public double TotalPrice { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _pureTax = String.Format("{0:C}", TotalPrice - TotalPriceWithoutTax);
+        _totalPrice = String.Format("{0:C}", TotalPrice);
+        _totalPriceWithoutTax = String.Format("{0:C}", TotalPriceWithoutTax);
+    }
 }

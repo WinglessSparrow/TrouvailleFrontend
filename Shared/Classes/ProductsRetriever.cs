@@ -24,6 +24,9 @@ namespace TrouvailleFrontend.Shared.Classes {
             List<ProductModel> outputProducts = new();
 
             foreach (ProductModel p in allProducts) {
+
+                Console.WriteLine("Tax: " + p.Vat);
+
                 foreach (ShoppingCartItemModel shmp in items) {
                     if (p.Pid == shmp.ProductId) {
                         outputProducts.Add(p);

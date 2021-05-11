@@ -24,8 +24,11 @@
 </div>
 
 @code{
+
     private string _totalPrice;
 
+    [Parameter]
+    public double TotalPrice { get; set; }
     [Parameter]
     public List<ProductModel> Products { get; set; }
     [Parameter]
@@ -33,16 +36,6 @@
 
     protected override void OnParametersSet()
     {
-        double tempTotal = 0;
-
-        if (ItemData != null && Products != null)
-        {
-            for (int i = 0; i < ItemData.Count(); i++)
-            {
-                tempTotal += ItemData[i].Cardinality * Products[i].Price;
-            }
-        }
-
-        _totalPrice = String.Format("{0:C}", tempTotal);
+        _totalPrice = String.Format("{0:C}", TotalPrice);
     }
 }
