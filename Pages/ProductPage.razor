@@ -91,7 +91,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //roductIet Token
+        //Token
         Token token = new Token();
         token.AuthToken = "293862934582983523958";
         await localStorage.SetStorageAsync<Token>("authToken", token);

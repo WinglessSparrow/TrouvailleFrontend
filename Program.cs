@@ -21,6 +21,8 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
 
             builder.Services.AddTransient<IProductIterator, ProductsIterator>();
+            builder.Services.AddTransient<IProductsRetriever, ProductsRetriever>();
+
 
             await builder.Build().RunAsync();
         }
