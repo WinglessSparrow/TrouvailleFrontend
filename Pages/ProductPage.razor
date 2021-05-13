@@ -91,11 +91,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Token
-        Token token = new Token();
-        token.AuthToken = "293862934582983523958";
-        await localStorage.SetStorageAsync<Token>("authToken", token);
-
         var response = await httpRequest.GetRequestAsync("debugData/Product.json");
         product = await response.Content.ReadFromJsonAsync<ProductModel>();
 
@@ -110,8 +105,5 @@
                 amountInShoppingCart = item.Cardinality;
             }
         }
-
-        //Post Request Example
-        var testResponse = await httpRequest.PostRequestAsync("debugData/PostExample", shoppingCart);
     }
 }
