@@ -1,25 +1,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime;
+using TrouvailleFrontend.Shared.Enums;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class OrderModel {
         [Required]
         public PaymentMethod PaymentMethod { get; set; }
+
         [Required]
         public ShipmentMethod ShipmentMethod { get; set; }
+        [ValidateComplexType]
         public AddressModel DeliveryAddress { get; set; } = new AddressModel();
-        [Required]
+        [ValidateComplexType]
         public AddressModel InvoiceAddress { get; set; } = new AddressModel();
-        [Required]
+        [ValidateComplexType]
         public List<ShoppingCartItemModel> Products { get; set; } = new List<ShoppingCartItemModel>();
-    }
-
-    public enum PaymentMethod {
-        Rechnung, Vorkasse, Paypal
-    }
-
-    public enum ShipmentMethod {
-        dhl, dpd, ups, hermes
     }
 }
