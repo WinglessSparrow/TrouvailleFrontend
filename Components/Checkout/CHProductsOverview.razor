@@ -31,7 +31,7 @@
     public List<ProductModel> Products { get; set; }
     [Parameter]
     public List<ShoppingCartItemModel> ItemData { get; set; }
-        
+
     protected override void OnParametersSet()
     {
         _totalPrice = String.Format("{0:C}", TotalPrice);
