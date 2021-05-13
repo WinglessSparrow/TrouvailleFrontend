@@ -22,6 +22,7 @@ namespace TrouvailleFrontend.Shared.Classes {
             _index++;
             if (_index * _numberProductsPerIteration > _products.Length) return null;
 
+
             Console.WriteLine(_index);
 
             int offset = _index * _numberProductsPerIteration;
@@ -29,7 +30,6 @@ namespace TrouvailleFrontend.Shared.Classes {
 
             return CopyArrayToList(offset, limit);
         }
-
         public async Task<List<ProductModel>> GetPreviousProductsAsync() {
             _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
 

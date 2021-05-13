@@ -80,7 +80,7 @@
         }
         if (!alreadyInShoppingCart)
         {
-            shoppingCart.Add(new ShoppingCartItemModel(){ProductId = product.ProductId, Cardinality = Amount});
+            shoppingCart.Add(new ShoppingCartItemModel() { ProductId = product.ProductId, Cardinality = Amount });
             amountInShoppingCart += Amount;
         }
 
@@ -90,16 +90,16 @@
 
 
     protected override async Task OnInitializedAsync()
-    {   
-        //set Token
+    {
+        //roductIet Token
         Token token = new Token();
         token.AuthToken = "293862934582983523958";
         await localStorage.SetStorageAsync<Token>("authToken", token);
 
         var response = await httpRequest.GetRequestAsync("debugData/Product.json");
         product = await response.Content.ReadFromJsonAsync<ProductModel>();
-        
-        //TODO REMOVE LATER WHEN GETTING A REAL PRODUCT WITH THE API
+
+        //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
         product.ProductId = int.Parse(Id);
 
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
