@@ -1,0 +1,39 @@
+<div class="main-wrapper">
+    <div class="cost">
+        <p>Price: @_totalPrice <br /><small>without tax: @_totalPriceWithoutTax</small> <br /><small>the tax:
+                @_pureTax</small></p>
+    </div>
+    <div class="order-info">
+        <ul>
+            <li>By ordering you comply with our services and conditions</li>
+            <li>blah</li>
+            <li>blah</li>
+            <li>blah</li>
+        </ul>
+    </div>
+    <div class="submit-wrapper">
+        <button type="submit" form="@ForForm">Submit Order</button>
+    </div>
+</div>
+
+
+@code{
+
+    private string _pureTax;
+    private string _totalPrice;
+    private string _totalPriceWithoutTax;
+
+    [Parameter]
+    public string ForForm { get; set; }
+    [Parameter]
+    public double TotalPriceWithoutTax { get; set; }
+    [Parameter]
+    public double TotalPrice { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _pureTax = String.Format("{0:C}", TotalPrice - TotalPriceWithoutTax);
+        _totalPrice = String.Format("{0:C}", TotalPrice);
+        _totalPriceWithoutTax = String.Format("{0:C}", TotalPriceWithoutTax);
+    }
+}
