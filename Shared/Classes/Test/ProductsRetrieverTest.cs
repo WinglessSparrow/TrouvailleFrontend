@@ -7,10 +7,10 @@ using TrouvailleFrontend.Shared.Models;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 
 namespace TrouvailleFrontend.Shared.Classes.Test {
-    public class ProductsRetriever : IProductsRetriever {
+    public class ProductsRetrieverTest : IProductsRetriever {
         private HttpClient _http;
 
-        public ProductsRetriever(HttpClient http) {
+        public ProductsRetrieverTest(HttpClient http) {
             _http = http;
         }
 
@@ -62,7 +62,15 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
             return ids;
         }
 
+
+
+
+
         public Task<List<ProductModel>> GetProductsInRange(int start, int end) {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> GetNumberProducts() {
             throw new NotImplementedException();
         }
     }

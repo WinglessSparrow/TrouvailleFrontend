@@ -23,7 +23,7 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
 
             builder.Services.AddScoped<IProductIterator, ProductsIterator>();
-            builder.Services.AddTransient<IProductsRetriever, ProductsRetriever>();
+            builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
 
 
             await builder.Build().RunAsync();
