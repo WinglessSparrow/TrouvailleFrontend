@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime;
+using TrouvailleFrontend.Shared.Enums;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class OrderModel {
@@ -13,13 +13,5 @@ namespace TrouvailleFrontend.Shared.Models {
         public AddressModel InvoiceAddress { get; set; } = new AddressModel();
         [Required]
         public List<ShoppingCartItemModel> Products { get; set; } = new List<ShoppingCartItemModel>();
-    }
-
-    public enum PaymentMethod {
-        Rechnung, Vorkasse, Paypal
-    }
-
-    public enum ShipmentMethod {
-        dhl, dpd, ups, hermes
     }
 }

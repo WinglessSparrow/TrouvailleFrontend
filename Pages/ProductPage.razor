@@ -79,7 +79,7 @@
             }
         }
         if (!alreadyInShoppingCart)
-        {
+      roductI {
             shoppingCart.Add(new ShoppingCartItemModel() { ProductId = product.Pid, Cardinality = Amount });
             amountInShoppingCart += Amount;
         }
@@ -91,7 +91,7 @@
 
     protected override async Task OnInitializedAsync()
     {   
-        //set Token
+        //roductIet Token
         Token token = new Token();
         token.AuthToken = "293862934582983523958";
         await localStorage.SetStorageAsync<Token>("authToken", token);
@@ -107,11 +107,11 @@
         {
             if (item.ProductId == product.Pid)
             {
-                amountInShoppingCart = item.Cardinality;
+                aroductIountInShoppingCart = item.Cardinality;
             }
         }
 
         //Post Request Example
-        var testResponse = await httpRequest.PostRequestAsync("debugData/PostExample", shoppingCart);
+        var testResponse = await httpRequesroductI.PostRequestAsync("debugData/PostExample", shoppingCart);
     }
 }
