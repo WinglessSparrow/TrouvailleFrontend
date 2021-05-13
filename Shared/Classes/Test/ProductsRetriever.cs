@@ -4,8 +4,9 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using TrouvailleFrontend.Shared.Models;
+using TrouvailleFrontend.Shared.Classes.Interfaces;
 
-namespace TrouvailleFrontend.Shared.Classes {
+namespace TrouvailleFrontend.Shared.Classes.Test {
     public class ProductsRetriever : IProductsRetriever {
         private HttpClient _http;
 
@@ -25,7 +26,7 @@ namespace TrouvailleFrontend.Shared.Classes {
 
             foreach (ProductModel p in allProducts) {
                 foreach (ShoppingCartItemModel shmp in items) {
-                    if (p.ProductId == shmp.ProductId) {
+                    if (p.ProductId.Equals(shmp.ProductId)) {
                         outputProducts.Add(p);
                         break;
                     }
@@ -35,9 +36,24 @@ namespace TrouvailleFrontend.Shared.Classes {
             return outputProducts;
         }
 
-        private List<Guid> CreateListOfId(List<ShoppingCartItemModel> scItems) {
+        public async Task<ProductModel> GetProductByIdAsync(string item) {
 
-            List<Guid> ids = new();
+            var allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
+            ProductModel outputProduct = new();
+
+            foreach (ProductModel p in allProducts) {
+                if (p.ProductId.Equals(item)) {
+                    outputProduct = p;
+                    break;
+                }
+            }
+
+            return outputProduct;
+        }
+
+        private List<string> CreateListOfId(List<ShoppingCartItemModel> scItems) {
+
+            List<string> ids = new();
 
             foreach (ShoppingCartItemModel shpm in scItems) {
                 ids.Add(shpm.ProductId);

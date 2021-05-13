@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using TrouvailleFrontend.Shared.Classes.Interfaces;
 
-namespace TrouvailleFrontend.Shared.Classes {
-    public class ProductsIteratorAPI : IProductIteratorAPI {
+namespace TrouvailleFrontend.Shared.Classes.Test {
+    public class ProductsIterator : IProductIterator {
         private ProductModel[] _products;
         private int _index = -1;
         private int _numberProductsPerIteration = 7;
         private HttpClient _http;
-        private HttpRequest _httpRequest;
 
-        public ProductsIteratorAPI(HttpClient http) {
+        public ProductsIterator(HttpClient http) {
             _http = http;
         }
 
@@ -22,8 +22,6 @@ namespace TrouvailleFrontend.Shared.Classes {
 
             _index++;
             if (_index * _numberProductsPerIteration > _products.Length) return null;
-
-            Console.WriteLine(_index);
 
             int offset = _index * _numberProductsPerIteration;
             int limit = offset + _numberProductsPerIteration;

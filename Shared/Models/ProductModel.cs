@@ -2,7 +2,8 @@ using System;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class ProductModel {
-        public Guid ProductId { get; set; }
+        private Guid _id;
+        public string ProductId { get { return _id.ToString(); } set { _id = new Guid(value); } }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }

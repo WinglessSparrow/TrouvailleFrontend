@@ -3,8 +3,9 @@ using Microsoft.JSInterop;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using TrouvailleFrontend.Shared.Classes.Interfaces;
 
-namespace TrouvailleFrontend.Shared.Classes {
+namespace TrouvailleFrontend.Shared.Classes.API {
     public class LocalStorage : ILocalStorage {
         private IJSRuntime _JSRuntime;
         public LocalStorage(IJSRuntime JSRuntime) {

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Text;
 using TrouvailleFrontend.Shared.Models;
+using TrouvailleFrontend.Shared.Classes.Interfaces;
 
-namespace TrouvailleFrontend.Shared.Classes {
+namespace TrouvailleFrontend.Shared.Classes.API {
     public class HttpRequest : IHttpRequest {
         private HttpClient _http;
         private ILocalStorage _localStorage;

@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using TrouvailleFrontend.Shared.Classes;
+using TrouvailleFrontend.Shared.Classes.Test;
+using TrouvailleFrontend.Shared.Classes.Interfaces;
+using TrouvailleFrontend.Shared.Classes.API;
 
 namespace TrouvailleFrontend {
     public class Program {

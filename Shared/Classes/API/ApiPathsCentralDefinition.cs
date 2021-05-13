@@ -1,4 +1,4 @@
-namespace TrouvailleFrontend.Shared.Classes {
+namespace TrouvailleFrontend.Shared.Classes.API {
     public class ApiPathsCentralDefinition {
         public const string API_IP = "";
         public const string API_PRODUCTS_IN_RANGE = API_IP + "/api/products";
