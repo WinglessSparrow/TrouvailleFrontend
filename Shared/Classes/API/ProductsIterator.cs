@@ -29,7 +29,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _retriever.GetProductsInRange(offset, limit);
+            return await _retriever.GetProductsInRangeAsync(offset, limit);
         }
 
         public async Task<List<ProductModel>> GetPreviousProductsAsync() {
@@ -42,7 +42,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _retriever.GetProductsInRange(offset, limit);
+            return await _retriever.GetProductsInRangeAsync(offset, limit);
         }
 
         public async Task<List<ProductModel>> GetProductIndexedAsync(int index) {
@@ -52,7 +52,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _retriever.GetProductsInRange(offset, limit);
+            return await _retriever.GetProductsInRangeAsync(offset, limit);
         }
 
         public ProductsNumbersModel GetProductNumbers() {
