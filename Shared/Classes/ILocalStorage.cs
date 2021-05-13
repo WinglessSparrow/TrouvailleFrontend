@@ -6,7 +6,5 @@ namespace TrouvailleFrontend.Shared.Classes {
         Task SetStorageAsync<T>(string key, T value);
         Task RemoveStorageAsync(string key);
         Task<int> LengthStorageAsync();
-        //Task ClearStorageAsync();
-
     }
 }

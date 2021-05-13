@@ -1,0 +1,44 @@
+.collapsable-container {
+  height: auto;
+
+  padding: 0;
+
+  border: solid 1px black;
+  /* animation-name: expand; */
+  /* animation-duration: 1s; */
+}
+
+.collapse {
+  height: 0;
+  /* animation-name: collapse; */
+  /* animation-duration: 1s; */
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+
+  border: solid 1px black;
+}
+
+/* WHY DONT YOU WORK!?!??!!??! */
+@keyframes collapse {
+  from {
+    height: auto;
+  }
+  to {
+    height: 0%;
+  }
+}
+
+@keyframes expand {
+  from {
+    height: 0%;
+  }
+  to {
+    height: auto;
+  }
+}

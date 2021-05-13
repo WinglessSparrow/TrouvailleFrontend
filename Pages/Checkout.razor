@@ -2,50 +2,175 @@
 
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes
+@using TrouvailleFrontend.Shared.Enums
 @using TrouvailleFrontend.Components.Checkout
-@using System.Net.Http
+@using TrouvailleFrontend.Components.Shared
 
 @inject ILocalStorage local
-@inject HttpClient http
+@inject IProductsRetriever productsRetriever
+@inject IHttpRequest http
+@inject NavigationManager navMan
 
 <div class="page">
     <div class="content">
+        @* <EditForm id="order-form" Model=@_order OnValidSubmit="PostOrder"> *@
+        <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder"
+            OnInvalidSubmit=@(()=>{Console.WriteLine("Test");})>
+            <ObjectGraphDataAnnotationsValidator />
 
-        @* TODO, make it work *@
-
-        <EditForm Model="@_order" OnValidSubmit="PostOrder">
             <div class="addresses">
-                <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
-                <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress" />
+                <div class="addresses-input-wrapper">
+                    <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+                    <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
+                        IsDisabled=@_isDeliverySameInvoice />
+                </div>
+                <label for="address-equal-chck">
+                    <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
+                    Delivery address same as Invoivce address
+                </label>
             </div>
-            <div class="payment">
+
+            <div class="radio-group-container">
+                <h4>Payment Method</h4>
+                <div class="radio-container">
+                    <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
+                        @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
+
+                        {
+                            var temp = method;
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
+                                <label for=@temp>@temp</label>
+                            </div>
+
+                        }
+                    </InputRadioGroup>
+                </div>
             </div>
-            <div class="sent-methode">
+
+            <div class="radio-group-container">
+                <h4>Shipping Method</h4>
+                <div class="radio-container">
+                    <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
+                        @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
+
+                        {
+                            var temp = method;
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
+                                <label for=@temp>@temp</label>
+                            </div>
+
+                        }
+                    </InputRadioGroup>
+                </div>
             </div>
-            <div class="products-view">
-            </div>
+
+            <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
         </EditForm>
     </div>
     <div class="side-menu">
-        @* <div class="sticky-container"></div> *@
+        <SideMenu>
+            <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
+        </SideMenu>
     </div>
 </div>
 
+@* TODO ERROR SYSTEM *@
 
 @code{
 
-    private OrderModel _order = new OrderModel();
+    private EditContext _eContext;
+
+    private double _totalPriceWithoutTax;
+
+    private double _totalPrice;
+
+    private bool _isDeliverySameInvoice = false;
+
+    private OrderModel _order;
+
+    private List<ShoppingCartItemModel> _cartItems { get; set; }
+
+    private List<ProductModel> _products { get; set; }
 
 
-    private List<ShoppingCartItemModel> _products { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    private void SetDelivery()
+
     {
-        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+
+        _order.DeliveryAddress = (!_isDeliverySameInvoice) ? _order.InvoiceAddress : new AddressModel();
+
+        this.StateHasChanged();
+
     }
 
-    protected async Task PostOrder()
+    protected override async Task OnInitializedAsync()
+
     {
-        _products = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+
+        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+
+        _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+
+
+
+        for (int i = 0; i < _cartItems.Count(); i++)
+
+        {
+
+            _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
+
+
+
+            //calculating tax
+
+            double tax = ((double)_products[i].Tax) / 100.0;
+
+            _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
+
+        }
+
+    }
+
+
+
+    protected override void OnInitialized()
+
+    {
+
+        _order = new();
+
+        _eContext = new(_order);
+
+    }
+
+
+
+    protected async Task PostOrder()
+
+    {
+
+        //if (_order.DeliveryAddress.GetType().GetProperties().All(p => p.GetValue(_order.InvoiceAddress) != null))
+
+
+
+        _order.Products = _cartItems;
+
+
+
+        var response = await http.PostRequestAsync<OrderModel>("", _order);
+
+        _order = new();
+
+
+
+        //TODO Navigate to thank you page or error, depending on the recieved code
+
+        navMan.NavigateTo("");
+
+
+
     }
 }

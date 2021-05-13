@@ -8,10 +8,11 @@ namespace TrouvailleFrontend.Shared.Models {
         public PaymentMethod PaymentMethod { get; set; }
         [Required]
         public ShipmentMethod ShipmentMethod { get; set; }
+        [ValidateComplexType]
         public AddressModel DeliveryAddress { get; set; } = new AddressModel();
-        [Required]
+        [ValidateComplexType]
         public AddressModel InvoiceAddress { get; set; } = new AddressModel();
-        [Required]
+        [ValidateComplexType]
         public List<ShoppingCartItemModel> Products { get; set; } = new List<ShoppingCartItemModel>();
     }
 }
