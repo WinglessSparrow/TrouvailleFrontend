@@ -1,8 +1,8 @@
 using System;
 
 namespace TrouvailleFrontend.Shared.Models {
-    public class TokenModel {
-        public string AuthToken { get; set; }
-        public DateTime? expireDate {get; set;}
+    public class LoginModel {
+        public string email { get; set; }
+        public string password {get; set;}
     }
 }
