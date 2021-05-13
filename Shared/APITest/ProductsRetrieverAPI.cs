@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes {
-    public class ProductsRetriever : IProductsRetriever {
+    public class ProductsRetrieverAPI : IProductsRetrieverAPI {
         private HttpClient _http;
 
-        public ProductsRetriever(HttpClient http) {
+        public ProductsRetrieverAPI(HttpClient http) {
             _http = http;
         }
 

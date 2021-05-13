@@ -15,9 +15,8 @@
     {
         //Login
         LoginModel login = new LoginModel() { email = "hello@text.com", password = "A1234.b1" };
-        string path = "";
 
-        var responseLogin = await httpRequest.PostRequestAsync<LoginModel>(path, login);
+        var responseLogin = await httpRequest.PostRequestAsync<LoginModel>(ApiPathsCentralDefinition.API_LOGIN, login);
         if (responseLogin.StatusCode == HttpStatusCode.OK)
         {
             AuthResponseMessageModel message = await responseLogin.Content.ReadFromJsonAsync<AuthResponseMessageModel>();

@@ -95,7 +95,7 @@
         product = await response.Content.ReadFromJsonAsync<ProductModel>();
 
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
-        product.ProductId = int.Parse(Id);
+        //product.ProductId = int.Parse(Id);
 
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         foreach (var item in shoppingCart)
