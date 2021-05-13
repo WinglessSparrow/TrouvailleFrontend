@@ -19,7 +19,6 @@ namespace TrouvailleFrontend {
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<ILocalStorage, LocalStorage>();
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
-            builder.Services.AddTransient<IProductsRetriever, ProductsRetriever>();
 
             builder.Services.AddTransient<IProductIterator, ProductsIterator>();
 

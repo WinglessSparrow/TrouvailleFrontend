@@ -9,7 +9,7 @@
         alt="Image loading Error">
     <div class="info-wrapper">
         <div class="product-name info-field">
-            <p>@product.ProductId</p>
+            <p>@product.Pid</p>
         </div>
         <div class="product-stars info-field">
             <p>@product.Rating</p>
@@ -18,7 +18,7 @@
             <p>@product.Price</p>
         </div>
         <div class="product-amount-left info-field">
-            <p>@product.InStock</p>
+            <p>@product.Stock</p>
         </div>
         <div class="product-short-info info-field">
             <p>@product.Description</p>
@@ -32,6 +32,6 @@
 
     private void Do()
     {
-        NavMan.NavigateTo($"/product/{product.ProductId}");
+        NavMan.NavigateTo($"/product/{product.Pid}");
     }
 }

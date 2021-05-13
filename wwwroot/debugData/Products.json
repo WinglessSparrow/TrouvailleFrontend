@@ -1,263 +1,234 @@
 [
-  {
-    "productid": "1",
-    "name": "Brush",
-    "price": "111.50",
-    "description": "Cool Brush",
-    "rating": "4",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "2",
-    "name": "Brush 2",
-    "price": "20.50",
-    "description": "Cool Brush $$$",
-    "rating": "4",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "3",
-    "name": "Brush 3",
-    "price": "5.50",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, sunt.",
-    "rating": "4",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "4",
-    "name": "Brush 4",
-    "price": "3.50",
-    "description": "unCool Brush",
-    "rating": "1",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "5",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "6",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "7",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "8",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "9",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "10",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "11",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "12",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "13",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "14",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "15",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "16",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "17",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "18",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "19",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "20",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "21",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "22",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "23",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "24",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "25",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "26",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "27",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "28",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  },
-  {
-    "productid": "29",
-    "name": "Brush 5",
-    "price": "1.40",
-    "description": "very Cool Brush",
-    "rating": "5",
-    "inStock": "30",
-    "tax": "3"
-  }
+    {
+        "pid": "1",
+        "name":"Brush",
+        "price":"111.50",
+        "description":"Cool Brush",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "pid": "2",
+        "name":"Brush 2",
+        "price":"20.50",
+        "description":"Cool Brush $$$",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "pid": "3",
+        "name":"Brush 3",
+        "price":"5.50",
+        "description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, sunt.",
+        "rating":"4",
+        "stock":"30"
+    },
+    {
+        "pid": "4",
+        "name":"Brush 4",
+        "price":"3.50",
+        "description":"unCool Brush",
+        "rating":"1",
+        "stock":"30"
+    },
+    {
+        "pid": "5",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "6",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "7",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "8",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "9",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "10",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "11",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "12",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "13",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "14",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "15",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "16",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "17",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "18",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "19",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "20",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "21",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "22",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "23",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "24",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "25",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "26",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "27",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "28",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    },
+    {
+        "pid": "29",
+        "name":"Brush 5",
+        "price":"1.40",
+        "description":"very Cool Brush",
+        "rating":"5",
+        "stock":"30"
+    }
 ]
