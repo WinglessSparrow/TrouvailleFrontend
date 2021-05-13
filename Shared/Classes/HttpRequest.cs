@@ -20,7 +20,7 @@ namespace TrouvailleFrontend.Shared.Classes {
         public async Task<HttpResponseMessage> GetRequestAsync(string path){
             HttpResponseMessage response; 
             
-            TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
+            Token token = await _localStorage.GetStorageAsync<Token>("authToken");
 
             var request = new HttpRequestMessage(HttpMethod.Get, path);
             var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
@@ -34,7 +34,7 @@ namespace TrouvailleFrontend.Shared.Classes {
         public async Task<HttpResponseMessage> PostRequestAsync<T>(string path, T postBody){
             HttpResponseMessage response; 
             
-            TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
+            Token token = await _localStorage.GetStorageAsync<Token>("authToken");
 
             var request = new HttpRequestMessage(HttpMethod.Post, path);
             StringContent stringContent = new StringContent(JsonSerializer.Serialize(postBody), Encoding.UTF8, "application/json");
