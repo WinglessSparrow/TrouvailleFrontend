@@ -22,7 +22,7 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<ILocalStorage, LocalStorage>();
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
 
-            builder.Services.AddTransient<IProductIterator, ProductsIterator>();
+            builder.Services.AddScoped<IProductIterator, ProductsIterator>();
             builder.Services.AddTransient<IProductsRetriever, ProductsRetriever>();
 
 

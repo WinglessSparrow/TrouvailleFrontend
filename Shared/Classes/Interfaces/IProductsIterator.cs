@@ -8,5 +8,7 @@ namespace TrouvailleFrontend.Shared.Classes.Interfaces {
         Task<List<ProductModel>> GetPreviousProductsAsync();
         Task<List<ProductModel>> GetProductIndexedAsync(int index);
         Task<ProductsNumbersModel> GetProductNumbersAsync();
+        int GetIndex();
+        void InitIterator();
     }
 }

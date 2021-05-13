@@ -9,12 +9,16 @@ using TrouvailleFrontend.Shared.Classes.Interfaces;
 namespace TrouvailleFrontend.Shared.Classes.Test {
     public class ProductsIterator : IProductIterator {
         private ProductModel[] _products;
-        private int _index = -1;
+        private int _index = 0;
         private int _numberProductsPerIteration = 7;
         private HttpClient _http;
 
         public ProductsIterator(HttpClient http) {
             _http = http;
+        }
+
+        public int GetIndex() {
+            return _index;
         }
 
         public async Task<List<ProductModel>> GetNextProductsAsync() {
@@ -60,6 +64,10 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
             _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
             return new ProductsNumbersModel() { NumberOfProduct = _products.Length, NumberProductsPerIteration = _numberProductsPerIteration };
+        }
+
+        public void InitIterator() {
+            //here be code
         }
 
         private List<ProductModel> CopyArrayToList(int from, int to) {
