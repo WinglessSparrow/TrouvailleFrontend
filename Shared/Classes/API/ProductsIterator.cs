@@ -13,7 +13,9 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public ProductsIterator(IProductsRetriever retriever) {
             _retriever = retriever;
             _productsNumber.NumberProductsPerIteration = 8;
-            _productsNumber.NumberOfProduct = _retriever.GetNumberProducts();
+            Task.Run(async () => {
+                _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
+            });
         }
 
         public int GetIndex() {
