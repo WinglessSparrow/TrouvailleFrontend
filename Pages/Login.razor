@@ -1,0 +1,32 @@
+@page "/login"
+
+@using System.Net;
+@using TrouvailleFrontend.Shared.Models
+
+@inject ILocalStorage localStorage
+@inject IHttpRequest httpRequest
+
+<div class="page">
+    <h1>LOGIN PAGE</h1>
+</div>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        //Login
+        LoginModel login = new LoginModel() { email = "hello@text.com", password = "A1234.b1" };
+        string path = "";
+
+        var responseLogin = await httpRequest.PostRequestAsync<LoginModel>(path, login);
+        if (responseLogin.StatusCode == HttpStatusCode.OK)
+        {
+            AuthCustomerMessageModel message = await responseLogin.Content.ReadFromJsonAsync<AuthCustomerMessageModel>();
+            if (message.isSucces)
+            {
+                TokenModel token = new TokenModel() { AuthToken = message.message, expireDate = message.expireDate };
+                await localStorage.SetStorageAsync<TokenModel>("authToken", token);
+            }
+
+        }
+    }
+}
