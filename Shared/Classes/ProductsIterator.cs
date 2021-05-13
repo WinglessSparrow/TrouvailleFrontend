@@ -18,11 +18,10 @@ namespace TrouvailleFrontend.Shared.Classes {
 
         public async Task<List<ProductModel>> GetNextProductsAsync() {
             _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
+            // _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/ProductsWithImages.json");
 
             _index++;
             if (_index * _numberProductsPerIteration > _products.Length) return null;
-
-            Console.WriteLine(_index);
 
             int offset = _index * _numberProductsPerIteration;
             int limit = offset + _numberProductsPerIteration;
