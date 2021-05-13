@@ -71,7 +71,7 @@
         bool alreadyInShoppingCart = false;
         foreach (var item in shoppingCart)
         {
-            if (item.ProductId == product.Pid)
+            if (item.ProductId == product.ProductId)
             {
                 alreadyInShoppingCart = true;
                 item.Cardinality += Amount;
@@ -79,8 +79,8 @@
             }
         }
         if (!alreadyInShoppingCart)
-      roductI {
-            shoppingCart.Add(new ShoppingCartItemModel() { ProductId = product.Pid, Cardinality = Amount });
+        {
+            shoppingCart.Add(new ShoppingCartItemModel() { ProductId = product.ProductId, Cardinality = Amount });
             amountInShoppingCart += Amount;
         }
 
@@ -90,7 +90,7 @@
 
 
     protected override async Task OnInitializedAsync()
-    {   
+    {
         //roductIet Token
         Token token = new Token();
         token.AuthToken = "293862934582983523958";
@@ -100,18 +100,18 @@
         product = await response.Content.ReadFromJsonAsync<ProductModel>();
 
         //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
-        product.Pid = int.Parse(Id);
+        product.ProductId = int.Parse(Id);
 
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         foreach (var item in shoppingCart)
         {
-            if (item.ProductId == product.Pid)
+            if (item.ProductId == product.ProductId)
             {
-                aroductIountInShoppingCart = item.Cardinality;
+                amountInShoppingCart = item.Cardinality;
             }
         }
 
         //Post Request Example
-        var testResponse = await httpRequesroductI.PostRequestAsync("debugData/PostExample", shoppingCart);
+        var testResponse = await httpRequest.PostRequestAsync("debugData/PostExample", shoppingCart);
     }
 }
