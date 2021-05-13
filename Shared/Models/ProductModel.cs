@@ -9,7 +9,7 @@ namespace TrouvailleFrontend.Shared.Models {
         public double Price { get; set; }
         public int InStock { get; set; }
         public int Rating { get; set; }
-        public int Tax { get; set; }
+        public double Tax { get; set; }
         public PictureModel Picture { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using TrouvailleFrontend.Shared.Models;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
+using System;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class ProductsRetrieverAPI : IProductsRetriever {
@@ -22,6 +23,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             }
 
             var response = await _httpRequest.PostRequestAsync<List<string>>(ApiPathsCentralDefinition.API_PRODUCTS_BY_ID_ARRAY, _stringItems);
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
             outputProducts = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
 
             //use this when API actually does what it should
@@ -45,8 +47,9 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             List<ProductModel> outputProducts;
 
             var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCTS_IN_RANGE}/{start}/{end}");
+            //TODO check for 404, ...
+            //errorHandler.Handle404
             outputProducts = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
-
 
             return outputProducts;
         }

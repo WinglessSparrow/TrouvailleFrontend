@@ -18,31 +18,35 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         }
 
 
-        public async Task<HttpResponseMessage> GetRequestAsync(string path){
-            HttpResponseMessage response; 
-            
+        public async Task<HttpResponseMessage> GetRequestAsync(string path) {
+            HttpResponseMessage response;
+
             TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
 
             var request = new HttpRequestMessage(HttpMethod.Get, path);
             var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
             request.Headers.Authorization = authHeader;
-            
+
+            Console.WriteLine($"Request: {path}");
+
             response = await _http.SendAsync(request);
 
             return response;
         }
 
-        public async Task<HttpResponseMessage> PostRequestAsync<T>(string path, T postBody){
-            HttpResponseMessage response; 
-            
+        public async Task<HttpResponseMessage> PostRequestAsync<T>(string path, T postBody) {
+            HttpResponseMessage response;
+
             TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
 
             var request = new HttpRequestMessage(HttpMethod.Post, path);
-            StringContent stringContent = new StringContent(JsonSerializer.Serialize(postBody), Encoding.UTF8, "application/json");
+
+            var options = new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+            StringContent stringContent = new StringContent(JsonSerializer.Serialize(postBody, options), Encoding.UTF8, "application/json");
             request.Content = stringContent;
             var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
             request.Headers.Authorization = authHeader;
-            
+
             response = await _http.SendAsync(request);
 
             return response;

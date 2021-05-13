@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
@@ -46,6 +47,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         }
 
         public async Task<List<ProductModel>> GetProductIndexedAsync(int index) {
+
+            Console.WriteLine($"number of products: {_productsNumber.NumberOfProduct}");
             if (index < 0 || index >= _productsNumber.NumberOfProduct) return null;
             _index = index;
 
@@ -55,7 +58,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             return await _retriever.GetProductsInRangeAsync(offset, limit);
         }
 
-        public ProductsNumbersModel GetProductNumbers() {
+        public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
+            _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
             return _productsNumber;
         }
     }

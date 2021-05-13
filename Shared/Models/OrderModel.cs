@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TrouvailleFrontend.Shared.Enums;
+using System.Text.Json;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class OrderModel {

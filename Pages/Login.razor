@@ -14,13 +14,13 @@
     protected override async Task OnInitializedAsync()
     {
         //Login
-        LoginModel login = new LoginModel() { email = "hello@text.com", password = "A1234.b1" };
+        LoginModel login = new LoginModel() { email = "yavuz@hotmail.com", password = "String.1" };
 
         var responseLogin = await httpRequest.PostRequestAsync<LoginModel>(ApiPathsCentralDefinition.API_LOGIN, login);
         if (responseLogin.StatusCode == HttpStatusCode.OK)
         {
             AuthResponseMessageModel message = await responseLogin.Content.ReadFromJsonAsync<AuthResponseMessageModel>();
-            if (message.isSucces)
+            if (message.isSuccess)
             {
                 TokenModel token = new TokenModel() { AuthToken = message.message, expireDate = message.expireDate };
                 await localStorage.SetStorageAsync<TokenModel>("authToken", token);

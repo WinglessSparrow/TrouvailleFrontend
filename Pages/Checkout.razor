@@ -4,6 +4,7 @@
 @using TrouvailleFrontend.Shared.Enums
 @using TrouvailleFrontend.Components.Checkout
 @using TrouvailleFrontend.Components.Shared
+@using System.Text.Json
 
 @inject ILocalStorage local
 @inject IProductsRetriever productsRetriever
@@ -112,9 +113,18 @@
     protected async Task PostOrder()
     {
         _order.Products = _cartItems;
-        var response = await
-        http.PostRequestAsync<OrderModel>($"{ApiPathsCentralDefinition.API_ORDER}", _order);
+
+        //deep copy of the object
+        var json = JsonSerializer.Serialize(_order);
+        var objectToSend = JsonSerializer.Deserialize<OrderModel>(json);
+
+        if (_isDeliverySameInvoice) objectToSend.DeliveryAddress = null;
+
+        var response = await http.PostRequestAsync<OrderModel>($"{ApiPathsCentralDefinition.API_ORDER}", objectToSend);
+        await local.RemoveStorageAsync("shoppingCart");
+
         _order = new();
+
         //TODO Navigate to thank you page or error, depending on the recieved code
         navMan.NavigateTo("");
     }
