@@ -6,9 +6,9 @@ using TrouvailleFrontend.Shared.Classes.Interfaces;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class ProductsRetrieverAPI : IProductsRetriever {
-        private HttpRequest _httpRequest;
+        private IHttpRequest _httpRequest;
 
-        public ProductsRetrieverAPI(HttpRequest httpRequest) {
+        public ProductsRetrieverAPI(IHttpRequest httpRequest) {
             _httpRequest = httpRequest;
         }
 

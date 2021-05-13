@@ -112,7 +112,8 @@
     protected async Task PostOrder()
     {
         _order.Products = _cartItems;
-        var response = await http.PostRequestAsync<OrderModel>("", _order);
+        var response = await
+        http.PostRequestAsync<OrderModel>($"{ApiPathsCentralDefinition.API_ORDER}", _order);
         _order = new();
         //TODO Navigate to thank you page or error, depending on the recieved code
         navMan.NavigateTo("");
