@@ -50,7 +50,7 @@
     protected override async Task OnInitializedAsync()
     {
         _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
-        _numbers = await iterator.GetProductNumbersAsync();
+        _numbers = iterator.GetProductNumbers();
     }
 
     private async void next()

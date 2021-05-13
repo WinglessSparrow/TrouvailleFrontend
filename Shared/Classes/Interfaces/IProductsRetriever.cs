@@ -8,5 +8,7 @@ namespace TrouvailleFrontend.Shared.Classes.Interfaces {
     public interface IProductsRetriever {
         Task<List<ProductModel>> GetProductsByIdAsync(List<ShoppingCartItemModel> items);
         Task<ProductModel> GetProductByIdAsync(string item);
+        Task<List<ProductModel>> GetProductsInRange(int start, int end);
+        int GetNumberProducts();
     }
 }

@@ -95,10 +95,6 @@
         @* var response = await httpRequest.GetRequestAsync("debugData/Product.json");
             product = await response.Content.ReadFromJsonAsync<ProductModel>(); *@
 
-
-        //TODO REMOVE LATER WHEN GETTING A REAL PRODUCKT WITH THE API
-        //product.ProductId = int.Parse(Id);
-
         _product = await productRetriever.GetProductByIdAsync(Id);
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         foreach (var sc in shoppingCart)

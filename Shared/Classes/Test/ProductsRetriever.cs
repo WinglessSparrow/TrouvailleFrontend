@@ -65,5 +65,13 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public Task<List<ProductModel>> GetProductsInRange(int start, int end) {
             throw new NotImplementedException();
         }
+
+        public int GetNumberProducts() {
+            return 0;
+        }
+
+        public Task<int> GetNumberProductsAsync() {
+            throw new NotImplementedException();
+        }
     }
 }

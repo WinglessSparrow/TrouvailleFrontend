@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 
 namespace TrouvailleFrontend.Shared.Classes.Test {
-    public class ProductsIterator : IProductIterator {
+    public class ProductsIteratorTest : IProductIterator {
         private ProductModel[] _products;
         private int _index = 0;
         private int _numberProductsPerIteration = 7;
+
+        private ProductsNumbersModel _productsNumber = new();
         private HttpClient _http;
 
-        public ProductsIterator(HttpClient http) {
+        public ProductsIteratorTest(HttpClient http) {
             _http = http;
         }
 
@@ -52,6 +54,10 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public async Task<List<ProductModel>> GetProductIndexedAsync(int index) {
             _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
 
+            _productsNumber.NumberOfProduct = _products.Length;
+            _productsNumber.NumberProductsPerIteration = _numberProductsPerIteration;
+
+
             if (index < 0 || index >= _products.Length) return null;
             _index = index;
 
@@ -61,13 +67,8 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
             return CopyArrayToList(offset, limit);
         }
 
-        public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
-            _products = await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json");
-            return new ProductsNumbersModel() { NumberOfProduct = _products.Length, NumberProductsPerIteration = _numberProductsPerIteration };
-        }
-
-        public void InitIterator() {
-            //here be code
+        public ProductsNumbersModel GetProductNumbers() {
+            return _productsNumber;
         }
 
         private List<ProductModel> CopyArrayToList(int from, int to) {
