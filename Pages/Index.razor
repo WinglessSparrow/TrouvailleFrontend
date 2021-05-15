@@ -3,14 +3,13 @@
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Components.Index
 @using TrouvailleFrontend.Components.Shared
-@using TrouvailleFrontend.Shared.Classes
 
 @inject IProductIterator iterator
 
 <div class="page">
     <div class="side-panel">
         <SideMenu>
-            content
+            <SideMenuContentIndex />
         </SideMenu>
     </div>
     <div class="main-container">
@@ -19,7 +18,7 @@
         {
             @foreach (ProductModel p in _products)
             {
-                <ProductSmall product=p />
+                <ProductSmall Product=p />
             }
         }
 

@@ -92,9 +92,6 @@
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
 
-        Console.WriteLine($"cart: {_cartItems.Count()}");
-        Console.WriteLine($"products: {_products.Count()}");
-
         for (int i = 0; i < _cartItems.Count(); i++)
         {
             _totalPrice += _cartItems[i].Cardinality * _products[i].Price;

@@ -1,39 +1,58 @@
 @namespace TrouvailleFrontend.Components.Index
 
+@using Blazorise
 @using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Shared.Classes.Functional
 
 @inject NavigationManager NavMan
 
-<div class="product" @onclick="Do">
-    <img class="product-picture center-flex" src="assets/svg/trouvailleLogoBucketMinimized.svg"
+<div class="product" @onclick="NavigateToProduct">
+    <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
         alt="Image loading Error">
-    @* <img class="product-picture center-flex" src="data:image/png;base64,@product.Picture.ImageData"
-        alt="Image loading Error"> *@
     <div class="info-wrapper">
         <div class="product-name info-field">
-            <p>@product.ProductId</p>
+            <p>@Product.ProductId</p>
         </div>
         <div class="product-stars info-field">
-            <p>@product.Rating</p>
+            @for (int i = 0; i < _starsMax - Product.Rating; i++)
+            {
+                <Icon Name="IconName.Star" />
+            }
+            @for (int i = (_starsMax - Product.Rating); i < _starsMax; i++)
+            {
+                <Icon Name="IconName.Star" class="colored" />
+            }
+
         </div>
         <div class="product-cost info-field">
-            <p>@product.Price</p>
+            <h4><b>@_cost</b></h4>
         </div>
         <div class="product-amount-left info-field">
-            <p>@product.InStock</p>
+            <p>@StockConverter.ParseStockToString(Product.InStock)</p>
         </div>
         <div class="product-short-info info-field">
-            <p>@product.Description</p>
+            <p>@Product.Description</p>
         </div>
     </div>
 </div>
 
 @code{
-    [ParameterAttribute]
-    public ProductModel product { get; set; }
+    private int _starsMax = 5;
 
-    private void Do()
+    private string _cost;
+
+    [Parameter]
+    public ProductModel Product { get; set; }
+
+    protected override void OnInitialized()
     {
-        NavMan.NavigateTo($"/product/{product.ProductId}");
+        _cost = String.Format("{0:C}", Product.Price);
+    }
+
+
+
+    private void NavigateToProduct()
+    {
+        NavMan.NavigateTo($"/product/{Product.ProductId}");
     }
 }

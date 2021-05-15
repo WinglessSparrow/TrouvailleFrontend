@@ -9,13 +9,11 @@
   width: 100%;
 
   background-color: var(--background);
+  background-color: white;
 }
 
 .content {
   display: block;
-
-  /* temp */
-  border: solid 2px yellowgreen;
 
   min-height: 100vh;
 
