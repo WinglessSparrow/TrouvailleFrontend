@@ -97,13 +97,15 @@
 
         _product = await productRetriever.GetProductByIdAsync(Id);
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        foreach (var sc in shoppingCart)
+        if (shoppingCart != default(List<ShoppingCartItemModel>))
         {
-            if (sc.ProductId.Equals(_product.ProductId))
+            foreach (var sc in shoppingCart)
             {
-                _amountInShoppingCart = sc.Cardinality;
+                if (sc.ProductId.Equals(_product.ProductId))
+                {
+                    _amountInShoppingCart = sc.Cardinality;
+                }
             }
         }
-
     }
 }

@@ -1,0 +1,13 @@
+@using Blazorise
+
+<div class="error-message main-container-style">
+    <div class="error-content">
+        @ChildContent
+        <Icon Name="IconName.ExclamationTriangle" />
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

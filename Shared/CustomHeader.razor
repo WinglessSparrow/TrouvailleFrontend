@@ -23,24 +23,29 @@
                 </a>
             </div>
         </div>
+
         @if (_token != null)
         {
-            <div class="dropdown-indicator">
-                <Icon Name="IconName.User" />
-                <div class="dropdown-content">
-                    <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
+            @if (_token.AuthToken != "")
+            {
+                <div class="dropdown-indicator">
+                    <Icon Name="IconName.User" />
+                    <div class="dropdown-content">
+                        <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
+                    </div>
                 </div>
-            </div>
+            }
         }
         else
         {
             <div class="dropdown-indicator">
                 <Icon Name="IconName.Lock" />
                 <div class="dropdown-content">
-                    <a href="/Account">Register
+                    <a href="/Register">Register
                         <i class="fas fa-clipboard-list"></i>
                     </a>
-                    <a href="/Account">Login
+                    @* TODO Login; NOT redirection! *@
+                    <a href="">Login
                         <Icon Name="IconName.Key" />
                     </a>
                 </div>
@@ -51,15 +56,11 @@
 
 
 @code{
-    private TokenModel _token { get; set; } = null;
+    private TokenModel _token { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var temp = await local.GetStorageAsync<TokenModel>("authToken");
-        if (temp != default(TokenModel))
-        {
-            _token = temp;
-        }
+        _token = await local.GetStorageAsync<TokenModel>("authToken");
     }
 
 

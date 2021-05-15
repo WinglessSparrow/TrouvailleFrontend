@@ -27,10 +27,9 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                     jsonString = "{}";
                 }
                 Console.WriteLine("GetStorageAsync(): Either the Key: " + key + " or its Value does not exist");
-                _localStorage = default(T);
-            } else {
-                _localStorage = JsonSerializer.Deserialize<T>(jsonString);
             }
+            
+            _localStorage = JsonSerializer.Deserialize<T>(jsonString);
 
             return _localStorage;
         }

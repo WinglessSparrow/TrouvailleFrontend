@@ -12,36 +12,37 @@
 @inject NavigationManager navMan
 
 <div class="page">
-    <div class="content">
-        @* <EditForm id="order-form" Model=@_order OnValidSubmit="PostOrder"> *@
-        <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder"
+    @if (_cartItems != null && _cartItems.Count() > 0 && _token != null && _token.AuthToken != "")
+    {
+        <div class="content">
+            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder"
             OnInvalidSubmit=@(()=>{Console.WriteLine("Test");})>
-            <ObjectGraphDataAnnotationsValidator />
+                <ObjectGraphDataAnnotationsValidator />
 
-            <div class="addresses">
-                <div class="addresses-input-wrapper">
-                    <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
-                    <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
+                <div class="addresses">
+                    <div class="addresses-input-wrapper">
+                        <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+                        <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
                         IsDisabled=@_isDeliverySameInvoice />
+                    </div>
+                    <label for="address-equal-chck">
+                        <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
+                        Delivery address same as Invoivce address
+                    </label>
                 </div>
-                <label for="address-equal-chck">
-                    <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
-                    Delivery address same as Invoivce address
-                </label>
-            </div>
 
-            <div class="radio-group-container">
-                <h4>Payment Method</h4>
-                <div class="radio-container">
-                    <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
-                        @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
-                        {
-                            var temp = method;
+                <div class="radio-group-container">
+                    <h4>Payment Method</h4>
+                    <div class="radio-container">
+                        <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
+                            @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
+                            {
+                                var temp = method;
                             <div class="radio-wraper">
                                 <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
                                 <label for=@temp>@temp</label>
                             </div>
-                        }
+                            }
                     </InputRadioGroup>
                 </div>
             </div>
@@ -51,29 +52,42 @@
                 <div class="radio-container">
                     <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
                         @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
-                        {
-                            var temp = method;
+                            {
+                                var temp = method;
                             <div class="radio-wraper">
                                 <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
                                 <label for=@temp>@temp</label>
                             </div>
-                        }
+                            }
                     </InputRadioGroup>
                 </div>
             </div>
             <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
         </EditForm>
     </div>
-    <div class="side-menu">
-        <SideMenu>
-            <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
-        </SideMenu>
-    </div>
+        <div class="side-menu">
+            <SideMenu>
+                <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
+            </SideMenu>
+        </div>
+    }
+    else
+    {
+        <ErrorMessage>
+            @if (_cartItems != null && _cartItems.Count() <= 0)
+            {
+                <b>Your shopping cart is empty <br /> please fill it with stuff</b>
+            }
+            @if (_token == null || _token.AuthToken == "")
+            {
+                <b>You are not logged in<br /> please log in</b>
+            }
+        </ErrorMessage>
+    }
 </div>
-
-@* TODO ERROR SYSTEM *@
 @code{
     private EditContext _eContext;
+    private TokenModel _token;
     private double _totalPriceWithoutTax;
     private double _totalPrice;
     private bool _isDeliverySameInvoice = false;
@@ -89,15 +103,20 @@
 
     protected override async Task OnInitializedAsync()
     {
+        _token = await local.GetStorageAsync<TokenModel>("authToken");
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
 
-        for (int i = 0; i < _cartItems.Count(); i++)
+        if (_cartItems != null && _cartItems.Count() > 0)
         {
-            _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
-            //calculating tax
-            double tax = ((double)_products[i].Tax) / 100.0;
-            _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
+            _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+
+            for (int i = 0; i < _cartItems.Count(); i++)
+            {
+                _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
+                //calculating tax
+                double tax = ((double)_products[i].Tax) / 100.0;
+                _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
+            }
         }
     }
 

@@ -12,12 +12,8 @@
   min-height: 200px;
   max-height: 200px;
 
-  background-color: var(--background);
-
   color: black;
   font-size: 1.2rem;
-
-  box-shadow: 1px 1px 4px 0px rgba(136, 136, 136, 0.521);
 }
 
 .product:hover {
