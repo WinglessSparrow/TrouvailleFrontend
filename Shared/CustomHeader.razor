@@ -15,41 +15,51 @@
         <div class="dropdown-indicator">
             <Icon Name="IconName.ShoppingCart" />
             <div class="dropdown-content">
-                <a href="/ShopingCart">Shoping Cart</a>
-                <a href="/Checkout">Checkout</a>
+                <a href="/ShopingCart">Shopping Cart
+                    <Icon Name="IconName.ShoppingBasket" />
+                </a>
+                <a href="/Checkout">Checkout
+                    <Icon Name="IconName.CreditCard" />
+                </a>
             </div>
         </div>
-        @if (Token != null)
+        @if (_token != null)
         {
             <div class="dropdown-indicator">
                 <Icon Name="IconName.User" />
                 <div class="dropdown-content">
-                    <a href="/Account">Account Settings</a>
+                    <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
                 </div>
             </div>
-
         }
         else
         {
             <div class="dropdown-indicator">
                 <Icon Name="IconName.Lock" />
                 <div class="dropdown-content">
-                    <a href="/Login">Login</a>
-                    <a href="/Register">Register</a>
+                    <a href="/Account">Register
+                        <i class="fas fa-clipboard-list"></i>
+                    </a>
+                    <a href="/Account">Login
+                        <Icon Name="IconName.Key" />
+                    </a>
                 </div>
             </div>
         }
     </div>
-    @* </div> *@
 </div>
 
 
 @code{
-    public TokenModel Token { get; set; }
+    private TokenModel _token { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
-        Token = await local.GetStorageAsync<TokenModel>("authToken");
+        var temp = await local.GetStorageAsync<TokenModel>("authToken");
+        if (temp != default(TokenModel))
+        {
+            _token = temp;
+        }
     }
 
 

@@ -10,6 +10,8 @@
 
   background-color: var(--background);
   background-color: white;
+
+  --border-height: 18px;
 }
 
 .content {
@@ -33,4 +35,72 @@
 
 ::deep .center-flex-horizontal {
   justify-content: center;
+}
+
+::deep .button-style {
+  border: none;
+
+  background-color: var(--background-contrast);
+
+  box-shadow: 0px 3px 7px 0px rgba(136, 136, 136, 0.521);
+}
+
+::deep .button-style:hover {
+  background-color: var(--foreground-contrast);
+  color: white;
+}
+
+::deep .button-style:active {
+  outline: none;
+  background-color: var(--foreground);
+}
+
+::deep .button-style:focus {
+  outline: none;
+}
+
+::deep .button-style:hover + .arrow {
+  border-left: solid var(--border-height) var(--foreground-contrast);
+}
+
+::deep .button-style:active + .arrow {
+  outline: none;
+  border-left: solid var(--border-height) var(--foreground);
+}
+
+::deep .button-style:focus + .arrow {
+  outline: none;
+}
+
+::deep .arrow {
+  width: 0;
+  height: 0;
+
+  border-top: solid var(--border-height) transparent;
+  border-bottom: solid var(--border-height) transparent;
+  border-right: solid var(--border-height) transparent;
+  border-left: solid var(--border-height) var(--background-contrast);
+}
+
+::deep .overlay-under-construction {
+  position: absolute;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(206, 206, 206, 0.11);
+
+  box-shadow: inset 0px 0px 10px 1px rgba(0, 0, 0, 0.47);
+}
+
+::deep .overlay-under-construction > p {
+  color: red;
+  transform: rotate(-25deg);
+  font-size: 2.5rem;
+  text-align: center;
 }
