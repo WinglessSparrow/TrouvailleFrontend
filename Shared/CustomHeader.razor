@@ -1,31 +1,45 @@
+@using Blazorise
+
 @inject NavigationManager NavMan
 
-<div class="header center-flex">
-    <div class="grid-main">
-        <div class="logo"><img src="assets/svg/trouvailleLogoFullMinimized.svg" alt="error" @onclick="ToMain"></div>
-        <div class="search-bar center-flex">
-            <label style="margin-right: 30px;">search</label>
-            <input type="text" style="width: 70%;">
-        </div>
-        <div class="variable-icons center-flex">
-            <a class="shoping-cart" href="/checkout">shoping-cart</a>
-            @if (Token != null)
-            {
-                <div class="username">user</div>
-            }
-            else
-            {
-                <div class="login">Login</div>
-                <div class="register">Register</div>
-            }
-            <div class="user"> user-s</div>
-        </div>
+<div class="header">
+    @* <div class="grid-main"> *@
+    <div class="logo"><img src="assets/svg/trouvailleLogoFullMinimized.svg" alt="error" @onclick="ToMain"></div>
+    <div class="search-bar">
+        <input id="search" type="text">
+        <button>
+            <Icon Name="IconName.Search" />
+        </button>
     </div>
+    <div class="variable-icons">
+        <div class="dropdown-indicator">
+            <Icon Name="IconName.ShoppingCart" />
+            <div class="dropdown-content">
+                <a href="/ShopingCart">Shoping Cart</a>
+                <a href="/Checkout">Checkout</a>
+            </div>
+        </div>
+        @if (Token != null)
+        {
+            <div class="username">username</div>
+        }
+        else
+        {
+            <div class="dropdown-indicator">
+                <Icon Name="IconName.Lock" />
+                <div class="dropdown-content">
+                    <a href="/Login">Login</a>
+                    <a href="/Register">Register</a>
+                </div>
+            </div>
+        }
+    </div>
+    @* </div> *@
 </div>
 
 
 @code{
-    [ParameterAttribute]
+    [Parameter]
     public string Token { get; set; }
 
     private void ToMain()

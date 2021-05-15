@@ -1,9 +1,20 @@
 @inherits LayoutComponentBase
 
+<style>
+    :root {
+        --background: #effaf9;
+        --background-contrast: #bdefea;
+        @* --foreground: #3ba99c; *@
+        --foreground: #77bbb3;
+        --foreground-contrast: #278bce;
+        --accent: #8980f5;
+    }
+</style>
+
 <div class="page">
 
     <CustomHeader />
-    
+
     <div class="content center-flex">
         @Body
     </div>
