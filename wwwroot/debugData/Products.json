@@ -6,7 +6,10 @@
     "description": "Cool Brush",
     "rating": "4",
     "inStock": "30",
-    "tax": "3"
+    "tax": "3",
+    "picture": {
+      "ImageData": "oijhdfa09dsapodmas0=-=sa=0asd0-0123kjljas"
+    }
   },
   {
     "productid": "f0f7b8d4-0d2a-4c55-9a94-d91f39a93a1a",

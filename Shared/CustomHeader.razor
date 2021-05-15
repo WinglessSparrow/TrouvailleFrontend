@@ -1,10 +1,10 @@
 @using Blazorise
 
 @inject NavigationManager NavMan
+@inject ILocalStorage local
 
 <div class="header">
-    @* <div class="grid-main"> *@
-    <div class="logo"><img src="assets/svg/trouvailleLogoFullMinimized.svg" alt="error" @onclick="ToMain"></div>
+    <div class="logo" @onclick="ToMain"></div>
     <div class="search-bar">
         <input id="search" type="text">
         <button>
@@ -21,7 +21,13 @@
         </div>
         @if (Token != null)
         {
-            <div class="username">username</div>
+            <div class="dropdown-indicator">
+                <Icon Name="IconName.User" />
+                <div class="dropdown-content">
+                    <a href="/Account">Account Settings</a>
+                </div>
+            </div>
+
         }
         else
         {
@@ -39,8 +45,13 @@
 
 
 @code{
-    [Parameter]
-    public string Token { get; set; }
+    public TokenModel Token { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Token = await local.GetStorageAsync<TokenModel>("authToken");
+    }
+
 
     private void ToMain()
     {
