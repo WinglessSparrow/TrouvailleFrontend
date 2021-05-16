@@ -37,6 +37,8 @@ namespace TrouvailleFrontend {
             // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
             builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
             // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
+            builder.Services.AddTransient<ILogin, LoginTest>();
+            // builder.Services.AddTransient<ILogin, LoginAPI>();
 
 
             await builder.Build().RunAsync();

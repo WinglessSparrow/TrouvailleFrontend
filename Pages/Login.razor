@@ -3,29 +3,26 @@
 @using System.Net;
 @using TrouvailleFrontend.Shared.Models;
 
-@inject ILocalStorage localStorage
-@inject IHttpRequest httpRequest
+@inject ILogin loginer
+
 
 <div class="page">
     <h1>LOGIN PAGE</h1>
 </div>
 
 @code{
+    private bool _isSuccess;
+
     protected override async Task OnInitializedAsync()
     {
-        //Login
-        LoginModel login = new LoginModel() { email = "yavuz@hotmail.com", password = "String.1" };
+        //TODO TEMP DATA
+        LoginModel loginData = new LoginModel() { email = "yavuz@hotmail.com", password = "String.1" };
 
-        var responseLogin = await httpRequest.PostRequestAsync<LoginModel>(ApiPathsCentralDefinition.API_LOGIN, login);
-        if (responseLogin.StatusCode == HttpStatusCode.OK)
-        {
-            AuthResponseMessageModel message = await responseLogin.Content.ReadFromJsonAsync<AuthResponseMessageModel>();
-            if (message.isSuccess)
-            {
-                TokenModel token = new TokenModel() { AuthToken = message.message, expireDate = message.expireDate };
-                await localStorage.SetStorageAsync<TokenModel>("authToken", token);
-            }
+        @*
+            TokenModel token_test = new TokenModel() { AuthToken = "TokenVBalue", expireDate = DateTime.Today.AddDays(5) };
+            await localStorage.SetStorageAsync<TokenModel>("authToken", token_test);
+        *@
 
-        }
+        _isSuccess = await loginer.loginAsync(loginData);
     }
 }

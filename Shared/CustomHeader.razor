@@ -15,27 +15,24 @@
         <div class="dropdown-indicator">
             <Icon Name="IconName.ShoppingCart" />
             <div class="dropdown-content">
-                <a href="/ShopingCart">Shopping Cart
+                <a href='@(_tokenIsValid ? "/ShopingCart" : "/Login")'>Shopping Cart
                     <Icon Name="IconName.ShoppingBasket" />
                 </a>
-                <a href="/Checkout">Checkout
+                <a href='@(_tokenIsValid ? "/Checkout" : "/Login")'>Checkout
                     <Icon Name="IconName.CreditCard" />
                 </a>
             </div>
         </div>
-
-        @if (_token != null)
+        @if (_token != null && _token.AuthToken != "")
         {
-            @if (_token.AuthToken != "")
-            {
-                <div class="dropdown-indicator">
-                    <Icon Name="IconName.User" />
-                    <div class="dropdown-content">
-                        <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
-                    </div>
+            <div class="dropdown-indicator">
+                <Icon Name="IconName.User" />
+                <div class="dropdown-content">
+                    <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
                 </div>
-            }
+            </div>
         }
+
         else
         {
             <div class="dropdown-indicator">
@@ -44,8 +41,7 @@
                     <a href="/Register">Register
                         <i class="fas fa-clipboard-list"></i>
                     </a>
-                    @* TODO Login; NOT redirection! *@
-                    <a href="">Login
+                    <a href="/Login">Login
                         <Icon Name="IconName.Key" />
                     </a>
                 </div>
@@ -57,10 +53,16 @@
 
 @code{
     private TokenModel _token { get; set; }
+    private bool _tokenIsValid;
 
     protected override async Task OnInitializedAsync()
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
+        _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
+        Console.WriteLine(_token);
+        Console.WriteLine(_token.AuthToken);
+        Console.WriteLine(_token.expireDate);
+        Console.WriteLine(DateTime.Today);
     }
 
 

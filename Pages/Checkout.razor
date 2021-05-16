@@ -12,11 +12,11 @@
 @inject NavigationManager navMan
 
 <div class="page">
-    @if (_cartItems != null && _cartItems.Count() > 0 && _token != null && _token.AuthToken != "")
+    @* && _token != null && _token.AuthToken != "" *@
+    @if (_cartItems != null && _cartItems.Count() > 0)
     {
         <div class="content">
-            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder"
-            OnInvalidSubmit=@(()=>{Console.WriteLine("Test");})>
+            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder">
                 <ObjectGraphDataAnnotationsValidator />
 
                 <div class="addresses">
@@ -78,10 +78,10 @@
             {
                 <b>Your shopping cart is empty <br /> please fill it with stuff</b>
             }
-            @if (_token == null || _token.AuthToken == "")
-            {
+            @* @if (_token == null || _token.AuthToken == "")
+                {
                 <b>You are not logged in<br /> please log in</b>
-            }
+                } *@
         </ErrorMessage>
     }
 </div>
