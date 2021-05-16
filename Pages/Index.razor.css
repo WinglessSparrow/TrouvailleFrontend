@@ -9,7 +9,10 @@
   grid-template-columns: 1fr 4fr;
   grid-template-rows: auto 35px;
   grid-template-areas: "side main" "side index";
+
   gap: 10px;
+
+  padding-top: 10px;
 }
 
 .side-panel {

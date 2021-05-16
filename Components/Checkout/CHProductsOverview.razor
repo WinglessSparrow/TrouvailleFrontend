@@ -5,8 +5,8 @@
 
 @* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
 
-<div>
-    <CollapseAccordion Name="Products Overview">
+<div class="main-container-style">
+    <CollapseAccordion Name="Products Overview" IconClasses="fas fa-shopping-basket" IconEnable=true>
         @if (Products != null && ItemData != null)
         {
             @for (int i = 0; i < Products.Count(); i++)
@@ -18,7 +18,7 @@
     </CollapseAccordion>
     <div class="products-overview-under">
         <div class="total">
-            <p>Total: @_totalPrice</p>
+            <b>Total: @_totalPrice</b>
         </div>
     </div>
 </div>

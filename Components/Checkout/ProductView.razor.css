@@ -1,15 +1,15 @@
 .product-view {
-  display: grid;
-  /* flex-direction: row;
+  /* display: grid; */
 
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
   justify-content: flex-start;
-  align-items: center; */
+  align-items: center;
 
   grid-template-columns: 0.3fr minmax(0, 2fr) minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
 
   gap: 30px;
-
-  border: solid 2px blue;
 
   margin-top: 10px;
   margin-bottom: 10px;
@@ -23,8 +23,6 @@
   align-items: center;
 
   height: auto;
-
-  border: solid 2px red;
 }
 
 p {
@@ -34,7 +32,7 @@ p {
 
   text-align: center;
 
-  /* font-size: 1.2rem; */
+  font-size: 1.2rem;
 }
 
 img {
@@ -47,12 +45,17 @@ img {
 }
 
 .product-view p {
-  border: solid green 2px;
+  font-size: 1.5rem;
+}
+
+.product-view p,
+.product-view b {
+  border-bottom: solid 1px var(--accent);
 }
 
 .name {
   grid-column: 2;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
 
   white-space: nowrap;
   overflow-y: clip;

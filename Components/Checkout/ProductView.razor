@@ -6,17 +6,20 @@
         <p>@Name</p>
     </div>
     <div class="price">
-        <p>Price: @_priceCalculated <br /><sub>per item: @_price</sub></p>
+        <p>Price: @_priceCalculated<br />
+            <sub>per item: @_price</sub>
+        </p>
     </div>
     <div class="cardinality">
         <p>Shopping cart: @Cardinality</p>
     </div>
     <div class="stock">
-        <p>Stock: @Stock</p>
+        <p>@_stock</p>
     </div>
 </div>
 
 @code{
+    private string _stock;
     private string _priceCalculated;
     private string _price;
     [Parameter]
@@ -32,5 +35,6 @@
     {
         _priceCalculated = String.Format("{0:C}", Price * Cardinality);
         _price = String.Format("{0:C}", Price);
+        _stock = StockConverter.ParseStockToString(Stock);
     }
 }

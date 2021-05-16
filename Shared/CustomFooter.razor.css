@@ -9,7 +9,7 @@
   padding-right: 10%;
 
   background-color: var(--background);
-  box-shadow: 1px 3px 8px rgba(136, 136, 136, 0.521);
+  box-shadow: 1px -1px 8px rgba(136, 136, 136, 0.521);
 }
 
 a {

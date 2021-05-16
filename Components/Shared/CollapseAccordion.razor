@@ -1,9 +1,25 @@
 @namespace TrouvailleFrontend.Components.Shared
 <div>
     <div class="button-wrapper">
-        <h4>@Name</h4>
-        <button @onclick="Collpase" type="button">@(_isCollapsed ? "expand" : "collapse")</button>
+        <h4>
+            @if (IconEnable)
+            {
+                <i class="@IconClasses"></i>
+            }
+            @Name
+        </h4>
+        <button @onclick="Collpase" type="button">
+            @if (_isCollapsed)
+            {
+                <i class='fas fa-chevron-down'></i>
+            }
+            else
+            {
+                <i class='fas fa-chevron-up'></i>
+            }
+        </button>
     </div>
+
     <div class='collapsable-container @(_isCollapsed ? "collapse" : "")'>@ChildContent</div>
 </div>
 
@@ -12,6 +28,10 @@
     public RenderFragment ChildContent { get; set; }
     [Parameter]
     public string Name { get; set; } = "Collapseable Accordion";
+    [Parameter]
+    public string IconClasses { get; set; }
+    [Parameter]
+    public bool IconEnable { get; set; } = false;
     private bool _isCollapsed = true;
     private void Collpase()
     {

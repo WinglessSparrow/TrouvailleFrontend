@@ -59,10 +59,6 @@
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
-        Console.WriteLine(_token);
-        Console.WriteLine(_token.AuthToken);
-        Console.WriteLine(_token.expireDate);
-        Console.WriteLine(DateTime.Today);
     }
 
 

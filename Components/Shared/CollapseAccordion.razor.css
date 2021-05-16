@@ -3,9 +3,36 @@
 
   padding: 0;
 
-  border: solid 1px black;
+  background-color: var(--background-contrast);
+  border-bottom: solid 1px var(--accent);
   /* animation-name: expand; */
   /* animation-duration: 1s; */
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  width: 5%;
+}
+
+h4 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+button:hover {
+  background-color: var(--foreground-contrast);
+}
+
+button:hover i {
+  color: white;
+}
+
+button:focus {
+  outline: none;
 }
 
 .collapse {
@@ -19,9 +46,11 @@
   flex-direction: row;
   justify-content: space-between;
 
-  width: 100%;
+  padding-left: 10px;
 
-  border: solid 1px black;
+  border-bottom: solid 1px var(--accent);
+
+  width: 100%;
 }
 
 /* WHY DONT YOU WORK!?!??!!??! */
