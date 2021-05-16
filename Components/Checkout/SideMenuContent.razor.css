@@ -3,13 +3,46 @@
   flex-direction: column;
   gap: 20px;
 
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   width: 100%;
   height: 100%;
+
+  padding-bottom: 40px;
+  padding-top: 5px;
+
+  border-top: solid 1px var(--accent);
+  border-bottom: solid 1px var(--accent);
+}
+
+.border {
+  padding: 10px;
 }
 
 p {
   margin: 0;
+}
+
+.submit-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.cost {
+  text-align: center;
+}
+
+.cost b {
+  font-size: 1.3rem;
+  color: var(--foreground-contrast);
+}
+
+button {
+  width: 50%;
+  height: 36px;
 }

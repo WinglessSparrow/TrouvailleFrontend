@@ -34,11 +34,14 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
 
             builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
-            // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
             builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
-            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
             builder.Services.AddTransient<ILogin, LoginTest>();
+            builder.Services.AddTransient<IOrder, OrderTest>();
+
+            // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
+            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
             // builder.Services.AddTransient<ILogin, LoginAPI>();
+            // builder.Services.AddTransient<IOrder, OrderAPI>();
 
 
             await builder.Build().RunAsync();

@@ -1,23 +1,23 @@
 .product-view {
-  /* display: grid; */
-
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 
-  grid-template-columns: 0.3fr minmax(0, 2fr) minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
-
-  gap: 30px;
+  gap: 50px;
 
   margin-top: 10px;
   margin-bottom: 10px;
 
+  padding: 10px;
+
   width: 100%;
+  height: 120px;
+
+  border-left: solid 2px var(--accent);
 }
 
-.product-view > * {
+.product-view > p {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,45 +31,49 @@ p {
   width: 100%;
 
   text-align: center;
-
-  font-size: 1.2rem;
-}
-
-img {
-  grid-column: 1;
-  display: flex;
-
-  width: 100px;
-
-  object-fit: contain;
 }
 
 .product-view p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
-.product-view p,
-.product-view b {
+.product-view p:last-child {
   border-bottom: solid 1px var(--accent);
 }
 
 .name {
-  grid-column: 2;
-  /* font-size: 1.5rem; */
-
-  white-space: nowrap;
-  overflow-y: clip;
-  text-overflow: ellipsis;
+  max-width: 150px;
+  overflow: hidden;
 }
 
-.price {
-  grid-column: 3 / 4;
+.name > p {
+  font-size: 1.5rem;
+  /* max-width: 100%; */
+
+  /* white-space: nowrap; */
+  /* ?  text-overflow: ellipsis; */
+  overflow: clip;
 }
 
-.cardinality {
-  grid-column: 4;
+img {
+  display: flex;
+
+  width: 100px;
+  height: 100px;
+
+  object-fit: contain;
 }
 
-.stock {
-  grid-column: 5;
+.warning {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  height: 100%;
+}
+
+.warning i {
+  text-align: center;
+  color: red;
+  font-size: 1.8rem;
 }

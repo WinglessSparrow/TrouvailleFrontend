@@ -8,8 +8,9 @@
 
 @inject ILocalStorage local
 @inject IProductsRetriever productsRetriever
-@inject IHttpRequest http
 @inject NavigationManager navMan
+@inject IOrder orderer
+@inject IJSRuntime js
 
 <div class="page">
     @if (_cartItems != null && _cartItems.Count() > 0)
@@ -128,6 +129,47 @@
 
     protected async Task PostOrder()
     {
+        bool isOrderSucess = true;
+
+        isOrderSucess = CheckStock();
+        //TODO fail message
+        if (isOrderSucess)
+        {
+            isOrderSucess = await orderer.OrderAsync(PrepareOrder());
+
+            if (isOrderSucess)
+            {
+                await local.RemoveStorageAsync("shoppingCart");
+                navMan.NavigateTo("/Thanks");
+            }
+            else
+            {
+                await js.InvokeVoidAsync("alert", "Something went wrong on the Network!");
+            }
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", "Some items are not in Stock!");
+        }
+    }
+
+    private bool CheckStock()
+    {
+        bool everythingInStock = true;
+        foreach (var p in _products)
+        {
+            if (p.InStock <= 0)
+            {
+                everythingInStock = false;
+                break;
+            }
+        }
+
+        return everythingInStock;
+    }
+
+    private OrderModel PrepareOrder()
+    {
         _order.Products = _cartItems;
 
         //deep copy of the object
@@ -136,12 +178,6 @@
 
         if (_isDeliverySameInvoice) objectToSend.DeliveryAddress = null;
 
-        var response = await http.PostRequestAsync<OrderModel>($"{ApiPathsCentralDefinition.API_ORDER}", objectToSend);
-        await local.RemoveStorageAsync("shoppingCart");
-
-        _order = new();
-
-        //TODO Navigate to thank you page or error, depending on the recieved code
-        navMan.NavigateTo("");
+        return objectToSend;
     }
 }
