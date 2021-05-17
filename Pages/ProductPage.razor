@@ -73,29 +73,39 @@
     private string _price;
     private ProductModel _product;
     private int _amountInShoppingCart = 0;
-
-    List<ShoppingCartItemModel> shoppingCart = new List<ShoppingCartItemModel>();
+    private List<ShoppingCartItemModel> _shoppingCart = new List<ShoppingCartItemModel>();
 
 
     public async void addToCart()
     {
         bool alreadyInShoppingCart = false;
-        foreach (var item in shoppingCart)
+        bool inStock = _product.InStock > 0;
+        foreach (var item in _shoppingCart)
         {
             if (item.ProductId.Equals(_product.ProductId))
             {
-                alreadyInShoppingCart = true;
-                item.Cardinality += Amount;
-                _amountInShoppingCart = item.Cardinality;
+                Console.WriteLine(_product.InStock);
+                Console.WriteLine(item.Cardinality);
+                inStock = _product.InStock > item.Cardinality;
+                if(inStock){
+                    alreadyInShoppingCart = true;
+                    item.Cardinality += Amount;
+                    _amountInShoppingCart = item.Cardinality;
+                } else {
+                    await JSRuntime.InvokeVoidAsync("alert", "Cannot add more items than already available in stock");
+                }
             }
         }
-        if (!alreadyInShoppingCart)
+
+        if (!alreadyInShoppingCart && inStock)
         {
-            shoppingCart.Add(new ShoppingCartItemModel() { ProductId = _product.ProductId, Cardinality = Amount });
+            _shoppingCart.Add(new ShoppingCartItemModel() { ProductId = _product.ProductId, Cardinality = Amount });
             _amountInShoppingCart += Amount;
+        } else {
+            await JSRuntime.InvokeVoidAsync("alert", "Cannot add more items than already available in stock");
         }
 
-        await localStorage.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", shoppingCart);
+        await localStorage.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", _shoppingCart);
 
     }
 
@@ -103,9 +113,9 @@
     protected override async Task OnInitializedAsync()
     {
         _product = await productRetriever.GetProductByIdAsync(Id);
-        shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        _shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
 
-        foreach (var sc in shoppingCart)
+        foreach (var sc in _shoppingCart)
         {
             if (sc.ProductId.Equals(_product.ProductId))
             {
