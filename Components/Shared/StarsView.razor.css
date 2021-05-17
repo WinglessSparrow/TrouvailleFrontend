@@ -1,0 +1,16 @@
+.stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--foreground);
+}
+
+::deep .transparent {
+  -webkit-text-stroke: 1px black;
+  color: transparent;
+}
+
+::deep .colored {
+  text-shadow: 3px 2px 5px rgba(46, 230, 243, 0.555);
+}

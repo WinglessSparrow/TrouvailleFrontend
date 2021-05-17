@@ -1,6 +1,7 @@
 @page "/product/{Id}"
 
 @using System.Collections.Generic
+@using TrouvailleFrontend.Components.Shared
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes.Interfaces
 
@@ -12,40 +13,48 @@
 
 <div>
     <div class="product">
+        @if (_product != null)
+        {
+            <div class="product-image main-container-style">
+                <img class="product-picture center-flex" src="data:image/png;base64,@_product.Picture.ImageData"
+                alt="Image loading Error">
+            </div>
 
-        <div class="productLeft">
-            <div class="pImage">
-                <img class="pLogo" src="assets/svg/trouvailleLogoBucketMinimized.svg" alt="">
+            <div class="product-description main-container-style">
+                <div class="product-name">
+                    <h1>@_product.Name</h1>
+                </div>
+                <h3>Description:</h3>
+                <div class="description-wrapper">
+                    <section>@_product.Description</section>
+                </div>
             </div>
-        </div>
 
-        <div class="productMiddle">
-            <div class="productName">
-                <h1>Produktname ID: @Id</h1>
+            <div class="product-controls main-container-style">
+                <div class="stars">
+                    <StarsView Product=_product Classes="product-stars" />
+                </div>
+                <div class="price">
+                    <h2>Price: @_price</h2>
+                </div>
+                <div class="stock">
+                    <h4>@_stock</h4>
+                </div>
+                <div class="number-in-shopping-cart">
+                    <h4>In
+                        <Icon Name="IconName.ShoppingCart" />: @_amountInShoppingCart
+                    </h4>
+                </div>
+                <div class="to-shopping-cart">
+                    <button class="button-style" @onclick="@addToCart">
+                        <Icon Name="IconName.CartPlus" />
+                    </button>
+                </div>
             </div>
-            <div class="productDesciption">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, vitae facere id asperiores aperiam
-                    beatae inventore. Ipsa obcaecati est quasi doloribus animi qui voluptates fugit architecto, vero
-                    unde natus neque molestiae? Deserunt a nulla nostrum aperiam voluptatibus dolor sint quae nam?</p>
-            </div>
-        </div>
-
-        <div class="productRight">
-            <div class="price">
-                <p>19,99 €</p>
-            </div>
-            <div class="stock">
-                <p>Vorrätig</p>
-            </div>
-            <div class="amountToAdd">
-                <input type="number" min="1" max="20" value="1"
-                    @onchange="@((ChangeEventArgs e) => Amount = int.Parse((string) e.Value))" />
-            </div>
-            <div class="toSCart">
-                <button class="btn-toSCart" @onclick="@addToCart">In den Warenkorb</button>
-            </div>
-            <div class="amountInSC">
-                <p>Anzahl im Warenkorb: @_amountInShoppingCart</p>
+        }
+        <div class="product-rating main-container-style">
+            <div class="overlay-under-construction">
+                <p>Under Construction</p>
             </div>
         </div>
     </div>
@@ -58,11 +67,12 @@
 @code {
     [Parameter]
     public string Id { get; set; }
+    public int Amount { get; set; } = 1;
 
-
+    private string _stock;
+    private string _price;
     private ProductModel _product;
     private int _amountInShoppingCart = 0;
-    public int Amount { get; set; } = 1;
 
     List<ShoppingCartItemModel> shoppingCart = new List<ShoppingCartItemModel>();
 
@@ -92,20 +102,19 @@
 
     protected override async Task OnInitializedAsync()
     {
-        @* var response = await httpRequest.GetRequestAsync("debugData/Product.json");
-            product = await response.Content.ReadFromJsonAsync<ProductModel>(); *@
-
         _product = await productRetriever.GetProductByIdAsync(Id);
         shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        if (shoppingCart != default(List<ShoppingCartItemModel>))
+
+        foreach (var sc in shoppingCart)
         {
-            foreach (var sc in shoppingCart)
+            if (sc.ProductId.Equals(_product.ProductId))
             {
-                if (sc.ProductId.Equals(_product.ProductId))
-                {
-                    _amountInShoppingCart = sc.Cardinality;
-                }
+                _amountInShoppingCart = sc.Cardinality;
             }
         }
+
+        _stock = StockConverter.ParseStockToString(_product.InStock);
+
+        _price = String.Format("{0:C}", _product.Price);
     }
 }

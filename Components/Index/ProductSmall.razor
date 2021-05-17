@@ -1,6 +1,7 @@
 @namespace TrouvailleFrontend.Components.Index
 
 @using Blazorise
+@using TrouvailleFrontend.Components.Shared
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes.Functional
 
@@ -13,25 +14,13 @@
         <div class="product-name info-field">
             <p>@Product.Name</p>
         </div>
-        <div class="product-stars info-field">
-            @for (int i = (_starsMax - Product.Rating); i < _starsMax; i++)
-            {
-                <Icon Name="IconName.Star" class="colored" />
-            }
-            @for (int i = 0; i < _starsMax - Product.Rating; i++)
-            {
-                <Icon Name="IconName.Star" class="transparent" />
-            }
-        </div>
+        <StarsView Product=Product Classes="product-stars info-field" />
         <div class="product-cost info-field">
             <h4><b>@_cost</b></h4>
         </div>
         <div class="product-amount-left info-field">
             <p>@StockConverter.ParseStockToString(Product.InStock)</p>
         </div>
-        @* <div class="product-short-info info-field">
-            <p>@Product.Description</p>
-            </div> *@
         <div class="to-product info-field">
             <button class="button-style" @onclick="NavigateToProduct">To Product</button>
             <div class="arrow"></div>
@@ -40,8 +29,6 @@
 </div>
 
 @code{
-    private int _starsMax = 5;
-
     private string _cost;
 
     [Parameter]

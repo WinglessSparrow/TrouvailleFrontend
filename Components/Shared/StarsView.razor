@@ -1,0 +1,21 @@
+@namespace TrouvailleFrontend.Components.Shared
+
+<div class="@Classes stars">
+    @for (int i = (_starsMax - Product.Rating); i < _starsMax; i++)
+    {
+        <Icon Name="IconName.Star" class="colored" />
+    }
+    @for (int i = 0; i < _starsMax - Product.Rating; i++)
+    {
+        <Icon Name="IconName.Star" class="transparent" />
+    }
+</div>
+
+@code{
+    private int _starsMax = 5;
+
+    [Parameter]
+    public ProductModel Product { get; set; }
+    [Parameter]
+    public string Classes { get; set; }
+}
