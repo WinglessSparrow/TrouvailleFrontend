@@ -1,0 +1,65 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 200px;
+
+  width: 100%;
+  height: 100vh;
+}
+
+::deep .form > form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 20px;
+
+  width: 300px;
+  height: auto;
+
+  padding: 20px;
+}
+
+::deep form > div {
+  width: 100%;
+}
+
+button {
+  margin-top: 20%;
+
+  width: 100%;
+  height: 40px;
+}
+
+::deep button > i {
+  margin-left: 10px;
+}
+
+::deep input {
+  border: none;
+
+  width: 100%;
+  height: 40px;
+
+  border-bottom: solid 1px var(--accent);
+
+  box-shadow: inset 2px -2px 2px 0px rgba(182, 181, 181, 0.24);
+}
+
+::deep input:focus {
+  outline: none;
+}
+
+::deep input {
+    border: none;
+  
+    width: 100%;
+    height: 40px;
+  
+    border-bottom: solid 1px var(--accent);
+  
+    box-shadow: inset 2px -2px 2px 0px rgba(182, 181, 181, 0.24);
+  }

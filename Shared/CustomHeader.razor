@@ -2,12 +2,13 @@
 
 @inject NavigationManager NavMan
 @inject ILocalStorage local
+@inject IJSRuntime js
 
 <div class="header">
     <div class="logo" @onclick="ToMain"></div>
     <div class="search-bar">
         <input id="search" type="text">
-        <button>
+        <button @onclick="Search">
             <Icon Name="IconName.Search" />
         </button>
     </div>
@@ -23,7 +24,7 @@
                 </a>
             </div>
         </div>
-        @if (_token != null && _token.AuthToken != "")
+        @if (_tokenIsValid)
         {
             <div class="dropdown-indicator">
                 <Icon Name="IconName.User" />
@@ -32,7 +33,6 @@
                 </div>
             </div>
         }
-
         else
         {
             <div class="dropdown-indicator">
@@ -58,12 +58,17 @@
     protected override async Task OnInitializedAsync()
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
+        Console.WriteLine(_token.AuthToken);
+        Console.WriteLine(_token.expireDate);
+        Console.WriteLine(_token.expireDate > DateTime.Today);
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
     }
-
-
     private void ToMain()
     {
         NavMan.NavigateTo("/");
+    }
+    private void Search()
+    {
+        js.InvokeVoidAsync("alert", "Search is under construction ¯\\_(ツ)_/¯");
     }
 }

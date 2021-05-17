@@ -1,28 +1,49 @@
 @page "/login"
 
-@using System.Net;
-@using TrouvailleFrontend.Shared.Models;
+@using TrouvailleFrontend.Shared.Models
 
 @inject ILogin loginer
+@inject NavigationManager navMan
+@inject IJSRuntime js
 
-
-<div class="page">
-    <h1>LOGIN PAGE</h1>
+<div class="login-content">
+    <div class="form">
+        <EditForm Model="@_loginModel" class="main-container-style" OnValidSubmit="LoginAsync">
+            <DataAnnotationsValidator />
+            <div>
+                <label for="email">Email: </label><br />
+                <InputText id="email" type="email" @bind-Value=_loginModel.Email
+                    @bind-Value-oninput=_loginModel.Email />
+            </div>
+            <div>
+                <label for="password">Password:</label><br />
+                <InputText id="password" type="password" @bind-Value=_loginModel.Password
+                    @bind-Value-oninput=_loginModel.Password />
+            </div>
+            <button type="submit" class="button-style">Log in
+                <Icon Name="IconName.Key" />
+            </button>
+        </EditForm>
+    </div>
 </div>
 
 @code{
-    private bool _isSuccess;
+    private bool _isSuccess = false;
+    private LoginModel _loginModel = new LoginModel();
 
-    protected override async Task OnInitializedAsync()
+    private async Task LoginAsync()
     {
-        //TODO TEMP DATA
-        LoginModel loginData = new LoginModel() { email = "yavuz@hotmail.com", password = "String.1" };
+        Console.WriteLine("loggingin");
 
-        @*
-            TokenModel token_test = new TokenModel() { AuthToken = "TokenVBalue", expireDate = DateTime.Today.AddDays(5) };
-            await localStorage.SetStorageAsync<TokenModel>("authToken", token_test);
-        *@
+        _isSuccess = await loginer.loginAsync(_loginModel);
 
-        _isSuccess = await loginer.loginAsync(loginData);
+        if (_isSuccess)
+        {
+            navMan.NavigateTo("/");
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", "Login Failed, check the data and try again");
+        }
     }
 }
