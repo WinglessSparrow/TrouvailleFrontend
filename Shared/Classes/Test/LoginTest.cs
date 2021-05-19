@@ -11,7 +11,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
             _storage = storage;
         }
 
-        public async Task<bool> loginAsync(LoginModel loginData) {
+        public async Task<bool> LoginAsync(LoginModel loginData) {
 
             TokenModel token_test = new TokenModel() { AuthToken = "TokenValue", expireDate = DateTime.Today.AddDays(5) };
             await _storage.SetStorageAsync<TokenModel>("authToken", token_test);

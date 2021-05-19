@@ -1,57 +1,115 @@
 @page "/register"
 
+@using TrouvailleFrontend.Components.Checkout
+@using Blazorise
+
+@inject IRegister registerer
+
 <div class="page">
     <div class="main-container-style register">
-        <EditForm Model=@_registerData>
-            <DataAnnotationsValidator />
+
+        <h1>Register</h1>
+
+        <EditForm EditContext=@_registerContext OnValidSubmit="SubmitFormAsync">
+            <ObjectGraphDataAnnotationsValidator />
             <div class="input-group">
                 <h4>Personal Data</h4>
-                <InputText id="first-name" @bind-Value=_registerData.FirstName
-                    @bind-Value-oninput=_registerData.FirstName placeholder="First Name" />
-                <InputText id="last-name" @bind-Value=_registerData.LastName @bind-Value-oninput=_registerData.LastName
-                    placeholder="Surname" />
-                <InputText type="phone" id="phone-number" @bind-Value=_registerData.PhoneNumber class="not-required"
-                    @bind-Value-oninput=_registerData.PhoneNumber placeholder="Phonenumber" />
+                <InputText id="first-name" @bind-Value=_registerData.RegisterModel.FirstName
+                    @bind-Value-oninput=_registerData.RegisterModel.FirstName placeholder="First Name" />
+                <InputText id="last-name" @bind-Value=_registerData.RegisterModel.LastName
+                    @bind-Value-oninput=_registerData.RegisterModel.LastName placeholder="Surname" />
+                <div class="tooltip-trigger">
+                    <InputText type="phone" id="phone-number" @bind-Value=_registerData.RegisterModel.PhoneNumber
+                        class="not-required" @bind-Value-oninput=_registerData.RegisterModel.PhoneNumber
+                        placeholder="Phonenumber" />
+                    <div class="tooltip-custom"><b>Not Required</b></div>
+                </div>
                 <div>
-                    <ValidationMessage For="@(() => _registerData.FirstName)" />
-                    <ValidationMessage For="@(() => _registerData.LastName)" />
-                    <ValidationMessage For="@(() => _registerData.PhoneNumber)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.FirstName)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.LastName)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.PhoneNumber)" />
                 </div>
             </div>
 
             <div class="input-group">
                 <h4>Login Data</h4>
-                <InputText type="email" @bind-Value=_registerData.Email @bind-Value-oninput=_registerData.Email
-                    placeholder="Email" />
-                <InputText type="password" @bind-Value=_registerData.Password @bind-Value-oninput=_registerData.Password
-                    placeholder="Password" />
-                <InputText type="password" @bind-Value=_registerData.ConfirmPassword
-                    @bind-Value-oninput=_registerData.ConfirmPassword placeholder="Confirm Password" />
+                <InputText type="email" @bind-Value=_registerData.RegisterModel.Email
+                    @bind-Value-oninput=_registerData.RegisterModel.Email placeholder="Email" />
+                <InputText type="password" @bind-Value=_registerData.RegisterModel.Password
+                    @bind-Value-oninput=_registerData.RegisterModel.Password placeholder="Password" />
+                <InputText type="password" @bind-Value=_registerData.RegisterModel.ConfirmPassword
+                    @bind-Value-oninput=_registerData.RegisterModel.ConfirmPassword placeholder="Confirm Password" />
                 <div>
-                    <ValidationMessage For="@(() => _registerData.ConfirmPassword)" />
-                    <ValidationMessage For="@(() => _registerData.Password)" />
-                    <ValidationMessage For="@(() => _registerData.Email)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.ConfirmPassword)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.Password)" />
+                    <ValidationMessage For="@(() => _registerData.RegisterModel.Email)" />
                 </div>
             </div>
 
             <div class="input-group">
-                <Address AddressFor="Address" @bind-AddressM=_addressData />
+                <Address AddressFor="Address" @bind-AddressM=_registerData.AddressModel />
                 <div>
-                    <ValidationMessage For="@(() => _addressData.CityName)" />
-                    <ValidationMessage For="@(() => _addressData.State)" />
-                    <ValidationMessage For="@(() => _addressData.PostalCode)" />
-                    <ValidationMessage For="@(() => _addressData.Street)" />
-                    <ValidationMessage For="@(() => _addressData.StreetNumber)" />
-                    <ValidationMessage For="@(() => _addressData.Country)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.CityName)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.State)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.PostalCode)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.Street)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.StreetNumber)" />
+                    <ValidationMessage For="@(() => _registerData.AddressModel.Country)" />
                 </div>
+            </div>
+
+            <div class="input-group">
+                <button type="submit" class="button-style">
+                    <span>
+                        <i class="fas fa-user-plus "></i>
+                    </span>
+                </button>
             </div>
         </EditForm>
     </div>
-
 </div>
 
+<button @onclick=ShowModal>Show Modal</button>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered="true">
+        <ModalHeader>
+            <ModalTitle>Error Occured</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+
+        </ModalBody>
+        <ModalFooter>
+
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
 @code{
-    private RegisterModel _registerData = new();
-    private AddressModel _addressData = new();
+
+    private Modal modalRef;
+
+    private void ShowModal()
+    {
+        modalRef.Show();
+    }
+
+    private RegisterContext _registerData;
+    private EditContext _registerContext;
+    private bool _registerSuccess = false;
+    protected override void OnInitialized()
+    {
+        _registerData = new();
+        _registerContext = new(_registerData);
+    }
+
+    private async void SubmitFormAsync()
+    {
+        _registerData.PrepareRegisterModel();
+        _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
+        //TODO ERROR handling
+    }
+
 
 }

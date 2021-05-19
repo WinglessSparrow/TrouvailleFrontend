@@ -17,7 +17,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _storage = storage;
         }
 
-        public async Task<bool> loginAsync(LoginModel loginData) {
+        public async Task<bool> LoginAsync(LoginModel loginData) {
             var responseLogin = await _requester.PostRequestAsync<LoginModel>(ApiPathsCentralDefinition.API_LOGIN, loginData);
             if (responseLogin.StatusCode == HttpStatusCode.OK) {
                 AuthResponseMessageModel message = await responseLogin.Content.ReadFromJsonAsync<AuthResponseMessageModel>();

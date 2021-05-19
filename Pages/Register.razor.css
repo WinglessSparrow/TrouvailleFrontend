@@ -5,11 +5,31 @@
 
   width: 100%;
 
-  padding-right: 25%;
-  padding-left: 25%;
+  padding-right: 20vw;
+  padding-left: 20vw;
 }
 
 .register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 20px;
+}
+
+.register > h1 {
+  text-align: center;
+
+  margin-bottom: 40px;
+
+  border-bottom: solid 1px var(--accent);
+  width: 80%;
+}
+
+.register button {
+  height: 40px;
+  margin-top: 40px;
 }
 
 ::deep .register * {
@@ -29,10 +49,8 @@
   align-items: center;
   flex-direction: column;
 
-  padding: 20px;
-
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 50px;
+  padding-right: 50px;
 
   gap: 10px;
 }
@@ -47,4 +65,30 @@
 
 ::deep .not-required {
   border-left: solid 3px var(--accent);
+}
+
+.tooltip-trigger {
+  position: relative;
+}
+
+::deep .tooltip-trigger:hover > .tooltip-custom {
+  visibility: visible;
+}
+
+::deep .tooltip-custom {
+  visibility: hidden;
+
+  position: absolute;
+  top: 120%;
+  left: 1%;
+  z-index: 1;
+
+  width: auto;
+  height: auto;
+  padding: 5px;
+
+  background-color: var(--background-contrast);
+  box-shadow: 1px 1px 4px 0px rgb(136, 136, 136, 52%);
+
+  /* transition: 0.5s; */
 }
