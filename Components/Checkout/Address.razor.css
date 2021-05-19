@@ -7,28 +7,6 @@
   height: auto;
 }
 
-::deep input[type="number"],
-::deep input,
-::deep select {
-  border: none;
-
-  border-bottom: solid 1px var(--accent);
-
-  box-shadow: inset 2px -2px 2px 0px rgba(182, 181, 181, 0.24);
-}
-
-::deep input[type="number"]:focus,
-::deep input:focus,
-::deep select:focus {
-  outline: none;
-}
-
-::deep input[type="number"]:disabled,
-::deep input:disabled,
-::deep select:disabled {
-  border-bottom: solid 1px red;
-}
-
 .header {
   grid-column: 1 / 7;
   grid-row: 1;

@@ -1,0 +1,50 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  padding-right: 25%;
+  padding-left: 25%;
+}
+
+.register {
+}
+
+::deep .register * {
+  width: 100%;
+}
+
+::deep form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 20px;
+
+  padding-left: 100px;
+  padding-right: 100px;
+
+  gap: 10px;
+}
+
+.input-group > h4 {
+  text-align: center;
+}
+
+::deep .validation-message {
+  font-size: 12px;
+}
+
+::deep .not-required {
+  border-left: solid 3px var(--accent);
+}

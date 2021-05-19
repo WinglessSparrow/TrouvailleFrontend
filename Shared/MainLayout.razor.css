@@ -109,3 +109,25 @@
   background-color: var(--background);
   box-shadow: 1px 1px 4px 0px rgba(136, 136, 136, 0.521);
 }
+
+::deep input[type="number"],
+::deep input,
+::deep select {
+  border: none;
+
+  border-bottom: solid 1px var(--accent);
+
+  box-shadow: inset 2px -2px 2px 0px rgba(182, 181, 181, 0.24);
+}
+
+::deep input[type="number"]:focus,
+::deep input:focus,
+::deep select:focus {
+  outline: none;
+}
+
+::deep input[type="number"]:disabled,
+::deep input:disabled,
+::deep select:disabled {
+  border-bottom: solid 1px red;
+}
