@@ -10,7 +10,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
     public class ProductsIteratorTest : IProductIterator {
         private ProductModel[] _products;
         private int _index = 0;
-        private int _numberProductsPerIteration = 7;
+        private int _numberProductsPerIteration = 8;
 
         private ProductsNumbersModel _productsNumber = new();
         private HttpClient _http;

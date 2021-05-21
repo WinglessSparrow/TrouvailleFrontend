@@ -5,7 +5,5 @@
   width: 100%;
   min-height: 200px;
 
-  background-color: var(--background);
-
   box-shadow: 1px 1px 4px 0px rgba(136, 136, 136, 0.521);
 }

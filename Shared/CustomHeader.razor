@@ -5,48 +5,54 @@
 @inject IJSRuntime js
 
 <div class="header">
-    <div class="logo" @onclick="ToMain"></div>
-    <div class="search-bar">
-        <input id="search" type="text">
-        <button @onclick="Search">
+    <div class="header-content">
+        <div class="logo" @onclick="ToMain"></div>
+        @* <div class="search-bar">
+
+            <button @onclick="Search">
             <Icon Name="IconName.Search" />
-        </button>
-    </div>
-    <div class="variable-icons">
-        <div class="dropdown-indicator">
-            <Icon Name="IconName.ShoppingCart" />
-            <div class="dropdown-content">
-                <a href='@(_tokenIsValid ? "/ShopingCart" : "/Login")'>Shopping Cart
-                    <Icon Name="IconName.ShoppingBasket" />
-                </a>
-                <a href='@(_tokenIsValid ? "/Checkout" : "/Login")'>Checkout
-                    <Icon Name="IconName.CreditCard" />
-                </a>
+            </button>
+            </div> *@
+        <div class="variable-icons">
+            <div class="search-bar">
+                <input id="search" type="text" placeholder="Search">
+                <Icon Name="IconName.Search"/>
             </div>
+            <div class="dropdown-indicator">
+                <Icon Name="IconName.ShoppingCart" />
+                <div class="dropdown-content">
+                    <a href='@(_tokenIsValid ? "/ShopingCart" : "/Login")'>Shopping Cart
+                        <Icon Name="IconName.ShoppingBasket" />
+                    </a>
+                    <a href='@(_tokenIsValid ? "/Checkout" : "/Login")'>Checkout
+                        <Icon Name="IconName.CreditCard" />
+                    </a>
+                </div>
+            </div>
+            @if (_tokenIsValid)
+            {
+                <div class="dropdown-indicator">
+                    <Icon Name="IconName.User" />
+                    <div class="dropdown-content">
+                        <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="dropdown-indicator">
+                    <Icon Name="IconName.Lock" />
+                    <div class="dropdown-content">
+                        <a href="/Register">Register
+                            <i class="fas fa-clipboard-list"></i>
+                        </a>
+                        <a href="/Login">Login
+                            <Icon Name="IconName.Key" />
+                        </a>
+                    </div>
+                </div>
+            }
         </div>
-        @if (_tokenIsValid)
-        {
-            <div class="dropdown-indicator">
-                <Icon Name="IconName.User" />
-                <div class="dropdown-content">
-                    <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="dropdown-indicator">
-                <Icon Name="IconName.Lock" />
-                <div class="dropdown-content">
-                    <a href="/Register">Register
-                        <i class="fas fa-clipboard-list"></i>
-                    </a>
-                    <a href="/Login">Login
-                        <Icon Name="IconName.Key" />
-                    </a>
-                </div>
-            </div>
-        }
     </div>
 </div>
 

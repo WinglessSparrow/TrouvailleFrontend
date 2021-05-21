@@ -28,9 +28,9 @@
 
     </div>
     <div class="indexed-navigation">
-        <button @onclick="prev" disabled="@_prevButton" class="button-style ">
+        <button @onclick="prev" disabled="@_prevButton" class="next-prev-button">
             <Icon Name="IconName.ArrowLeft" />
-            prev
+            @* prev *@
         </button>
         <div class="page-numbers-container">
             @if (_numbers != null)
@@ -42,8 +42,8 @@
                 }
             }
         </div>
-        <button @onclick="next" disabled="@_nextButton" class="button-style">
-            next
+        <button @onclick="next" disabled="@_nextButton" class="next-prev-button">
+            @* next *@
             <Icon Name="IconName.ArrowRight" />
         </button>
     </div>

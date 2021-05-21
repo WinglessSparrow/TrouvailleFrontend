@@ -7,23 +7,25 @@
 
 @inject NavigationManager NavMan
 
-<div class="product main-container-style">
-    <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
-        alt="Image loading Error">
-    <div class="info-wrapper">
-        <div class="product-name info-field">
-            <p>@Product.Name</p>
-        </div>
-        <StarsView Product=Product Classes="product-stars info-field" />
-        <div class="product-cost info-field">
-            <h4><b>@_cost</b></h4>
-        </div>
-        <div class="product-amount-left info-field">
-            <p>@StockConverter.ParseStockToString(Product.InStock)</p>
-        </div>
-        <div class="to-product info-field">
-            <button class="button-style" @onclick="NavigateToProduct">To Product</button>
-            <div class="arrow"></div>
+<div class="size-wrapper" @onclick="NavigateToProduct">
+    <div class="product main-container-style">
+        <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
+            alt="Image loading Error">
+        <div class="info-wrapper">
+            <div class="product-name info-field">
+                <b>@Product.Name</b>
+            </div>
+            <StarsView Product=Product Classes="product-stars info-field" />
+            <div class="product-cost info-field">
+                <b>@_cost</b>
+            </div>
+            <div class="product-amount-left info-field">
+                <p>@StockConverter.ParseStockToString(Product.InStock)</p>
+            </div>
+            @* <div class="to-product info-field">
+                <button class="button-style" @onclick="NavigateToProduct">To Product</button>
+                <div class="arrow"></div>
+            </div> *@
         </div>
     </div>
 </div>
@@ -38,8 +40,6 @@
     {
         _cost = String.Format("{0:C}", Product.Price);
     }
-
-
 
     private void NavigateToProduct()
     {

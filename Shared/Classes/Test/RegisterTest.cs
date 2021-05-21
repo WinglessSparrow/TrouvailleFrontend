@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.API;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 using TrouvailleFrontend.Shared.Models;
+using System.Net;
 
 namespace TrouvailleFrontend.Shared.Classes.Test {
     public class RegisterTest : IRegister {
@@ -16,9 +17,14 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
 
         public async Task<bool> RegisterAsync(RegisterModel _registerData) {
 
-            await _http.PostRequestAsync<RegisterModel>("https://localhost", _registerData);
-
-            return true;
+            try {
+                HttpResponseMessage response = await _http.PostRequestAsync<RegisterModel>("https://localhost", _registerData);
+                if (response.StatusCode == HttpStatusCode.OK) return true;
+                //TODO handle all possible messages
+                return false;
+            } catch (HttpRequestException e) {
+                return false;
+            }
         }
     }
 }
