@@ -9,8 +9,10 @@
 
 <div class="size-wrapper" @onclick="NavigateToProduct">
     <div class="product main-container-style">
-        <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
-            alt="Image loading Error">
+        <div class="product-picture-wrapper">
+            <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
+                alt="Image loading Error">
+        </div>
         <div class="info-wrapper">
             <div class="product-name info-field">
                 <b>@Product.Name</b>
@@ -25,7 +27,7 @@
             @* <div class="to-product info-field">
                 <button class="button-style" @onclick="NavigateToProduct">To Product</button>
                 <div class="arrow"></div>
-            </div> *@
+                </div> *@
         </div>
     </div>
 </div>

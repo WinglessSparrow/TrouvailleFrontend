@@ -3,16 +3,17 @@
   flex-direction: column;
   gap: 0;
 }
+
 .collapsable-container {
   height: auto;
 
   padding: 0;
 
-  background-color: var(--background-contrast);
   border-bottom: solid 1px var(--accent);
 
   padding-left: 10px;
   padding-right: 10px;
+
   /* animation-name: expand; */
   /* animation-duration: 1s; */
 }

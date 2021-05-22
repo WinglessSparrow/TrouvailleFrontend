@@ -4,6 +4,7 @@
         "Rechnung",
         "Vorkasse",
         "collapsable",
+        "minmax",
         "productid",
         "shmp"
     ]

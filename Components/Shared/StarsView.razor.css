@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
 
-  color: var(--foreground);
+  color: var(--stars);
 }
 
 ::deep .transparent {
@@ -12,5 +12,5 @@
 }
 
 ::deep .colored {
-  text-shadow: 3px 2px 5px rgba(46, 230, 243, 0.555);
+  text-shadow: 3px 2px 5px var(--stars-shadow);
 }

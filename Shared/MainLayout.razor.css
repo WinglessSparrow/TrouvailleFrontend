@@ -106,9 +106,10 @@
 }
 
 ::deep .main-container-style {
-  /* background-color: var(--background); */
   background-color: transparent;
   box-shadow: 1px 1px 4px 0px rgba(136, 136, 136, 0.521);
+
+  border-radius: 10px;
 }
 
 ::deep input[type="number"],

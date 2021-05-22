@@ -23,6 +23,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                 //TODO handle all possible messages
                 return false;
             } catch (HttpRequestException e) {
+                
                 return false;
             }
         }
