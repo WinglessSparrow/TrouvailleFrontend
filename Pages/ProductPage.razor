@@ -11,46 +11,48 @@
 @inject IHttpRequest httpRequest
 @inject IProductsRetriever productRetriever
 
-<div>
+<div class="page">
     <div class="product">
         @if (_product != null)
         {
-            <div class="product-image">
+            <div class="product-image main-container-style">
                 <img class="product-picture center-flex" src="data:image/png;base64,@_product.Picture.ImageData"
                 alt="Image loading Error">
             </div>
 
-            <div class="product-description main-container-style">
-                <div class="product-name">
-                    <h1>@_product.Name</h1>
-                </div>
-                <h3>Description:</h3>
-                <div class="description-wrapper">
-                    <section>@_product.Description</section>
-                </div>
-            </div>
-
             <div class="product-controls main-container-style">
+                <div class="product-name">
+                    <h2>@_product.Name</h2>
+                </div>
                 <div class="stars">
                     <StarsView Product=_product Classes="product-stars" />
                 </div>
                 <div class="price">
-                    <h2>Price: @_price</h2>
+                    <h2><b>Price: @_price</b></h2>
                 </div>
                 <div class="stock">
                     <h4>@_stock</h4>
                 </div>
                 <div class="number-in-shopping-cart">
-                    <h4>In
-                        <Icon Name="IconName.ShoppingCart" />: @_amountInShoppingCart
+                    <h4>
+                        <b>In
+                            <Icon Name="IconName.ShoppingCart" />: @_amountInShoppingCart
+                        </b>
                     </h4>
                 </div>
                 <div class="to-shopping-cart">
                     <button class="button-style" @onclick="@addToCart">
                         <Icon Name="IconName.CartPlus" />
                     </button>
-                </div
+                </div>
             </div>
+            <div class="product-description main-container-style">
+                <h3>Description:</h3>
+                <div class="description-wrapper">
+                    <section>@_product.Description</section>
+                </div>
+            </div>
+
         }
         <div class="product-rating main-container-style">
             <div class="overlay-under-construction">
@@ -80,29 +82,26 @@
     {
         bool alreadyInShoppingCart = false;
         bool inStock = _product.InStock > 0;
+
+        //finding the item in shopping cart
         foreach (var item in _shoppingCart)
         {
             if (item.ProductId.Equals(_product.ProductId))
             {
                 Console.WriteLine(_product.InStock);
                 Console.WriteLine(item.Cardinality);
-                inStock = _product.InStock > item.Cardinality;
-                if(inStock){
-                    alreadyInShoppingCart = true;
-                    item.Cardinality += Amount;
-                    _amountInShoppingCart = item.Cardinality;
-                } else {
-                    await JSRuntime.InvokeVoidAsync("alert", "Cannot add more items than already available in stock");
-                }
+
+                alreadyInShoppingCart = true;
+                item.Cardinality += Amount;
+                _amountInShoppingCart = item.Cardinality;
             }
         }
 
-        if (!alreadyInShoppingCart && inStock)
+        //check if the item is already in it
+        if (!alreadyInShoppingCart)
         {
             _shoppingCart.Add(new ShoppingCartItemModel() { ProductId = _product.ProductId, Cardinality = Amount });
             _amountInShoppingCart += Amount;
-        } else {
-            await JSRuntime.InvokeVoidAsync("alert", "Cannot add more items than already available in stock");
         }
 
         await localStorage.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", _shoppingCart);

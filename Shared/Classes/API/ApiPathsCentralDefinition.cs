@@ -7,5 +7,6 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public const string API_PRODUCT_COUNT = API_IP + "/api/products/count";
         public const string API_ORDER = API_IP + "/api/Orders";
         public const string API_LOGIN = API_IP + "/api/auth/customer/login";
+        public const string API_REGISTER = API_IP + "/api/auth/customer/register";
     }
 }
