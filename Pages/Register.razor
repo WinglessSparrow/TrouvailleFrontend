@@ -71,18 +71,62 @@
 
 <button @onclick=ShowModal>Show Modal</button>
 
+<style>
+    .modal-body {
+        @*display:flex;justify-content:center;align-items:center;*@
+    }
+
+    .modal-body>i {
+        font-size: 100px;
+    }
+
+    .check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 200px;
+
+        color: var(--stars);
+    }
+
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer>button {
+        color: var(--foreground-contrast);
+    }
+</style>
+
 <Modal @ref="modalRef">
     <ModalContent Centered="true">
-        <ModalHeader>
-            <ModalTitle>Error Occured</ModalTitle>
-            <CloseButton />
-        </ModalHeader>
-        <ModalBody>
-
-        </ModalBody>
-        <ModalFooter>
-
-        </ModalFooter>
+        @if (_registerSuccess)
+        {
+            <ModalHeader>
+                <ModalTitle>Register Success</ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody class="check">
+                <i class="fas fa-check-circle"></i>
+            </ModalBody>
+            <ModalFooter class="footer">
+                <Button>Proceed to the Store</Button>
+                <Button>Proceed to the User Account</Button>
+            </ModalFooter>
+        }
+        else
+        {
+            <ModalHeader>
+                <ModalTitle>Register Failure</ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody>
+                <i class="fas fa-check-circle    "></i>
+            </ModalBody>
+        }
     </ModalContent>
 </Modal>
 
@@ -97,7 +141,7 @@
 
     private RegisterContext _registerData;
     private EditContext _registerContext;
-    private bool _registerSuccess = false;
+    private bool _registerSuccess = true;
     protected override void OnInitialized()
     {
         _registerData = new();
@@ -107,6 +151,22 @@
     private async void SubmitFormAsync()
     {
         _registerData.PrepareRegisterModel();
-        _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
+        try
+        {
+            _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
+            if (_registerSuccess)
+            {
+                //show everything is ok
+            }
+            else
+            {
+                //get error string
+                //show everything is not ok
+            }
+        }
+        catch (HttpRequestException)
+        {
+            //server time-out / unavailable
+        }
     }
 }
