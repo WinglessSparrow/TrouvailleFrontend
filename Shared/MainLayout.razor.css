@@ -39,7 +39,7 @@
 
 ::deep .button-style {
   background-color: var(--background-contrast);
-  
+
   border: none;
   border-bottom: solid 2px var(--accent);
   border-radius: 10px;
@@ -134,4 +134,56 @@
 ::deep input:disabled,
 ::deep select:disabled {
   border-bottom: solid 1px red;
+}
+
+::deep .modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  height: 200px;
+}
+
+::deep .modal-body > i {
+  font-size: 100px;
+}
+
+::deep .modal-check {
+  color: var(--stars);
+}
+
+::deep .modal-warning {
+  color: var(--warning);
+}
+
+::deep .footer > button {
+  color: var(--foreground-contrast);
+}
+
+::deep .loading-spiner {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 10px var(--stars-shadow);
+  border-top: solid 10px var(--stars);
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+::deep .modal-error-message {
+  text-align: center;
+  color: black;
+  font-size: 1.3rem;
 }

@@ -32,6 +32,7 @@ namespace TrouvailleFrontend {
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<ILocalStorage, LocalStorage>();
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
+            builder.Services.AddSingleton<IErrorHandler, ErrorHandler>();
 
             builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
             builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
@@ -43,6 +44,7 @@ namespace TrouvailleFrontend {
             // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
             // builder.Services.AddTransient<ILogin, LoginAPI>();
             // builder.Services.AddTransient<IOrder, OrderAPI>();
+            // builder.Services.AddTransient<IRegister, RegisterAPI>();
 
             await builder.Build().RunAsync();
         }

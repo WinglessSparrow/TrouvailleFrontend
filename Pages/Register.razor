@@ -4,6 +4,9 @@
 @using Blazorise
 
 @inject IRegister registerer
+@inject NavigationManager navMan
+@inject IErrorHandler errorHandler
+
 
 <div class="page">
     <div class="main-container-style register">
@@ -69,79 +72,55 @@
     </div>
 </div>
 
-<button @onclick=ShowModal>Show Modal</button>
-
-<style>
-    .modal-body {
-        @*display:flex;justify-content:center;align-items:center;*@
-    }
-
-    .modal-body>i {
-        font-size: 100px;
-    }
-
-    .check {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        height: 200px;
-
-        color: var(--stars);
-    }
-
-    .footer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .footer>button {
-        color: var(--foreground-contrast);
-    }
-</style>
-
-<Modal @ref="modalRef">
+<Modal @ref="_modal">
     <ModalContent Centered="true">
-        @if (_registerSuccess)
+        @if (_awaitingResponse)
         {
             <ModalHeader>
-                <ModalTitle>Register Success</ModalTitle>
-                <CloseButton />
-            </ModalHeader>
-            <ModalBody class="check">
-                <i class="fas fa-check-circle"></i>
-            </ModalBody>
-            <ModalFooter class="footer">
-                <Button>Proceed to the Store</Button>
-                <Button>Proceed to the User Account</Button>
-            </ModalFooter>
-        }
-        else
-        {
-            <ModalHeader>
-                <ModalTitle>Register Failure</ModalTitle>
+                <ModalTitle>Pending response from server</ModalTitle>
                 <CloseButton />
             </ModalHeader>
             <ModalBody>
-                <i class="fas fa-check-circle    "></i>
+                <div class="loading-spiner"></div>
             </ModalBody>
+        }
+        else
+        {
+            @if (_registerSuccess)
+            {
+                <ModalHeader>
+                    <ModalTitle>Register Success</ModalTitle>
+                    <CloseButton />
+                </ModalHeader>
+                <ModalBody class="modal-check">
+                    <i class="fas fa-check-circle"></i>
+                </ModalBody>
+            }
+            else
+            {
+                <ModalHeader>
+                    <ModalTitle>Register Failure</ModalTitle>
+                    <CloseButton />
+                </ModalHeader>
+                <ModalBody class="modal-warning">
+                    <i class="fas fa-times-circle"></i>
+                    <div class="modal-error-message">
+                        @errorMessage
+                    </div>
+                </ModalBody>
+            }
         }
     </ModalContent>
 </Modal>
 
 @code{
 
-    private Modal modalRef;
-
-    private void ShowModal()
-    {
-        modalRef.Show();
-    }
-
+    private Modal _modal;
     private RegisterContext _registerData;
     private EditContext _registerContext;
-    private bool _registerSuccess = true;
+    private bool _registerSuccess;
+    private bool _awaitingResponse;
+    private string errorMessage = "errorMessage";
     protected override void OnInitialized()
     {
         _registerData = new();
@@ -151,22 +130,17 @@
     private async void SubmitFormAsync()
     {
         _registerData.PrepareRegisterModel();
-        try
+
+        _awaitingResponse = true;
+        _modal.Show();
+
+        _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
+        if (!_registerSuccess)
         {
-            _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
-            if (_registerSuccess)
-            {
-                //show everything is ok
-            }
-            else
-            {
-                //get error string
-                //show everything is not ok
-            }
+            errorMessage = errorHandler.GetErrorStringForLastError();
         }
-        catch (HttpRequestException)
-        {
-            //server time-out / unavailable
-        }
+
+        _awaitingResponse = false;
+        StateHasChanged();
     }
 }

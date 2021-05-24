@@ -11,20 +11,23 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
     public class RegisterTest : IRegister {
 
         IHttpRequest _http;
+        IErrorHandler _errorHandler;
 
-        public RegisterTest(IHttpRequest http) {
+        public RegisterTest(IHttpRequest http, IErrorHandler errorHandler) {
             _http = http;
+            _errorHandler = errorHandler;
         }
 
         public async Task<bool> RegisterAsync(RegisterModel _registerData) {
 
             try {
                 HttpResponseMessage response = await _http.PostRequestAsync<RegisterModel>("https://localhost", _registerData);
-                if (response.StatusCode == HttpStatusCode.OK) return true;
-                
-                return true;
-            } catch (HttpRequestException e) {
-                Console.WriteLine(e.Data + " 1");
+                if (response.IsSuccessStatusCode) return true;
+
+                _errorHandler.SetLastError(response);
+
+            } catch (HttpRequestException) {
+                _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
             }
 
             return false;
