@@ -1,0 +1,70 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using TrouvailleFrontend.Components.Checkout
+@using TrouvailleFrontend.Shared.Models
+@using System.ComponentModel.DataAnnotations
+
+<style>
+    form {
+        display: flex;
+
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 50%;
+
+        gap: 20px
+    }
+</style>
+
+<div class="addresses">
+    <div class="form-wrapper">
+        <h2>Addresses</h2>
+        <EditForm Model="_userData" OnValidSubmit="Submit">
+            <ObjectGraphDataAnnotationsValidator />
+            <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
+            <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
+            <button type="@_isChangeDone? 'submit' : 'button'" class="button-style"
+                @onclick=ChangeChangingState>@_isChangeDone?
+                'sumbit changes' : 'Change
+                Address'</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private UserModel _userData { get; set; }
+    [Parameter]
+    public string ForForm { get; set; }
+
+    private Addresses _addresses = new();
+    private bool _isChangeDone = true;
+
+    protected override void OnParametersSet()
+    {
+        _addresses.Delivery = _userData.DeliveryAddress;
+        _addresses.Invoice = _userData.InvoiceAddress;
+        StateHasChanged();
+    }
+
+    private void ChangeChangingState()
+    {
+        _isChangeDone = !_isChangeDone;
+        StateHasChanged();
+    }
+
+    private void Submit()
+    {
+
+    }
+
+    class Addresses
+    {
+        [ValidateComplexType]
+        public AddressModel Delivery { get; set; }
+        [ValidateComplexType]
+        public AddressModel Invoice { get; set; }
+    }
+}

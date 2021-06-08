@@ -1,0 +1,21 @@
+@namespace TrouvailleFrontend.Components.UserAccount
+
+@using TrouvailleFrontend.Shared.Models
+
+<div class="user-data">
+    <h4>Personal Data</h4>
+    <InputText id="first-name" @bind-Value=_userData.FirstName @bind-Value-oninput=_userData.FirstName
+        placeholder="First Name" />
+    <InputText id="last-name" @bind-Value=_userData.LastName @bind-Value-oninput=_userData.LastName
+        placeholder="Surname" />
+    <InputText type="phone" id="phone-number" @bind-Value=_userData.PhoneNumber class="not-required"
+        @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" />
+    <button type="submit" class="button-style">Change Data</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    private UserModel _userData { get; set; }
+    [Parameter]
+    public string ForForm { get; set; }
+}

@@ -1,0 +1,14 @@
+.user-data {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+
+  gap: 10px;
+
+  width: 50%;
+}
+
+.user-data > h4 {
+  text-align: center;
+}

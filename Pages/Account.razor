@@ -1,21 +1,28 @@
-@using TrouvailleFrontend.Components.Account
-
 @page "/account"
 
+@using TrouvailleFrontend.Components.Shared
+
 <div class="main-container-style">
-    <TabControl>
-        <CustomTab Name="My Account">
-            hi 1
-        </CustomTab>
-        <CustomTab Name="Orders">
-            hi 2
-        </CustomTab>
-        <CustomTab Name="Settings">
-            hi 3
-        </CustomTab>
-    </TabControl>
+    <CascadingValue Value="@_userModel">
+        <TabControl>
+            <CustomTab Name="My Account">
+                <AccountMain />
+            </CustomTab>
+            <CustomTab Name="Orders">
+                hi 2
+            </CustomTab>
+            <CustomTab Name="Settings">
+                hi 3
+            </CustomTab>
+        </TabControl>
+    </CascadingValue>
 </div>
 
-@code{
+@code {
+    private UserModel _userModel;
 
+    protected override void OnInitialized()
+    {
+        _userModel = new();
+    }
 }
