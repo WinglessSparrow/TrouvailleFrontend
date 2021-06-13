@@ -10,7 +10,7 @@ namespace TrouvailleFrontend.Shared.Models {
         //this right here is retarded, BUT! it lets me validate the whole form without extra classes.
         //API needs the RegisterModel, but validation through only it require development 
         //of already existing elements but slightly different
-        //and I can't be fucked do develop the same thing twice. 
+        //and I can't be fucked do develop the same thing twice.
         public void PrepareRegisterModel() {
             RegisterModel.CityName = AddressModel.CityName;
             RegisterModel.Country = AddressModel.Country;

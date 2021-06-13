@@ -26,9 +26,7 @@
             <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
             <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
             <button type="@_isChangeDone? 'submit' : 'button'" class="button-style"
-                @onclick=ChangeChangingState>@_isChangeDone?
-                'sumbit changes' : 'Change
-                Address'</button>
+                @onclick=ChangeChangingState>@_buttonText</button>
         </EditForm>
     </div>
 </div>
@@ -41,6 +39,7 @@
 
     private Addresses _addresses = new();
     private bool _isChangeDone = true;
+    private string _buttonText = "Change Address";
 
     protected override void OnParametersSet()
     {
@@ -52,6 +51,7 @@
     private void ChangeChangingState()
     {
         _isChangeDone = !_isChangeDone;
+        _buttonText = (_isChangeDone) ? "Change Address" : "Submit Changes";
         StateHasChanged();
     }
 

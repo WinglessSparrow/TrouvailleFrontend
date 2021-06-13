@@ -1,0 +1,22 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using TrouvailleFrontend.Components.Checkout
+
+<div class="account-data">
+
+    @* <UserAddress ForForm="user-data-form" /> *@
+    @* <UserData /> *@
+
+    <div style="width: 200px; height: 200px; background-color: red;"></div>
+    <div style="width: 200px; height: 200px; background-color: blue;"></div>
+
+</div>
+
+@code {
+    [CascadingParameter]
+    private UserModel _userData { get; set; }
+
+    protected override void OnInitialized()
+    {
+    }
+}
