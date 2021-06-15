@@ -2,17 +2,21 @@
 
 @using TrouvailleFrontend.Shared.Models
 
-<div class="user-data">
+<div class='user-data @(_isChangeDone? " " : "changing")'>
     <h4>Personal Data</h4>
     <EditForm Model="@_userData">
         <ObjectGraphDataAnnotationsValidator />
         <InputText id="first-name" @bind-Value=_userData.FirstName @bind-Value-oninput=_userData.FirstName
-            placeholder="First Name" />
+            placeholder="First Name" disabled="@_isChangeDone" />
+
         <InputText id="last-name" @bind-Value=_userData.LastName @bind-Value-oninput=_userData.LastName
-            placeholder="Surname" />
+            placeholder="Surname" disabled="@_isChangeDone" />
+
         <InputText type="phone" id="phone-number" @bind-Value=_userData.PhoneNumber class="not-required"
-            @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" />
-        <button type="submit" class="button-style">Change Data</button>
+            @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" disabled="@_isChangeDone" />
+
+        <button type="@_isChangeDone? 'submit' : 'button'" class="button-style"
+            @onclick=ChangeChangingState>@_buttonText</button>
     </EditForm>
 </div>
 
@@ -21,4 +25,22 @@
     private UserModel _userData { get; set; }
     [Parameter]
     public string ForForm { get; set; }
+    private bool _isChangeDone = true;
+    private string _buttonText = "Change Data";
+
+    protected override void OnParametersSet()
+    {
+    }
+
+    private void ChangeChangingState()
+    {
+        _isChangeDone = !_isChangeDone;
+        _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
+        StateHasChanged();
+    }
+
+    private void Submit()
+    {
+
+    }
 }

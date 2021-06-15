@@ -7,18 +7,14 @@
 <style>
     form {
         display: flex;
-
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
-        width: 50%;
-
         gap: 20px
     }
 </style>
 
-<div class="addresses">
+<div class='addresses @(_isChangeDone? " " : "changing")'>
     <div class="form-wrapper">
         <h2>Addresses</h2>
         <EditForm Model="_userData" OnValidSubmit="Submit">
