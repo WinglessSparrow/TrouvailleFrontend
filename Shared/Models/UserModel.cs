@@ -13,9 +13,9 @@ namespace TrouvailleFrontend.Shared.Models {
         public string FirstName { get; set; } = "";
         [StringLength(50, MinimumLength = 3)]
         public string LastName { get; set; } = "";
-
+        [ValidateComplexType]
         public AddressModel InvoiceAddress { get; set; } = new();
-
+        [ValidateComplexType]
         public AddressModel DeliveryAddress { get; set; } = new();
 
         public ICollection<Guid> Orders { get; set; }

@@ -27,22 +27,3 @@
         </EditForm>
     </div>
 </div>
-
-@code {
-    private Addresses _addresses = new();
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        _addresses.Delivery = _userData.DeliveryAddress;
-        _addresses.Invoice = _userData.InvoiceAddress;
-        StateHasChanged();
-    }
-
-    class Addresses
-    {
-        [ValidateComplexType]
-        public AddressModel Delivery { get; set; }
-        [ValidateComplexType]
-        public AddressModel Invoice { get; set; }
-    }
-}
