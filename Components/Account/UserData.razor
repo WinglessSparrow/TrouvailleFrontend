@@ -6,15 +6,18 @@
     <h4>Personal Data</h4>
     <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
         <DataAnnotationsValidator />
+
         <InputText id="first-name" @bind-Value=_userData.FirstName @bind-Value-oninput=_userData.FirstName
             placeholder="First Name" disabled="@_isChangeDone" />
-
         <InputText id="last-name" @bind-Value=_userData.LastName @bind-Value-oninput=_userData.LastName
             placeholder="Surname" disabled="@_isChangeDone" />
-
         <InputText type="phone" id="phone-number" @bind-Value=_userData.PhoneNumber class="not-required"
             @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" disabled="@_isChangeDone" />
 
         <button type="submit" class="button-style">@_buttonText</button>
+        @if (!_isChangeDone)
+        {
+            <button type="button" class="button-style" @onclick=ChangeState>Cancel</button>
+        }
     </EditForm>
 </div>

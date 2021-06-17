@@ -7,16 +7,12 @@
 <div class="header">
     <div class="header-content">
         <div class="logo" @onclick="ToMain"></div>
-        @* <div class="search-bar">
-
-            <button @onclick="Search">
-            <Icon Name="IconName.Search" />
-            </button>
-            </div> *@
         <div class="variable-icons">
             <div class="search-bar">
-                <input id="search" type="text" placeholder="Search">
-                <Icon Name="IconName.Search"/>
+                <input id="search" type="text" placeholder="Search" @onkeydown="Enter">
+                <a href="" @onclick=Search>
+                    <Icon Name="IconName.Search" />
+                </a>
             </div>
             <div class="dropdown-indicator">
                 <Icon Name="IconName.ShoppingCart" />
@@ -57,7 +53,7 @@
 </div>
 
 
-@code{
+@code {
     private TokenModel _token { get; set; }
     private bool _tokenIsValid;
 
@@ -73,6 +69,15 @@
     {
         NavMan.NavigateTo("/");
     }
+
+    private void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            Search();
+        }
+    }
+
     private void Search()
     {
         js.InvokeVoidAsync("alert", "Search is under construction ¯\\_(ツ)_/¯");
