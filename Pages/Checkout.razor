@@ -16,7 +16,7 @@
     @if (_cartItems != null && _cartItems.Count() > 0)
     {
         <div class="content">
-            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder">
+            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="SubmitOrderAsync">
                 <ObjectGraphDataAnnotationsValidator />
 
                 <div class="addresses main-container-style">
@@ -82,6 +82,8 @@
         </ErrorMessage>
     }
 </div>
+
+
 @code {
     private EditContext _eContext;
     private TokenModel _token;
@@ -123,7 +125,7 @@
         _eContext = new(_order);
     }
 
-    protected async Task PostOrder()
+    protected async Task SubmitOrderAsync()
     {
         bool isOrderSucess = true;
 
