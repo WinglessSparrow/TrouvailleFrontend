@@ -1,11 +1,11 @@
 @namespace TrouvailleFrontend.Components.Account
 
-@using TrouvailleFrontend.Shared.Models
+@inherits UserChanger
 
 <div class='user-data @(_isChangeDone? " " : "changing")'>
     <h4>Personal Data</h4>
-    <EditForm Model="@_userData">
-        <ObjectGraphDataAnnotationsValidator />
+    <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
+        <DataAnnotationsValidator />
         <InputText id="first-name" @bind-Value=_userData.FirstName @bind-Value-oninput=_userData.FirstName
             placeholder="First Name" disabled="@_isChangeDone" />
 
@@ -15,32 +15,6 @@
         <InputText type="phone" id="phone-number" @bind-Value=_userData.PhoneNumber class="not-required"
             @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" disabled="@_isChangeDone" />
 
-        <button type="@_isChangeDone? 'submit' : 'button'" class="button-style"
-            @onclick=ChangeChangingState>@_buttonText</button>
+        <button type="submit" class="button-style">@_buttonText</button>
     </EditForm>
 </div>
-
-@code {
-    [CascadingParameter]
-    private UserModel _userData { get; set; }
-    [Parameter]
-    public string ForForm { get; set; }
-    private bool _isChangeDone = true;
-    private string _buttonText = "Change Data";
-
-    protected override void OnParametersSet()
-    {
-    }
-
-    private void ChangeChangingState()
-    {
-        _isChangeDone = !_isChangeDone;
-        _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
-        StateHasChanged();
-    }
-
-    private void Submit()
-    {
-
-    }
-}

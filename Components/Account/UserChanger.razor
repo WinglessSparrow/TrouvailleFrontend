@@ -1,0 +1,43 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@inject IUserDataChanger userChanger
+
+@code {
+    [CascadingParameter]
+    protected UserModel _userData { get; set; }
+    protected EditContext _context;
+    protected bool _isChangeDone = true;
+    protected string _buttonText = "Change Data";
+
+    protected override void OnParametersSet()
+    {
+        _context = new(_userData);
+    }
+
+    protected async void SubmitAsync()
+    {
+        ChangeState();
+
+        bool valid = _context.Validate();
+        bool success;
+
+        if (_isChangeDone)
+        {
+            if (valid)
+            {
+                success = await userChanger.changeUserDataAsync(_userData);
+            }
+            else
+            {
+                ChangeState();
+            }
+        }
+    }
+
+    private void ChangeState()
+    {
+        _isChangeDone = !_isChangeDone;
+        _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
+        StateHasChanged();
+    }
+}

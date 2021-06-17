@@ -3,27 +3,32 @@
 @using TrouvailleFrontend.Components.Account
 @using TrouvailleFrontend.Components.Shared
 
+@inject IUserDataGetter userHandler
+
 <div class="main-container-style">
-    <CascadingValue Value="@_userModel">
-        <TabControl>
-            <CustomTab Name="My Account">
-                <AccountMain />
-            </CustomTab>
-            <CustomTab Name="Orders">
-                hi 2
-            </CustomTab>
-            <CustomTab Name="Settings">
-                hi 3
-            </CustomTab>
-        </TabControl>
-    </CascadingValue>
+    @if (_userModel != null)
+    {
+        <CascadingValue Value="@_userModel">
+            <TabControl>
+                <CustomTab Name="My Account">
+                    <AccountMain />
+                </CustomTab>
+                <CustomTab Name="Orders">
+                    hi 2
+                </CustomTab>
+                <CustomTab Name="Settings">
+                    hi 3
+                </CustomTab>
+            </TabControl>
+        </CascadingValue>
+    }
 </div>
 
 @code {
     private UserModel _userModel;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _userModel = new();
+        _userModel = await userHandler.getUserDataAsync();
     }
 }

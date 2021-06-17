@@ -4,6 +4,8 @@
 @using TrouvailleFrontend.Shared.Models
 @using System.ComponentModel.DataAnnotations
 
+@inherits UserChanger
+
 <style>
     form {
         display: flex;
@@ -17,43 +19,23 @@
 <div class='addresses @(_isChangeDone? " " : "changing")'>
     <div class="form-wrapper">
         <h2>Addresses</h2>
-        <EditForm Model="_userData" OnValidSubmit="Submit">
+        <EditForm EditContext="@_context" OnSubmit="@SubmitAsync">
             <ObjectGraphDataAnnotationsValidator />
             <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
             <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
-            <button type="@_isChangeDone? 'submit' : 'button'" class="button-style"
-                @onclick=ChangeChangingState>@_buttonText</button>
+            <button type="@_isChangeDone? 'submit' : 'button'" class="button-style">@_buttonText</button>
         </EditForm>
     </div>
 </div>
 
 @code {
-    [CascadingParameter]
-    private UserModel _userData { get; set; }
-    [Parameter]
-    public string ForForm { get; set; }
-
     private Addresses _addresses = new();
-    private bool _isChangeDone = true;
-    private string _buttonText = "Change Address";
-
     protected override void OnParametersSet()
     {
+        base.OnParametersSet();
         _addresses.Delivery = _userData.DeliveryAddress;
         _addresses.Invoice = _userData.InvoiceAddress;
         StateHasChanged();
-    }
-
-    private void ChangeChangingState()
-    {
-        _isChangeDone = !_isChangeDone;
-        _buttonText = (_isChangeDone) ? "Change Address" : "Submit Changes";
-        StateHasChanged();
-    }
-
-    private void Submit()
-    {
-
     }
 
     class Addresses
