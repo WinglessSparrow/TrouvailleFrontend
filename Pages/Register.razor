@@ -73,7 +73,52 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 <CustomModal @ref="_modal" Name="Register" ButtonText="Epic, proceed to Login" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+=======
+@* <Modal @ref="_modal">
+    <ModalContent Centered="true">
+    @if (_awaitingResponse)
+    {
+    <ModalHeader>
+    <ModalTitle>Pending response from server</ModalTitle>
+    <CloseButton />
+    </ModalHeader>
+    <ModalBody>
+    <div class="loading-spiner"></div>
+    </ModalBody>
+    }
+    else
+    {
+    @if (_registerSuccess)
+    {
+    <ModalHeader>
+    <ModalTitle>Register Success</ModalTitle>
+    <CloseButton />
+    </ModalHeader>
+    <ModalBody class="modal-check">
+    <i class="fas fa-check-circle"></i>
+    </ModalBody>
+    }
+    else
+    {
+    <ModalHeader>
+    <ModalTitle>Register Failure</ModalTitle>
+    <CloseButton />
+    </ModalHeader>
+    <ModalBody class="modal-warning">
+    <i class="fas fa-times-circle"></i>
+    <div class="modal-error-message">
+    @errorMessage
+    </div>
+    </ModalBody>
+    }
+    }
+    </ModalContent>
+    </Modal> *@
+
+<CustomModal @ref="_modal" Name="Register" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+>>>>>>> cc587e2a801301d120ab1bcf807bd987c86f9bba
 
 @code {
     private CustomModal _modal;
@@ -90,11 +135,19 @@
         _registerData.PrepareRegisterModel();
 
         _modal.AwaitingResponse = true;
+<<<<<<< HEAD
 
         _modal.Modal.Show();
 
         _modal.Success = await registerer.RegisterAsync(_registerData.RegisterModel);
 
+=======
+
+        _modal.Modal.Show();
+
+        _modal.Success = await registerer.RegisterAsync(_registerData.RegisterModel);
+
+>>>>>>> cc587e2a801301d120ab1bcf807bd987c86f9bba
         if (_modal.Success)
         {
             _modal.ErrorMessage = errorHandler.GetErrorStringForLastError();
