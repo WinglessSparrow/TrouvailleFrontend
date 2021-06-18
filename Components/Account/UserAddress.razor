@@ -1,0 +1,33 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using TrouvailleFrontend.Components.Checkout
+@using TrouvailleFrontend.Shared.Models
+@using System.ComponentModel.DataAnnotations
+
+@inherits UserChanger
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px
+    }
+</style>
+
+<div class='addresses @(_isChangeDone? " " : "changing")'>
+    <div class="form-wrapper">
+        <h2>Addresses</h2>
+        <EditForm id="user-data-form" EditContext="@_context" OnSubmit="@SubmitAsync">
+            <ObjectGraphDataAnnotationsValidator />
+            <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
+            <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
+            <button form="user-data-form" class="button-style">@_buttonText</button>
+            @if (!_isChangeDone)
+            {
+                <button type="button" class="button-style" @onclick=ChangeState>Cancel</button>
+            }
+        </EditForm>
+    </div>
+</div>

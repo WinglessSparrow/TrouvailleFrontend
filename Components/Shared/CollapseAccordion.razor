@@ -1,4 +1,5 @@
 @namespace TrouvailleFrontend.Components.Shared
+
 <div class="collapse-accordion">
     <div class="button-wrapper">
         <h4>
@@ -23,7 +24,7 @@
     <div class='collapsable-container @(_isCollapsed ? "collapse" : "")'>@ChildContent</div>
 </div>
 
-@code{
+@code {
     [Parameter]
     public RenderFragment ChildContent { get; set; }
     [Parameter]

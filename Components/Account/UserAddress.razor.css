@@ -1,0 +1,22 @@
+.form-wrapper {
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px;
+
+  gap: 20px;
+}
+
+.addresses {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  transition: 0.2s;
+}
+
+::deep form > .address-container {
+  width: 100%;
+}

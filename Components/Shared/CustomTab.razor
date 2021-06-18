@@ -1,0 +1,25 @@
+@namespace TrouvailleFrontend.Components.Shared
+
+<div class='content @(Active? "show": " ")'>
+    @ChildContent
+</div>
+
+@code {
+    [CascadingParameter]
+    private TabControl _parent { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Name { get; set; } = "Tab Name";
+
+    public bool Active { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        if (_parent == null)
+            throw new ArgumentNullException(nameof(_parent), "CustomTab must exist within a TabControl");
+        base.OnInitialized();
+        _parent.AddPage(this);
+    }
+}

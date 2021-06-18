@@ -1,0 +1,21 @@
+.user-data {
+  display: flex;
+  justify-content: center;
+
+  align-items: stretch;
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 20px;
+
+  transition: 0.2s;
+}
+
+.user-data > h4 {
+  text-align: center;
+}
+
+::deep input {
+  width: 100%;
+}

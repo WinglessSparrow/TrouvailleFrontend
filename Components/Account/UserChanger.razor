@@ -1,0 +1,49 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using TrouvailleFrontend.Shared.Classes.Functional
+
+@inject IUserDataChanger userChanger
+
+@code {
+    [CascadingParameter]
+    protected UserModel _originUserData { get; set; }
+    protected UserModel _userData { get; set; }
+    protected EditContext _context;
+    protected bool _isChangeDone = true;
+    protected string _buttonText = "Change Data";
+
+    protected override void OnParametersSet()
+    {
+        //deep copy is needed, because otherwise diferent fields will affect each other
+        _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
+        _context = new(_userData);
+    }
+
+    protected async void SubmitAsync()
+    {
+        ChangeState();
+
+        bool valid = _context.Validate();
+        Console.WriteLine(valid);
+        bool success;
+
+        if (_isChangeDone)
+        {
+            if (valid)
+            {
+                success = await userChanger.changeUserDataAsync(_userData);
+            }
+            else
+            {
+                ChangeState();
+            }
+        }
+    }
+
+    protected void ChangeState()
+    {
+        _isChangeDone = !_isChangeDone;
+        _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
+        StateHasChanged();
+    }
+}

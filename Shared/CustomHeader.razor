@@ -1,30 +1,27 @@
 @using Blazorise
 
-@inject NavigationManager NavMan
+@inject NavigationManager navMan
 @inject ILocalStorage local
 @inject IJSRuntime js
+@inject ILocalStorage localStorage
 
 <div class="header">
     <div class="header-content">
         <div class="logo" @onclick="ToMain"></div>
-        @* <div class="search-bar">
-
-            <button @onclick="Search">
-            <Icon Name="IconName.Search" />
-            </button>
-            </div> *@
         <div class="variable-icons">
             <div class="search-bar">
-                <input id="search" type="text" placeholder="Search">
-                <Icon Name="IconName.Search"/>
+                <input id="search" type="text" placeholder="Search" @onkeydown="Enter">
+                <a href="" @onclick=Search>
+                    <Icon Name="IconName.Search" />
+                </a>
             </div>
             <div class="dropdown-indicator">
                 <Icon Name="IconName.ShoppingCart" />
                 <div class="dropdown-content">
-                    <a href='@(_tokenIsValid ? "/ShopingCart" : "/Login")'>Shopping Cart
+                    <a href='@(_tokenIsValid ? "/shopingcart" : "/login")'>Shopping Cart
                         <Icon Name="IconName.ShoppingBasket" />
                     </a>
-                    <a href='@(_tokenIsValid ? "/Checkout" : "/Login")'>Checkout
+                    <a href='@(_tokenIsValid ? "/checkout" : "/login")'>Checkout
                         <Icon Name="IconName.CreditCard" />
                     </a>
                 </div>
@@ -34,7 +31,8 @@
                 <div class="dropdown-indicator">
                     <Icon Name="IconName.User" />
                     <div class="dropdown-content">
-                        <a href="/Account">Account Settings <i class="fas fa-user-cog  "></i></a>
+                        <a href="/account">Account Settings <i class="fas fa-user-cog"></i></a>
+                        <a @onclick="Logout">Logout <i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
             }
@@ -57,7 +55,7 @@
 </div>
 
 
-@code{
+@code {
     private TokenModel _token { get; set; }
     private bool _tokenIsValid;
 
@@ -71,10 +69,25 @@
     }
     private void ToMain()
     {
-        NavMan.NavigateTo("/");
+        navMan.NavigateTo("/");
     }
+
+    private void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            Search();
+        }
+    }
+
     private void Search()
     {
         js.InvokeVoidAsync("alert", "Search is under construction ¯\\_(ツ)_/¯");
+    }
+
+    private async void Logout()
+    {
+        await localStorage.RemoveStorageAsync("authToken");
+        navMan.NavigateTo("/", forceLoad: true);
     }
 }

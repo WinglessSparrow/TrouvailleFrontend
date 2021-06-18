@@ -1,5 +1,6 @@
 @page "/register"
 
+@using TrouvailleFrontend.Components.Shared
 @using TrouvailleFrontend.Components.Checkout
 @using Blazorise
 
@@ -72,55 +73,14 @@
     </div>
 </div>
 
-<Modal @ref="_modal">
-    <ModalContent Centered="true">
-        @if (_awaitingResponse)
-        {
-            <ModalHeader>
-                <ModalTitle>Pending response from server</ModalTitle>
-                <CloseButton />
-            </ModalHeader>
-            <ModalBody>
-                <div class="loading-spiner"></div>
-            </ModalBody>
-        }
-        else
-        {
-            @if (_registerSuccess)
-            {
-                <ModalHeader>
-                    <ModalTitle>Register Success</ModalTitle>
-                    <CloseButton />
-                </ModalHeader>
-                <ModalBody class="modal-check">
-                    <i class="fas fa-check-circle"></i>
-                </ModalBody>
-            }
-            else
-            {
-                <ModalHeader>
-                    <ModalTitle>Register Failure</ModalTitle>
-                    <CloseButton />
-                </ModalHeader>
-                <ModalBody class="modal-warning">
-                    <i class="fas fa-times-circle"></i>
-                    <div class="modal-error-message">
-                        @errorMessage
-                    </div>
-                </ModalBody>
-            }
-        }
-    </ModalContent>
-</Modal>
 
-@code{
+<CustomModal @ref="_modal" Name="Register" ButtonText="Epic, proceed to Login" OnCloseSuccess="@Success"
+    OnCloseFailure="@Failure" />
 
-    private Modal _modal;
+@code {
+    private CustomModal _modal;
     private RegisterContext _registerData;
     private EditContext _registerContext;
-    private bool _registerSuccess;
-    private bool _awaitingResponse;
-    private string errorMessage = "errorMessage";
     protected override void OnInitialized()
     {
         _registerData = new();
@@ -131,16 +91,26 @@
     {
         _registerData.PrepareRegisterModel();
 
-        _awaitingResponse = true;
-        _modal.Show();
+        _modal.AwaitingResponse = true;
 
-        _registerSuccess = await registerer.RegisterAsync(_registerData.RegisterModel);
-        if (!_registerSuccess)
+        _modal.Success = await registerer.RegisterAsync(_registerData.RegisterModel);
+
+        if (_modal.Success)
         {
-            errorMessage = errorHandler.GetErrorStringForLastError();
+            _modal.ErrorMessage = errorHandler.GetErrorStringForLastError();
         }
 
-        _awaitingResponse = false;
+        _modal.AwaitingResponse = false;
+
         StateHasChanged();
+    }
+
+    private void Success()
+    {
+        navMan.NavigateTo("/login", forceLoad: true);
+    }
+    private void Failure()
+    {
+        navMan.NavigateTo("/register", forceLoad: true);
     }
 }

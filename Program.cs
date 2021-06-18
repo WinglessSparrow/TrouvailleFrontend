@@ -39,12 +39,18 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<ILogin, LoginTest>();
             builder.Services.AddTransient<IOrder, OrderTest>();
             builder.Services.AddTransient<IRegister, RegisterTest>();
+            builder.Services.AddTransient<IUserDataGetter, UserDataGetterTest>();
+            builder.Services.AddTransient<IUserDataChanger, UserDataChangerTest>();
 
             // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
             // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
             // builder.Services.AddTransient<ILogin, LoginAPI>();
             // builder.Services.AddTransient<IOrder, OrderAPI>();
             // builder.Services.AddTransient<IRegister, RegisterAPI>();
+
+            //TODO -CLASSES
+            // builder.Services.AddTransient<IUserDataGetter, RegisterAPI>();
+            // builder.Services.AddTransient<IUserDataChanger, RegisterAPI>();
 
             await builder.Build().RunAsync();
         }

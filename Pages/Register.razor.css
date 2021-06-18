@@ -66,29 +66,3 @@
 ::deep .not-required {
   border-left: solid 3px var(--accent);
 }
-
-.tooltip-trigger {
-  position: relative;
-}
-
-::deep .tooltip-trigger:hover > .tooltip-custom {
-  visibility: visible;
-}
-
-::deep .tooltip-custom {
-  visibility: hidden;
-
-  position: absolute;
-  top: 120%;
-  left: 1%;
-  z-index: 1;
-
-  width: auto;
-  height: auto;
-  padding: 5px;
-
-  background-color: var(--background-contrast);
-  box-shadow: 1px 1px 4px 0px rgb(136, 136, 136, 52%);
-
-  /* transition: 0.5s; */
-}

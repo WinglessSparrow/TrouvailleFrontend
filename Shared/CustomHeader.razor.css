@@ -134,3 +134,11 @@
   background-color: var(--foreground-contrast);
   cursor: pointer;
 }
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--foreground-contrast);
+}

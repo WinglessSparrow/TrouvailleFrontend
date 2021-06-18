@@ -1,0 +1,43 @@
+@namespace TrouvailleFrontend.Components.Shared
+
+<div class="tab-control">
+    <div class="tabs">
+        @foreach (var tab in _tabs)
+        {
+            <button class='tab @(@tab.Active? "active": " ")' @onclick=@(()=>ActivateTab(tab))>@tab.Name</button>
+        }
+    </div>
+    <div class="tab-content">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    public CustomTab CurrentTab { get; set; }
+
+    private List<CustomTab> _tabs = new List<CustomTab>();
+
+    private void ActivateTab(CustomTab tab)
+    {
+        CurrentTab.Active = false;
+        CurrentTab = tab;
+        CurrentTab.Active = true;
+        StateHasChanged();
+    }
+
+    internal void AddPage(CustomTab tab)
+    {
+        _tabs.Add(tab);
+        if (_tabs.Count == 1)
+        {
+            CurrentTab = tab;
+            CurrentTab.Active = true;
+        }
+
+        StateHasChanged();
+    }
+}

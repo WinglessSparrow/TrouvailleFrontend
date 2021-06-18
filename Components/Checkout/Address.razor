@@ -2,8 +2,6 @@
 
 @using TrouvailleFrontend.Shared.Models
 
-@* TODO Check for value beign correct, bind address class *@
-
 <div class="address-container">
     <h4 class="header">@AddressFor</h4>
     <InputSelect @bind-Value=AddressM.Country @bind-Value-oniput="AddressM.Country" class="country"
@@ -39,7 +37,7 @@
     }
 </style>
 
-@code{
+@code {
     [Parameter]
     public bool IsDisabled { get; set; }
     [Parameter]

@@ -27,7 +27,7 @@
     </div>
 </div>
 
-@code{
+@code {
     private bool _isSuccess = false;
     private LoginModel _loginModel = new LoginModel();
 
@@ -39,7 +39,7 @@
 
         if (_isSuccess)
         {
-            navMan.NavigateTo("/");
+            navMan.NavigateTo("/", forceLoad: true);
         }
         else
         {
