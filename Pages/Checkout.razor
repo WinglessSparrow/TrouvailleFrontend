@@ -84,12 +84,8 @@
     }
 </div>
 
-<<<<<<< HEAD
-<CustomModal @ref="_modal" Name="Register" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+<CustomModal @ref="_modal" Name="Register" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
 @* </div> *@
-
-=======
->>>>>>> cc587e2a801301d120ab1bcf807bd987c86f9bba
 
 @code {
     private CustomModal _modal;
@@ -104,7 +100,7 @@
 
     private void Success()
     {
-        navMan.NavigateTo("/thanks", forceLoad: true);
+        navMan.NavigateTo("/", forceLoad: true);
     }
 
     private void Failure()
@@ -145,8 +141,6 @@
 
     protected async Task SubmitOrderAsync()
     {
-
-        _modal.Modal.Show();
         _modal.AwaitingResponse = true;
 
         if (CheckStock())
@@ -155,6 +149,7 @@
 
             if (_modal.Success)
             {
+                _modal.Message = "Thanks for the Purchase";
                 await local.RemoveStorageAsync("shoppingCart");
             }
             else
@@ -168,7 +163,6 @@
         }
 
         _modal.AwaitingResponse = false;
-        _modal.UpdateState();
 
         StateHasChanged();
     }

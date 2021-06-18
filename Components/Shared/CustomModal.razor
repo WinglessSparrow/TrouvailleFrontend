@@ -4,7 +4,7 @@
 
 <Modal @ref="Modal" Closing="@ClosingModal">
     <ModalContent Centered="true">
-        @if (AwaitingResponse)
+        @if (_awaiting)
         {
             <ModalHeader>
                 <ModalTitle>Pending response from server</ModalTitle>
@@ -24,6 +24,9 @@
                 </ModalHeader>
                 <ModalBody class="modal-check">
                     <i class="fas fa-check-circle"></i>
+                    <div>
+                        @Message
+                    </div>
                 </ModalBody>
                 <style>
                     .modal-footer {
@@ -65,22 +68,31 @@
     [Parameter]
     public Action OnCloseFailure { get; set; }
 
-
     public Modal Modal { get; set; }
     public string ErrorMessage { get; set; }
+    public string Message { get; set; } = "";
     public bool Success { get; set; }
-    public bool AwaitingResponse { get; set; }
-
-    public void UpdateState()
+    public bool AwaitingResponse
     {
-        StateHasChanged();
+        get
+        {
+            return _awaiting;
+        }
+        set
+        {
+            _awaiting = value;
+            if (_awaiting)
+            {
+                Modal.Show();
+            }
+            StateHasChanged();
+        }
     }
 
-<<<<<<< HEAD
+    private bool _awaiting = false;
+
     private void ClosingModal(ModalClosingEventArgs e)
-=======
-    public void ClosingModal(ModalClosingEventArgs e)
->>>>>>> cc587e2a801301d120ab1bcf807bd987c86f9bba
+
     {
         if (Success)
         {

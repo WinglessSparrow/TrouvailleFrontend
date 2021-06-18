@@ -1,8 +1,9 @@
 @using Blazorise
 
-@inject NavigationManager NavMan
+@inject NavigationManager navMan
 @inject ILocalStorage local
 @inject IJSRuntime js
+@inject ILocalStorage localStorage
 
 <div class="header">
     <div class="header-content">
@@ -30,7 +31,8 @@
                 <div class="dropdown-indicator">
                     <Icon Name="IconName.User" />
                     <div class="dropdown-content">
-                        <a href="/account">Account Settings <i class="fas fa-user-cog  "></i></a>
+                        <a href="/account">Account Settings <i class="fas fa-user-cog"></i></a>
+                        <a @onclick="Logout">Logout <i class="fas fa-sign-out-alt"></i></a>
                     </div>
                 </div>
             }
@@ -67,7 +69,7 @@
     }
     private void ToMain()
     {
-        NavMan.NavigateTo("/");
+        navMan.NavigateTo("/");
     }
 
     private void Enter(KeyboardEventArgs e)
@@ -83,8 +85,9 @@
         js.InvokeVoidAsync("alert", "Search is under construction ¯\\_(ツ)_/¯");
     }
 
-    private void Logout()
+    private async void Logout()
     {
-
+        await localStorage.RemoveStorageAsync("authToken");
+        navMan.NavigateTo("/", forceLoad: true);
     }
 }

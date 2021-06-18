@@ -30,6 +30,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                 _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
             }
 
+            //must be false, true is for test
             return true;
         }
     }
