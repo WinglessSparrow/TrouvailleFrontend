@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 using TrouvailleFrontend.Shared.Models;
@@ -9,6 +10,8 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         }
 
         public async Task<bool> changeUserDataAsync(UserModel userData) {
+            await Task.Run(() => { Thread.Sleep(1000); });
+
             return false;
         }
     }

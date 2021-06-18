@@ -11,12 +11,13 @@
 @inject NavigationManager navMan
 @inject IOrder orderer
 @inject IJSRuntime js
+@inject IErrorHandler errorHandler
 
 <div class="page">
     @if (_cartItems != null && _cartItems.Count() > 0)
     {
         <div class="content">
-            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="PostOrder">
+            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="SubmitOrderAsync">
                 <ObjectGraphDataAnnotationsValidator />
 
                 <div class="addresses main-container-style">
@@ -39,33 +40,33 @@
                             @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
                             {
                                 var temp = method;
-                            <div class="radio-wraper">
-                                <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
-                                <label for=@temp>@temp</label>
-                            </div>
+                                <div class="radio-wraper">
+                                    <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
+                                    <label for=@temp>@temp</label>
+                                </div>
                             }
-                    </InputRadioGroup>
+                        </InputRadioGroup>
+                    </div>
                 </div>
-            </div>
 
-            <div class="radio-group-container main-container-style">
-                <h4><i class="fas fa-parachute-box"></i> Shipping Method</h4>
-                <div class="radio-container">
-                    <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
-                        @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
+                <div class="radio-group-container main-container-style">
+                    <h4><i class="fas fa-parachute-box"></i> Shipping Method</h4>
+                    <div class="radio-container">
+                        <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
+                            @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
                             {
                                 var temp = method;
-                            <div class="radio-wraper">
-                                <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
-                                <label for=@temp>@temp</label>
-                            </div>
+                                <div class="radio-wraper">
+                                    <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
+                                    <label for=@temp>@temp</label>
+                                </div>
                             }
-                    </InputRadioGroup>
+                        </InputRadioGroup>
+                    </div>
                 </div>
-            </div>
-            <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
-        </EditForm>
-    </div>
+                <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
+            </EditForm>
+        </div>
         <div class="side-menu">
             <SideMenu>
                 <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
@@ -82,7 +83,13 @@
         </ErrorMessage>
     }
 </div>
+
+<CustomModal @ref="_modal" Name="Register" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+@* </div> *@
+
+
 @code {
+    private CustomModal _modal;
     private EditContext _eContext;
     private TokenModel _token;
     private double _totalPriceWithoutTax;
@@ -91,6 +98,16 @@
     private OrderModel _order;
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
+
+    private void Success()
+    {
+        navMan.NavigateTo("/thanks", forceLoad: true);
+    }
+
+    private void Failure()
+    {
+        navMan.NavigateTo("/checkout", forceLoad: true);
+    }
 
     private void SetDelivery()
     {
@@ -123,30 +140,34 @@
         _eContext = new(_order);
     }
 
-    protected async Task PostOrder()
+    protected async Task SubmitOrderAsync()
     {
-        bool isOrderSucess = true;
 
-        isOrderSucess = CheckStock();
-        //TODO fail message
-        if (isOrderSucess)
+        _modal.Modal.Show();
+        _modal.AwaitingResponse = true;
+
+        if (CheckStock())
         {
-            isOrderSucess = await orderer.OrderAsync(PrepareOrder());
+            _modal.Success = await orderer.OrderAsync(PrepareOrder());
 
-            if (isOrderSucess)
+            if (_modal.Success)
             {
                 await local.RemoveStorageAsync("shoppingCart");
-                navMan.NavigateTo("/thanks");
             }
             else
             {
-                await js.InvokeVoidAsync("alert", "Something went wrong on the Network!");
+                _modal.ErrorMessage = errorHandler.GetErrorStringForLastError();
             }
         }
         else
         {
-            await js.InvokeVoidAsync("alert", "Some items are not in Stock!");
+            _modal.ErrorMessage = "Some Items are not in stock!";
         }
+
+        _modal.AwaitingResponse = false;
+        _modal.UpdateState();
+
+        StateHasChanged();
     }
 
     private bool CheckStock()

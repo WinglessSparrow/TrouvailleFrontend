@@ -6,7 +6,7 @@ using TrouvailleFrontend.Shared.Classes.Interfaces;
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class ErrorHandler : IErrorHandler {
 
-        HttpResponseMessage _lastResponse;
+        HttpResponseMessage _lastResponse = new();
 
         public string GetErrorStringForLastError() {
             return ErrorMapping.ErrorsMapped[_lastResponse.StatusCode];

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 using TrouvailleFrontend.Shared.Models;
@@ -10,6 +11,9 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         }
 
         public async Task<UserModel> getUserDataAsync() {
+
+            await Task.Run(() => { Thread.Sleep(50); });
+
             return new UserModel() {
                 Id = "123210ßid0299u",
                 Email = "e@mail.com",

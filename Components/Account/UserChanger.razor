@@ -6,6 +6,7 @@
 
 @code {
     [CascadingParameter]
+    protected UserModel _originUserData { get; set; }
     protected UserModel _userData { get; set; }
     protected EditContext _context;
     protected bool _isChangeDone = true;
@@ -14,7 +15,8 @@
     protected override void OnParametersSet()
     {
         //deep copy is needed, because otherwise diferent fields will affect each other
-        _context = new(DeepCopier.DeepCopy<UserModel>(_userData));
+        _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
+        _context = new(_userData);
     }
 
     protected async void SubmitAsync()
@@ -22,6 +24,7 @@
         ChangeState();
 
         bool valid = _context.Validate();
+        Console.WriteLine(valid);
         bool success;
 
         if (_isChangeDone)

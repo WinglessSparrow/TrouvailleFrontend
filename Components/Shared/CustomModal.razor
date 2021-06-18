@@ -1,0 +1,90 @@
+@namespace TrouvailleFrontend.Components.Shared
+
+@using Blazorise
+
+<Modal @ref="Modal" Closing="@ClosingModal">
+    <ModalContent Centered="true">
+        @if (AwaitingResponse)
+        {
+            <ModalHeader>
+                <ModalTitle>Pending response from server</ModalTitle>
+                <CloseButton />
+            </ModalHeader>
+            <ModalBody>
+                <div class="loading-spiner"></div>
+            </ModalBody>
+        }
+        else
+        {
+            @if (Success)
+            {
+                <ModalHeader>
+                    <ModalTitle>@Name Success</ModalTitle>
+                    <CloseButton />
+                </ModalHeader>
+                <ModalBody class="modal-check">
+                    <i class="fas fa-check-circle"></i>
+                </ModalBody>
+                <style>
+                    .modal-footer {
+                        justify-content: center;
+                    }
+
+                    button {
+                        padding: 10px;
+                    }
+                </style>
+                <ModalFooter>
+                    <Button Color="Color.Info" Clicked="()=>{ClosingModal(null);}">@ButtonText</Button>
+                </ModalFooter>
+            }
+            else
+            {
+                <ModalHeader>
+                    <ModalTitle>@Name Failure</ModalTitle>
+                    <CloseButton />
+                </ModalHeader>
+                <ModalBody class="modal-warning">
+                    <i class="fas fa-times-circle"></i>
+                    <div class="modal-error-message">
+                        @ErrorMessage
+                    </div>
+                </ModalBody>
+            }
+        }
+    </ModalContent>
+</Modal>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public string ButtonText { get; set; }
+    [Parameter]
+    public Action OnCloseSuccess { get; set; }
+    [Parameter]
+    public Action OnCloseFailure { get; set; }
+
+
+    public Modal Modal { get; set; }
+    public string ErrorMessage { get; set; }
+    public bool Success { get; set; }
+    public bool AwaitingResponse { get; set; }
+
+    public void UpdateState()
+    {
+        StateHasChanged();
+    }
+
+    private void ClosingModal(ModalClosingEventArgs e)
+    {
+        if (Success)
+        {
+            OnCloseSuccess?.Invoke();
+        }
+        else
+        {
+            OnCloseFailure?.Invoke();
+        }
+    }
+}
