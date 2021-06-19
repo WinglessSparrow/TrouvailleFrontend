@@ -1,0 +1,15 @@
+@namespace TrouvailleFrontend.Components.Account
+
+<div class="addres-wrapper">
+    <h3>@Name</h3>
+    <div class="street">@Address.Street @Address.StreetNumber</div>
+    <div class="city">@Address.PostalCode @Address.CityName</div>
+    <div class="country">@Address.Country, @Address.State</div>
+</div>
+
+@code{
+    [Parameter]
+    public AddressModel Address { get; set; }
+    [Parameter]
+    public string Name { get; set; }
+}

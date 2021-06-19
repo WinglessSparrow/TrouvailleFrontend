@@ -5,6 +5,8 @@
 }
 
 .collapsable-container {
+  transition: 2s;
+
   height: auto;
 
   padding: 0;

@@ -1,0 +1,22 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@if (Order != null)
+{
+    <div class="data-wrapper">
+        <h4 class="shipment">Shiped with @Order.ShipmentMethod</h4>
+        <h4 class="payment">Payed with @Order.PaymentMethod</h4>
+        <h4 class="id">Order Id: @Order.OrderId</h4>
+
+        <div class="address-invoice">
+            <AddressShort Address=@Order.InvoiceAddress Name="Invoice Address" />
+        </div>
+        <div class="address-shipment">
+            <AddressShort Address=@Order.DeliveryAddress Name="Delivery Address" />
+        </div>
+    </div>
+}
+
+@code{
+    [Parameter]
+    public SmallOrderModel Order { get; set; }
+}

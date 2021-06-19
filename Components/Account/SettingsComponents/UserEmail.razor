@@ -13,7 +13,7 @@
             <InputText type="password" id="password" @bind-Value=_login.Password class="not-required"
                 @bind-Value-oninput=_login.Password placeholder="Password" disabled="@_isChangeDone" />
 
-            <button type="submit" class="button-style">@_buttonText</button>
+            <button type="submit" class="button-style button-change">@_buttonText</button>
             @if (!_isChangeDone)
             {
                 <button type="button" class="button-style button-change" @onclick=ChangeState>Cancel</button>

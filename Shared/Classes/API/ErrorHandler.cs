@@ -12,6 +12,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public string GetLastErrorString() {
             return ErrorMapping.ErrorsMapped[_lastResponse.StatusCode];
         }
+
         public void SetLastError(HttpResponseMessage response) {
             _lastResponse = response;
         }

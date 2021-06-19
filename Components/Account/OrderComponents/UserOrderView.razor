@@ -1,30 +1,19 @@
 @namespace TrouvailleFrontend.Components.Account
 
-@using System.Threading
-<div class="order-view">
+@using TrouvailleFrontend.Components.Checkout
 
+@inject IProductsRetriever productsRetriever
+
+<div class="order-view main-container-style">
+
+    <h4><b>Order of:</b> @Order.Date.ToLongDateString()</h4>
     <div class="short-data">
         @if (Order != null)
         {
-            @* TODD Separate Component for this nonsense*@
-
-            <div class="data-wrapper">
-                <div class="cost">Total: @Order.TotalCost</div>
-                <div class="date">On @Order.Date</div>
-                <div class="shipment">Shiped with @Order.ShipmentMethod</div>
-                <div class="payment">Payed through @Order.PaymentMethod</div>
-                <div class="id">Id: @Order.OrderId</div>
-                <div class="state">State @Order.OrderState</div>
-
-                @* TODO Separate Components for Address *@
-
-                <div class="address-invoice">Invoice Address: </div>
-                <div class="address-shipment">Delivery Address :</div>
-            </div>
+            <OrderShort Order=@Order />
         }
     </div>
-
-    <CollapseAccordion Name="Order" CallbackOnOpen=@LoadDetailsAsync>
+    <CollapseAccordion Name="Products" CallbackOnOpen=@LoadDetailsAsync>
         <div class="content">
             @if (!_loaded)
             {
@@ -32,19 +21,35 @@
             }
             else
             {
-            //content as component
-                <div style="background-color: red; width: 300px; height: 300px;"></div>
+
+                @for (int i = 0; i < _products.Count(); i++)
+                {
+                    <ProductView Name=@_products[i].Name Price=@_products[i].Price Stock=@_products[i].InStock
+                Cardinality=@_itemData[i].Cardinality Picture=@_products[i].Picture />
+                }
             }
         </div>
 
     </CollapseAccordion>
+    <div class="under-products ">
+        <div class="cost">
+            <b>Total: @_cost</b>
+        </div>
+    </div>
 </div>
 
 @code{
     [Parameter]
     public SmallOrderModel Order { get; set; }
-
+    private List<ProductModel> _products;
+    private List<ShoppingCartItemModel> _itemData;
     private bool _loaded = false;
+    private string _cost;
+
+    protected override void OnParametersSet()
+    {
+        _cost = String.Format("{0:C}", Order.TotalCost);
+    }
 
     private async void LoadDetailsAsync()
     {
@@ -52,9 +57,10 @@
         {
             StateHasChanged();
 
-            await Task.Run(() => { Thread.Sleep(3000); });
-            //TODO load details
-            //TODO Error checking!
+            _itemData = Order.Products;
+
+            _products = await productsRetriever.GetProductsByIdAsync(_itemData);
+
 
             _loaded = true;
 
