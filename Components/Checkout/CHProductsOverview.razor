@@ -3,8 +3,6 @@
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Components.Shared
 
-@* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
-
 <div class="main-container-style">
     <CollapseAccordion Name="Products Overview" IconClasses="fas fa-shopping-basket" IconEnable=true>
         @if (Products != null && ItemData != null)
@@ -12,7 +10,7 @@
             @for (int i = 0; i < Products.Count(); i++)
             {
                 <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
-            Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture/>
+            Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
             }
         }
     </CollapseAccordion>

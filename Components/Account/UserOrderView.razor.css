@@ -1,0 +1,13 @@
+.order-view {
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  min-height: 300px;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+}

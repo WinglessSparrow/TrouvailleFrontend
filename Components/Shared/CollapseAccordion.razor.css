@@ -18,6 +18,11 @@
   /* animation-duration: 1s; */
 }
 
+h4 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 button {
   display: flex;
   justify-content: center;
@@ -25,11 +30,6 @@ button {
 
   border: none;
   width: 5%;
-}
-
-h4 {
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 button:hover {

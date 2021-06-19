@@ -1,0 +1,40 @@
+@using System.Threading
+<div class="order-view">
+    <CollapseAccordion Name="Order" CallbackOnOpen=@LoadDetailsAsync>
+        <div class="content">
+            @if (!_loaded)
+            {
+                //spinn animation
+                <div class="loading-spinner"></div>
+
+            }
+            else
+            {
+            //content as component
+                <div style="background-color: red; width: 300px; height: 300px;"></div>
+            }
+        </div>
+
+    </CollapseAccordion>
+</div>
+
+@code{
+    private bool _loaded = false;
+
+    private async void LoadDetailsAsync()
+    {
+        if (!_loaded)
+        {
+            StateHasChanged();
+
+            await Task.Run(() => { Thread.Sleep(3000); });
+            //TODO load details
+            //TODO Error checking!
+
+            _loaded = true;
+
+            StateHasChanged();
+        }
+    }
+
+}

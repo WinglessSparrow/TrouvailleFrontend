@@ -40,33 +40,33 @@
                             @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
                             {
                                 var temp = method;
-                                <div class="radio-wraper">
-                                    <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
-                                    <label for=@temp>@temp</label>
-                                </div>
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
+                                <label for=@temp>@temp</label>
+                            </div>
                             }
-                        </InputRadioGroup>
-                    </div>
+                    </InputRadioGroup>
                 </div>
+            </div>
 
-                <div class="radio-group-container main-container-style">
-                    <h4><i class="fas fa-parachute-box"></i> Shipping Method</h4>
-                    <div class="radio-container">
-                        <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
-                            @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
+            <div class="radio-group-container main-container-style">
+                <h4><i class="fas fa-parachute-box"></i> Shipping Method</h4>
+                <div class="radio-container">
+                    <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
+                        @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
                             {
                                 var temp = method;
-                                <div class="radio-wraper">
-                                    <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
-                                    <label for=@temp>@temp</label>
-                                </div>
+                            <div class="radio-wraper">
+                                <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
+                                <label for=@temp>@temp</label>
+                            </div>
                             }
-                        </InputRadioGroup>
-                    </div>
+                    </InputRadioGroup>
                 </div>
-                <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
-            </EditForm>
-        </div>
+            </div>
+            <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
+        </EditForm>
+    </div>
         <div class="side-menu">
             <SideMenu>
                 <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
@@ -154,7 +154,7 @@
             }
             else
             {
-                _modal.ErrorMessage = errorHandler.GetErrorStringForLastError();
+                _modal.ErrorMessage = errorHandler.GetLastErrorString();
             }
         }
         else

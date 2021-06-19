@@ -23,10 +23,10 @@
             <ObjectGraphDataAnnotationsValidator />
             <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
             <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
-            <button form="user-data-form" class="button-style">@_buttonText</button>
+            <button form="user-data-form" class="button-style button-change">@_buttonText</button>
             @if (!_isChangeDone)
             {
-                <button type="button" class="button-style" @onclick=ChangeState>Cancel</button>
+                <button type="button" class="button-style button-change" @onclick=ChangeState>Cancel</button>
             }
         </EditForm>
     </div>

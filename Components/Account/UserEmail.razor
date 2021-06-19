@@ -1,0 +1,27 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@inherits UserChanger
+
+<div>
+    <div class='email @(_isChangeDone? " " : "changing")'>
+        <h4>Email</h4>
+        <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <InputText id="Email" type="email" @bind-Value=_userData.Email @bind-Value-oninput=_userData.Email
+                placeholder="First Name" disabled="@_isChangeDone" />
+            <InputText type="password" id="phone-number" @bind-Value=_login.Password class="not-required"
+                @bind-Value-oninput=_userData.PhoneNumber placeholder="Password" disabled="@_isChangeDone" />
+
+            <button type="submit" class="button-style">@_buttonText</button>
+            @if (!_isChangeDone)
+            {
+                <button type="button" class="button-style button-change" @onclick=ChangeState>Cancel</button>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@code{
+    private LoginModel _login = new();
+}
