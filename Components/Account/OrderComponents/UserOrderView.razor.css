@@ -1,0 +1,71 @@
+.order-view {
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  min-height: 300px;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+}
+
+.data-wrapper {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+
+  height: auto;
+
+  gap: 2px;
+}
+
+.data-wrapper > * {
+  /* min-width: 50px;
+  min-height: 20px;*/
+  background-color: red;
+
+  /* margin: 2px; */
+}
+
+.cost {
+  grid-row: 1;
+  grid-column: 1 / 4;
+}
+
+.id {
+  grid-row: 1;
+  grid-column: 4 / 8;
+}
+
+.state {
+  grid-row: 1;
+  grid-column: 8 / 11;
+}
+
+.date {
+  grid-row: 2;
+  grid-column: 1 / 4;
+}
+
+.payment {
+  grid-row: 3;
+  grid-column: 1 / 6;
+}
+
+.shipment {
+  grid-row: 3;
+  grid-column: 6 / 11;
+}
+
+.address-invoice {
+  grid-row: 4;
+  grid-column: 1 / 6;
+}
+
+.address-shipment {
+  grid-row: 4;
+  grid-column: 6 / 11;
+}

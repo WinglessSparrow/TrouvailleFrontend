@@ -1,0 +1,65 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using System.Threading
+<div class="order-view">
+
+    <div class="short-data">
+        @if (Order != null)
+        {
+            @* TODD Separate Component for this nonsense*@
+
+            <div class="data-wrapper">
+                <div class="cost">Total: @Order.TotalCost</div>
+                <div class="date">On @Order.Date</div>
+                <div class="shipment">Shiped with @Order.ShipmentMethod</div>
+                <div class="payment">Payed through @Order.PaymentMethod</div>
+                <div class="id">Id: @Order.OrderId</div>
+                <div class="state">State @Order.OrderState</div>
+
+                @* TODO Separate Components for Address *@
+
+                <div class="address-invoice">Invoice Address: </div>
+                <div class="address-shipment">Delivery Address :</div>
+            </div>
+        }
+    </div>
+
+    <CollapseAccordion Name="Order" CallbackOnOpen=@LoadDetailsAsync>
+        <div class="content">
+            @if (!_loaded)
+            {
+                <div class="loading-spinner"></div>
+            }
+            else
+            {
+            //content as component
+                <div style="background-color: red; width: 300px; height: 300px;"></div>
+            }
+        </div>
+
+    </CollapseAccordion>
+</div>
+
+@code{
+    [Parameter]
+    public SmallOrderModel Order { get; set; }
+
+    private bool _loaded = false;
+
+    private async void LoadDetailsAsync()
+    {
+        if (!_loaded)
+        {
+            StateHasChanged();
+
+            await Task.Run(() => { Thread.Sleep(3000); });
+            //TODO load details
+            //TODO Error checking!
+
+            _loaded = true;
+
+            StateHasChanged();
+        }
+    }
+
+}

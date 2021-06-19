@@ -1,0 +1,28 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@inject IOrderRetriever orderRetriever
+
+<div class="account-orders">
+    <div class="information-wrapper">
+        @if (Orders != null)
+        {
+            foreach (var o in Orders)
+            {
+                <UserOrderView Order=o />
+
+            }
+        }
+
+    </div>
+
+</div>
+
+
+@code{
+    public List<SmallOrderModel> Orders { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await orderRetriever.GetSlimOrdersAsync();
+    }
+}

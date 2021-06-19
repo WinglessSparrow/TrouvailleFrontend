@@ -40,9 +40,9 @@
     {
         if (_isCollapsed)
         {
-
-            Task.Run(() =>
+            Task.Run(async () =>
             {
+                await Task.Yield();
                 CallbackOnOpen?.Invoke();
             });
         }
