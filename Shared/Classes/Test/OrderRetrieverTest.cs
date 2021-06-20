@@ -23,7 +23,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     TotalCost = 20.50m,
                     PaymentMethod = Enums.PaymentMethod.Paypal,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
-                    OrderState = Enums.OrderState.Bestellt,
+                    OrderState = Enums.OrderState.Storniert,
                     InvoiceAddress = new() {
                         Country = "Estonia",
                         State = "Harjuma",
@@ -83,7 +83,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     TotalCost = 300.50m,
                     PaymentMethod = Enums.PaymentMethod.Paypal,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
-                    OrderState = Enums.OrderState.Bestellt,
+                    OrderState = Enums.OrderState.Unterwegs,
                     InvoiceAddress = new() {
                         Country = "USA",
                         State = "Kentucky",
@@ -108,6 +108,36 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                         new(){ProductId = "ef0e4781-d7f4-4d38-bce5-4c30427311fb", Cardinality = 1}
                     }
                },
+                             new()
+               {
+                    OrderId = "dc13f066-4ff7-4bca-452f-a81d4f2c932f",
+                    Date = DateTime.Now,
+                    TotalCost = 300.50m,
+                    PaymentMethod = Enums.PaymentMethod.Paypal,
+                    ShipmentMethod = Enums.ShipmentMethod.dhl,
+                    OrderState = Enums.OrderState.Zugestellt,
+                    InvoiceAddress = new() {
+                        Country = "USA",
+                        State = "Kentucky",
+                        PostalCode = 12356,
+                        CityName = "New York",
+                        Street = "Street",
+                        StreetNumber = 1
+                    },
+                    DeliveryAddress = new() {
+                        Country = "Germany",
+                        State = "Baden",
+                        PostalCode = 12356,
+                        CityName = "Rastatt",
+                        Street = "Lenin Strasse",
+                        StreetNumber = 1
+                    },
+                    Products = new()
+                    {
+                        new(){ProductId = "f0f7b8d4-0d2a-4c55-9a94-d91f39a93a1a", Cardinality = 1},
+                        new(){ProductId = "ef0e4781-d7f4-4d38-bce5-4c30427311fb", Cardinality = 1}
+                    }
+               }
 
             };
         }

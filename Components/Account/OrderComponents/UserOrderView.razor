@@ -1,12 +1,17 @@
 @namespace TrouvailleFrontend.Components.Account
 
 @using TrouvailleFrontend.Components.Checkout
+@using TrouvailleFrontend.Shared.Enums
 
 @inject IProductsRetriever productsRetriever
 
 <div class="order-view main-container-style">
 
-    <h4><b>Order of:</b> @Order.Date.ToLongDateString()</h4>
+    <div class="head">
+        <h4 class="order"><b>Order of:</b> @Order.Date.ToLongDateString()</h4>
+        <h4 class="state"><i class="fas fa-circle" style="color:@stateColor; margin-right: 10px;"></i><b>State:</b>
+            @Order.OrderState</h4>
+    </div>
     <div class="short-data">
         @if (Order != null)
         {
@@ -45,10 +50,26 @@
     private List<ShoppingCartItemModel> _itemData;
     private bool _loaded = false;
     private string _cost;
+    private string stateColor = "";
 
     protected override void OnParametersSet()
     {
         _cost = String.Format("{0:C}", Order.TotalCost);
+        switch (Order.OrderState)
+        {
+            case OrderState.Bestellt:
+                stateColor = "blue";
+                break;
+            case OrderState.Storniert:
+                stateColor = "red";
+                break;
+            case OrderState.Unterwegs:
+                stateColor = "yellow";
+                break;
+            case OrderState.Zugestellt:
+                stateColor = "green";
+                break;
+        }
     }
 
     private async void LoadDetailsAsync()
