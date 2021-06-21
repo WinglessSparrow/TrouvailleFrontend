@@ -4,7 +4,6 @@ using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes.Interfaces {
     public interface IUserDataChanger {
-        Task<bool> changeAddressAsync(UserModel userData);
         Task<bool> changeUserDataAsync(UserModel userData);
     }
 }

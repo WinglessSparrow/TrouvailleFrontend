@@ -1,24 +1,30 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
-    public class UserDataChangerAPI : IUserDataChanger {
+    public class UserDataGetterAPI : IUserDataGetter {
 
         IErrorHandler _errorHandler;
         HttpRequest _httpRequest;
 
-        public UserDataChangerAPI(IErrorHandler errorHandler, HttpRequest httpRequest) {
+        public UserDataGetterAPI(IErrorHandler errorHandler, HttpRequest httpRequest) {
             _errorHandler = errorHandler;
             _httpRequest = httpRequest;
         }
 
-        public async Task<bool> changeUserDataAsync(UserModel userData) {
+        public async Task<UserModel> getUserDataAsync() {
+
             try {
-                var response = await _httpRequest.PutRequestAsync<UserModel>(ApiPathsCentralDefinition.API_CHANGE_USER, userData);
-                if (response.IsSuccessStatusCode) return true;
+                var response = await _httpRequest.GetRequestAsync(ApiPathsCentralDefinition.API_GET_USER);
+                if (response.IsSuccessStatusCode) {
+                    var user = await response.Content.ReadFromJsonAsync<UserModel>();
+                    return user;
+                }
 
                 _errorHandler.SetLastError(response);
 
@@ -26,7 +32,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                 _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
             }
 
-            return false;
+            return null;
         }
     }
 }
