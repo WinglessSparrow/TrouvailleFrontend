@@ -41,7 +41,7 @@
                     </h4>
                 </div>
                 <div class="to-shopping-cart">
-                    <button class="button-style" @onclick="@addToCart">
+                    <button class="button-style" disabled="@_disabled" @onclick="@addToCart">
                         <Icon Name="IconName.CartPlus" />
                     </button>
                 </div>
@@ -67,6 +67,8 @@
 
 
 @code {
+    private bool _disabled = false;
+
     [Parameter]
     public string Id { get; set; }
     public int Amount { get; set; } = 1;
@@ -123,6 +125,11 @@
         }
 
         _stock = StockConverter.ParseStockToString(_product.InStock);
+
+        if (_product.InStock == 0)
+        {
+            _disabled = true;
+        }
 
         _price = String.Format("{0:C}", _product.Price);
     }
