@@ -10,5 +10,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public const string API_REGISTER = API_IP + "/api/auth/customer/register";
         public const string API_CHANGE_USER = API_IP + "/api/auth/customer";
         public const string API_GET_USER = API_IP + "/api/auth/customer";
+
+        public const string API_RESET_PASSWORD = API_IP + "/api/auth/customer/resetPassword";
+        public const string API_GET_HISTORY = API_IP + "/api/orders/History";
     }
 }
