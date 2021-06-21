@@ -1,0 +1,103 @@
+@page "/shoppingcart"
+
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Shared.Enums
+@using TrouvailleFrontend.Components.ShoppingCart
+@using TrouvailleFrontend.Components.Shared
+@using System.Text.Json
+
+@inject ILocalStorage local
+@inject IProductsRetriever productsRetriever
+@inject NavigationManager navMan
+@inject IOrder orderer
+@inject IJSRuntime js
+@inject IErrorHandler errorHandler
+
+<div class="page">
+    @if (_cartItems != null && _cartItems.Count() > 0)
+    {
+        <div class="content">
+            <CascadingValue Value="@this">
+                <CHProductsOverviewSC Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
+            </CascadingValue>
+        </div>
+    }
+    else
+    {
+        <ErrorMessage>
+            @if (_cartItems != null && _cartItems.Count() <= 0)
+            {
+                <b>Your shopping cart is empty <br /> please fill it with stuff</b>
+            }
+        </ErrorMessage>
+    }
+</div>
+
+<CustomModal @ref="_modal" Name="Register" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+@* </div> *@
+
+@code {
+    private CustomModal _modal;
+    private TokenModel _token;
+    private double _totalPriceWithoutTax;
+    private double _totalPrice;
+    private List<ShoppingCartItemModel> _cartItems { get; set; }
+    private List<ProductModel> _products { get; set; }
+
+    private void Success()
+    {
+        navMan.NavigateTo("/", forceLoad: true);
+    }
+
+    private void Failure()
+    {
+        navMan.NavigateTo("/checkout", forceLoad: true);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _token = await local.GetStorageAsync<TokenModel>("authToken");
+        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        if (_cartItems != null && _cartItems.Count() > 0)
+        {
+            _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+
+            for (int i = 0; i < _cartItems.Count(); i++)
+            {
+                _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
+                //calculating tax
+                double tax = ((double)_products[i].Tax) / 100.0;
+                _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
+            }
+        }
+    }
+
+    public async Task delete(string id)
+    {
+        if (_cartItems != null)
+        {
+            for (int i = 0; i < _cartItems.Count; i++)
+            {
+                if (_cartItems[i].ProductId == id)
+                {
+                    Console.WriteLine("_Cart items ID: " + _cartItems[i].ProductId);
+                    Console.WriteLine("_Product ID DELETE: " + _products[i].ProductId + "_Product NAME DELETE: " + _products[i].Name);
+                    //Console.WriteLine("Price: " + _cartItems[i].Cardinality * _products[i].Price);
+
+                    _totalPrice -= _cartItems[i].Cardinality * _products[i].Price;
+                    Console.WriteLine("TOTAL PRIZE: " + _totalPrice);
+                    _cartItems.RemoveAt(i);
+                    _products.RemoveAt(i);
+                    
+                    await local.SetStorageAsync("shoppingCart", _cartItems);
+
+                }
+            }
+        }
+
+        StateHasChanged();
+    }
+
+
+
+}

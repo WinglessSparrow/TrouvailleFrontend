@@ -1,0 +1,113 @@
+@namespace TrouvailleFrontend.Components.ShoppingCart
+
+@using TrouvailleFrontend.Pages
+@inject ILocalStorage local
+
+<div class="product-view main-container-style">
+    @* <div class="image"> *@
+    <img src="data:image/png;base64,@Picture.ImageData" alt="image error" class="image">
+    @* </div> *@
+    <div class="name">
+        <p>@Name</p>
+    </div>
+    <div>
+        <p>Price: @_priceCalculated<br />
+            <sub>per item: @_price</sub>
+        </p>
+    </div>
+    <div class="cardinality">
+        <div>
+            <p>In Shopping cart:<br />
+                @Cardinality
+            </p>
+        </div>
+        <div class="buttons">
+            <button @onclick="@increase">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button @onclick="@decrease">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <div class="delete">
+            <button @onclick="@delete">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <p>Availability:<br />
+            <sub>@_stock</sub>
+        </p>
+    </div>
+
+    <div>
+        <p>ID:<br />
+            <sub>@ProductId</sub>
+        </p>
+    </div>
+    <div>
+        <p>CartID:<br />
+            <sub>@CartID</sub>
+        </p>
+    </div>
+
+    @if (Stock <= 0)
+    {
+        <div class="warning">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+    }
+
+</div>
+
+@code{
+    private string _stock;
+    private string _priceCalculated;
+    private string _price;
+    [Parameter]
+    public string ProductId { get; set; }
+    [Parameter]
+    public string CartID {get; set;}
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public int Stock { get; set; }
+    [Parameter]
+    public double Price { get; set; }
+    [Parameter]
+    public int Cardinality { get; set; }
+    [Parameter]
+    public PictureModel Picture { get; set; }
+
+    [CascadingParameter]
+    private ShoppingCart _scSite {get; set;}
+    
+    protected override void OnInitialized()
+    {
+        _priceCalculated = String.Format("{0:C}", Price * Cardinality);
+        _price = String.Format("{0:C}", Price);
+        _stock = StockConverter.ParseStockToString(Stock);
+    }
+
+
+    public void increase()
+    {
+
+    }
+
+    public void decrease()
+    {
+
+    }
+
+    public async void delete()
+    {
+        await _scSite.delete(CartID);
+        OnInitialized();
+        StateHasChanged();   
+        
+    }
+
+}

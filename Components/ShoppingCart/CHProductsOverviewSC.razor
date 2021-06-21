@@ -1,0 +1,37 @@
+@namespace TrouvailleFrontend.Components.ShoppingCart
+
+@using TrouvailleFrontend.Shared.Models
+@using TrouvailleFrontend.Components.Shared
+
+@* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
+
+<div class="main-container-style">
+        @if (Products != null && ItemData != null)
+        {
+            @for (int i = 0; i < Products.Count(); i++)
+            {
+                <ProductViewSC ProductId="@Products[i].ProductId" CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
+            Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture/>
+            }
+        }
+    <div class="products-overview-under">
+        <div class="total">
+            <b>Total: @_totalPrice</b>
+        </div>
+    </div>
+</div>
+
+@code{
+    private string _totalPrice;
+    [Parameter]
+    public double TotalPrice { get; set; }
+    [Parameter]
+    public List<ProductModel> Products { get; set; }
+    [Parameter]
+    public List<ShoppingCartItemModel> ItemData { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _totalPrice = String.Format("{0:C}", TotalPrice);
+    }
+}
