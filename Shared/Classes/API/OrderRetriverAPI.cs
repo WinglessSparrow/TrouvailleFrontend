@@ -18,6 +18,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         }
         public async Task<List<SmallOrderModel>> GetSlimOrdersAsync() {
             try {
+                //NORMALLY YOU SHOULD CHECK THE AMOUNT OF ORDERS PER USER, BUT THERE IS NO API CALL FOR IT
                 HttpResponseMessage response = await _requester.PostRequestAsync($"{ApiPathsCentralDefinition.API_GET_HISTORY}/0/100", "");
                 if (response.IsSuccessStatusCode) {
                     
