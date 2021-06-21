@@ -42,17 +42,6 @@
         </p>
     </div>
 
-    <div>
-        <p>ID:<br />
-            <sub>@ProductId</sub>
-        </p>
-    </div>
-    <div>
-        <p>CartID:<br />
-            <sub>@CartID</sub>
-        </p>
-    </div>
-
     @if (Stock <= 0)
     {
         <div class="warning">
@@ -66,10 +55,9 @@
     private string _stock;
     private string _priceCalculated;
     private string _price;
+
     [Parameter]
-    public string ProductId { get; set; }
-    [Parameter]
-    public string CartID {get; set;}
+    public string CartID { get; set; }
     [Parameter]
     public string Name { get; set; }
     [Parameter]
@@ -82,8 +70,8 @@
     public PictureModel Picture { get; set; }
 
     [CascadingParameter]
-    private ShoppingCart _scSite {get; set;}
-    
+    private ShoppingCart _scSite { get; set; }
+
     protected override void OnInitialized()
     {
         _priceCalculated = String.Format("{0:C}", Price * Cardinality);
@@ -92,22 +80,27 @@
     }
 
 
-    public void increase()
+    public async void increase()
     {
-
+        await _scSite.increase(CartID);
+        reCalcPrice();
     }
 
-    public void decrease()
+    public async void decrease()
     {
-
+        await _scSite.decrease(CartID);
+        reCalcPrice();
     }
 
     public async void delete()
     {
         await _scSite.delete(CartID);
+        reCalcPrice();
+    }
+    private void reCalcPrice()
+    {
         OnInitialized();
-        StateHasChanged();   
-        
+        StateHasChanged();
     }
 
 }

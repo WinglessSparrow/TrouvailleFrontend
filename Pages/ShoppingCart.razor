@@ -80,16 +80,57 @@
             {
                 if (_cartItems[i].ProductId == id)
                 {
-                    Console.WriteLine("_Cart items ID: " + _cartItems[i].ProductId);
-                    Console.WriteLine("_Product ID DELETE: " + _products[i].ProductId + "_Product NAME DELETE: " + _products[i].Name);
-                    //Console.WriteLine("Price: " + _cartItems[i].Cardinality * _products[i].Price);
 
                     _totalPrice -= _cartItems[i].Cardinality * _products[i].Price;
-                    Console.WriteLine("TOTAL PRIZE: " + _totalPrice);
                     _cartItems.RemoveAt(i);
                     _products.RemoveAt(i);
+
+                    await local.SetStorageAsync("shoppingCart", _cartItems);
+
+                }
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    public async Task increase(string id)
+    {
+        if (_cartItems != null)
+        {
+            for (int i = 0; i < _cartItems.Count; i++)
+            {
+                if (_cartItems[i].ProductId == id)
+                {
+
+                    _totalPrice += _products[i].Price;
+                    _cartItems[i].Cardinality++;
                     
                     await local.SetStorageAsync("shoppingCart", _cartItems);
+
+                }
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    public async Task decrease(string id)
+    {
+        if (_cartItems != null)
+        {
+            for (int i = 0; i < _cartItems.Count; i++)
+            {
+                if (_cartItems[i].ProductId == id)
+                {
+
+                    if ((_cartItems[i].Cardinality - 1) >= 1 )
+                    {
+                        _totalPrice -= _products[i].Price;
+                        _cartItems[i].Cardinality--;
+                        await local.SetStorageAsync("shoppingCart", _cartItems);
+                    }
+                    
 
                 }
             }

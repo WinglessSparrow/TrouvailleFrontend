@@ -10,7 +10,7 @@
         {
             @for (int i = 0; i < Products.Count(); i++)
             {
-                <ProductViewSC ProductId="@Products[i].ProductId" CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
+                <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
             Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture/>
             }
         }
