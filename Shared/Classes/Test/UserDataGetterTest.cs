@@ -35,7 +35,8 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     CityName = "Rastatt",
                     Street = "Lenin Strasse",
                     StreetNumber = 1
-                }
+                },
+                IsDisabled = false
             };
         }
     }

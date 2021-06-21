@@ -1,25 +1,22 @@
 @namespace TrouvailleFrontend.Components.Account
-@using TrouvailleFrontend.Shared.Models.Auth
 
 @inherits UserChanger
 
-@inject IPasswordChanger passwordChanger
+@inject IUserDataChanger userChanger
 @inject IErrorHandler errorHandler
 @inject ILogin loginer
 
 <div>
-    <div class='password @(_isChangeDone? " " : "changing")'>
-        <h4>Password</h4>
+    <div class='delete danger @(_isChangeDone? " " : "changing")'>
+        <h6 class="danger-zone">
+            Account will be delted after a day, contact the Administration if you would like to stop
+            the process</h6>
+        <h4>Delete Account</h4>
         <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
             <DataAnnotationsValidator />
 
-            <InputText type="password" id="old-password" @bind-Value=_login.Password class="not-required"
-                @bind-Value-oninput=_login.Password placeholder="old Password" disabled="@_isChangeDone" />
-            <InputText type="password" id="new-password" @bind-Value=_newPassword.NewPassword class="not-required"
-                @bind-Value-oninput=_newPassword.NewPassword placeholder="new Password" disabled="@_isChangeDone" />
-            <InputText type="password" id="confirm-new-password" @bind-Value=_newPassword.ConfirmPassword
-                class="not-required" @bind-Value-oninput=_newPassword.ConfirmPassword placeholder="Confirm new Password"
-                disabled="@_isChangeDone" />
+            <InputText type="password" id="password" @bind-Value=_login.Password class="not-required"
+                @bind-Value-oninput=_userData.PhoneNumber placeholder="Password" disabled="@_isChangeDone" />
 
             <button type="submit" class="button-style button-change">@_buttonText</button>
             @if (!_isChangeDone)
@@ -31,12 +28,8 @@
 </div>
 
 @code{
-
     private LoginModel _login = new();
-
-    private ResetPasswordModel _newPassword = new();
-
-    protected override void OnParametersSet()
+    override protected void OnParametersSet()
     {
         base.OnParametersSet();
         _login.Email = _userData.Email;
@@ -45,6 +38,8 @@
     override protected async void SubmitAsync()
     {
         ChangeState();
+
+        _userData.IsDisabled = true;
 
         if (_isChangeDone)
         {
@@ -56,14 +51,14 @@
             if (_modal.Success)
             {
                 if (_context.Validate())
-                    _modal.Success = await passwordChanger.ChangePasswordAsync(_newPassword);
+                    _modal.Success = await userChanger.changeUserDataAsync(_userData);
                 else
                     ChangeState();
 
                 if (!_modal.Success)
                     _modal.ErrorMessage = errorHandler.GetLastErrorString();
                 else
-                    _modal.Message = "The Password was succesufully changed";
+                    _modal.Message = "Your Account was successfully deleted";
             }
             else
             {
