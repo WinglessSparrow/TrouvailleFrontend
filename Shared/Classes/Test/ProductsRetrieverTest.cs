@@ -24,9 +24,9 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
             var allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
             var outputProducts = new List<ProductModel>();
 
-            foreach (ProductModel p in allProducts) {
-                foreach (ShoppingCartItemModel shmp in items) {
-                    if (p.ProductId.Equals(shmp.ProductId)) {
+            foreach (ShoppingCartItemModel shmp in items) {
+                foreach (ProductModel p in allProducts) {
+                    if (shmp.ProductId.Equals(p.ProductId)) {
                         outputProducts.Add(p);
                         break;
                     }
