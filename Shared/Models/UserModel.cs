@@ -19,5 +19,7 @@ namespace TrouvailleFrontend.Shared.Models {
         public AddressModel DeliveryAddress { get; set; } = new();
 
         public ICollection<Guid> Orders { get; set; }
+
+        public bool IsDisabled { get; set; } = false;
     }
 }

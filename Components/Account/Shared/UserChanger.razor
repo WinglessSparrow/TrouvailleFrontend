@@ -3,10 +3,14 @@
 @using TrouvailleFrontend.Shared.Classes.Functional
 
 @inject IUserDataChanger userChanger
+@inject IErrorHandler errorHandler
+
 
 @code {
     [CascadingParameter]
     protected UserModel _originUserData { get; set; }
+    [CascadingParameter]
+    protected CustomModal _modal { get; set; }
     protected UserModel _userData { get; set; }
     protected EditContext _context;
     protected bool _isChangeDone = true;
@@ -14,29 +18,35 @@
 
     protected override void OnParametersSet()
     {
+        if (_modal == null || _originUserData == null)
+            throw new Exception("Modal and/or UserData are required as Cascading parameter in UserChanger");
+
         //deep copy is needed, because otherwise diferent fields will affect each other
         _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
         _context = new(_userData);
     }
 
-    protected async void SubmitAsync()
+    protected virtual async void SubmitAsync()
     {
-        ChangeState();
 
-        bool valid = _context.Validate();
-        Console.WriteLine(valid);
-        bool success;
+        ChangeState();
 
         if (_isChangeDone)
         {
-            if (valid)
-            {
-                success = await userChanger.changeUserDataAsync(_userData);
-            }
+            _modal.AwaitingResponse = true;
+
+            if (_context.Validate())
+                _modal.Success = await userChanger.changeUserDataAsync(_userData);
             else
-            {
                 ChangeState();
-            }
+
+            //modal handlin
+            if (!_modal.Success)
+                _modal.ErrorMessage = errorHandler.GetLastErrorString();
+            else
+                _modal.Message = "The Information was succesufully changed";
+
+            _modal.AwaitingResponse = false;
         }
     }
 
@@ -44,6 +54,10 @@
     {
         _isChangeDone = !_isChangeDone;
         _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
+
+        //resseting the data
+        _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
+
         StateHasChanged();
     }
 }

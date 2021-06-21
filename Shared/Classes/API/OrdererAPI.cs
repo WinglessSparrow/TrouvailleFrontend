@@ -3,10 +3,10 @@ using TrouvailleFrontend.Shared.Classes.Interfaces;
 using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
-    public class OrderAPI : IOrder {
+    public class OrdererAPI : IOrderer {
 
         private IHttpRequest _requester;
-        public OrderAPI(IHttpRequest requester) {
+        public OrdererAPI(IHttpRequest requester) {
             _requester = requester;
         }
         public async Task<bool> OrderAsync(OrderModel order) {

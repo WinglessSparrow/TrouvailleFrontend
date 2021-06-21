@@ -1,0 +1,72 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@inherits UserChanger
+
+@inject IUserDataChanger userChanger
+@inject IErrorHandler errorHandler
+@inject ILogin loginer
+
+<div>
+    <div class='delete danger @(_isChangeDone? " " : "changing")'>
+        <h6 class="danger-zone">
+            Account will be delted after a day, contact the Administration if you would like to stop
+            the process</h6>
+        <h4>Delete Account</h4>
+        <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <InputText type="password" id="password" @bind-Value=_login.Password class="not-required"
+                @bind-Value-oninput=_userData.PhoneNumber placeholder="Password" disabled="@_isChangeDone" />
+
+            <button type="submit" class="button-style button-change">@_buttonText</button>
+            @if (!_isChangeDone)
+            {
+                <button type="button" class="button-style button-change" @onclick=ChangeState>Cancel</button>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@code{
+    private LoginModel _login = new();
+    override protected void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _login.Email = _userData.Email;
+    }
+
+    override protected async void SubmitAsync()
+    {
+        ChangeState();
+
+        _userData.IsDisabled = true;
+
+        if (_isChangeDone)
+        {
+            _modal.AwaitingResponse = true;
+
+            //check login data
+            _modal.Success = await loginer.LoginAsync(_login);
+
+            if (_modal.Success)
+            {
+                if (_context.Validate())
+                    _modal.Success = await userChanger.changeUserDataAsync(_userData);
+                else
+                    ChangeState();
+
+                if (!_modal.Success)
+                    _modal.ErrorMessage = errorHandler.GetLastErrorString();
+                else
+                    _modal.Message = "Your Account was successfully deleted";
+            }
+            else
+            {
+                _modal.ErrorMessage = errorHandler.GetLastErrorString();
+            }
+
+            _modal.AwaitingResponse = false;
+            
+        }
+    }
+}

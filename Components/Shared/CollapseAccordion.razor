@@ -33,9 +33,20 @@
     public string IconClasses { get; set; }
     [Parameter]
     public bool IconEnable { get; set; } = false;
+    [Parameter]
+    public Action CallbackOnOpen { get; set; }
     private bool _isCollapsed = true;
     private void Collpase()
     {
+        if (_isCollapsed)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Yield();
+                CallbackOnOpen?.Invoke();
+            });
+        }
+
         _isCollapsed = !_isCollapsed;
     }
 }

@@ -1,0 +1,41 @@
+.data-wrapper {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(2, 1fr) auto;
+
+  height: auto;
+
+  gap: 5px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.data-wrapper > * {
+  border-left: solid 1px var(--accent);
+}
+
+.id {
+  grid-row: 1;
+  grid-column: 1 / 8;
+}
+
+.payment {
+  grid-row: 2;
+  grid-column: 1 / 6;
+}
+
+.shipment {
+  grid-row: 2;
+  grid-column: 6 / 11;
+}
+
+.address-invoice {
+  grid-row: 3;
+  grid-column: 1 / 6;
+}
+
+.address-shipment {
+  grid-row: 3;
+  grid-column: 6 / 11;
+}

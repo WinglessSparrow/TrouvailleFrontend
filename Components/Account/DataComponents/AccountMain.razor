@@ -1,7 +1,5 @@
 @namespace TrouvailleFrontend.Components.Account
 
-@using TrouvailleFrontend.Components.Checkout
-
 <div class="account-data">
 
     <div class="information-wrapper">
@@ -12,12 +10,3 @@
     </div>
 
 </div>
-
-@code {
-    [CascadingParameter]
-    private UserModel _userData { get; set; }
-
-    protected override void OnInitialized()
-    {
-    }
-}

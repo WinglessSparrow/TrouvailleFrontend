@@ -1,0 +1,92 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@using TrouvailleFrontend.Components.Checkout
+@using TrouvailleFrontend.Shared.Enums
+
+@inject IProductsRetriever productsRetriever
+
+<div class="order-view main-container-style">
+
+    <div class="head">
+        <h4 class="order"><b>Order of:</b> @Order.Date.ToLongDateString()</h4>
+        <h4 class="state"><i class="fas fa-circle" style="color:@stateColor; margin-right: 10px;"></i><b>State:</b>
+            @Order.OrderState</h4>
+    </div>
+    <div class="short-data">
+        @if (Order != null)
+        {
+            <OrderShort Order=@Order />
+        }
+    </div>
+    <CollapseAccordion Name="Products" CallbackOnOpen=@LoadDetailsAsync>
+        <div class="content">
+            @if (!_loaded)
+            {
+                <div class="loading-spinner"></div>
+            }
+            else
+            {
+
+                @for (int i = 0; i < _products.Count(); i++)
+                {
+                    <ProductView Name=@_products[i].Name Price=@_products[i].Price Stock=@_products[i].InStock
+                Cardinality=@_itemData[i].Cardinality Picture=@_products[i].Picture />
+                }
+            }
+        </div>
+
+    </CollapseAccordion>
+    <div class="under-products ">
+        <div class="cost">
+            <b>Total: @_cost</b>
+        </div>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public SmallOrderModel Order { get; set; }
+    private List<ProductModel> _products;
+    private List<ShoppingCartItemModel> _itemData;
+    private bool _loaded = false;
+    private string _cost;
+    private string stateColor = "";
+
+    protected override void OnParametersSet()
+    {
+        _cost = String.Format("{0:C}", Order.TotalCost);
+        switch (Order.OrderState)
+        {
+            case OrderState.Bestellt:
+                stateColor = "blue";
+                break;
+            case OrderState.Storniert:
+                stateColor = "red";
+                break;
+            case OrderState.Unterwegs:
+                stateColor = "yellow";
+                break;
+            case OrderState.Zugestellt:
+                stateColor = "green";
+                break;
+        }
+    }
+
+    private async void LoadDetailsAsync()
+    {
+        if (!_loaded)
+        {
+            StateHasChanged();
+
+            _itemData = Order.Products;
+
+            _products = await productsRetriever.GetProductsByIdAsync(_itemData);
+
+
+            _loaded = true;
+
+            StateHasChanged();
+        }
+    }
+
+}

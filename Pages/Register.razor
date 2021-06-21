@@ -97,7 +97,7 @@
 
         if (_modal.Success)
         {
-            _modal.ErrorMessage = errorHandler.GetErrorStringForLastError();
+            _modal.ErrorMessage = errorHandler.GetLastErrorString();
         }
 
         _modal.AwaitingResponse = false;

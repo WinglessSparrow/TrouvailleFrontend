@@ -1,0 +1,70 @@
+@namespace TrouvailleFrontend.Components.Account
+
+@inherits UserChanger
+
+@inject IUserDataChanger userChanger
+@inject IErrorHandler errorHandler
+@inject ILogin loginer
+
+<div>
+    <div class='email @(_isChangeDone? " " : "changing")'>
+        <h4>Email</h4>
+        <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
+            <DataAnnotationsValidator />
+
+            <InputText id="Email" type="email" @bind-Value=_userData.Email @bind-Value-oninput=_userData.Email
+                placeholder="new Email" disabled="@_isChangeDone" />
+            <InputText type="password" id="password" @bind-Value=_login.Password class="not-required"
+                @bind-Value-oninput=_login.Password placeholder="Password" disabled="@_isChangeDone" />
+
+            <button type="submit" class="button-style button-change">@_buttonText</button>
+            @if (!_isChangeDone)
+            {
+                <button type="button" class="button-style button-change" @onclick=ChangeState>Cancel</button>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@code{
+    private LoginModel _login = new();
+
+    override protected void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _login.Email = _userData.Email;
+    }
+
+    override protected async void SubmitAsync()
+    {
+        ChangeState();
+
+        if (_isChangeDone)
+        {
+            _modal.AwaitingResponse = true;
+
+            //check login data
+            _modal.Success = await loginer.LoginAsync(_login);
+
+            if (_modal.Success)
+            {
+                if (_context.Validate())
+                    _modal.Success = await userChanger.changeUserDataAsync(_userData);
+                else
+                    ChangeState();
+
+                if (!_modal.Success)
+                    _modal.ErrorMessage = errorHandler.GetLastErrorString();
+                else
+                    _modal.Message = "The Email was succesufully changed";
+            }
+            else
+            {
+                _modal.ErrorMessage = errorHandler.GetLastErrorString();
+            }
+
+            _modal.AwaitingResponse = false;
+        }
+    }
+
+}

@@ -1,0 +1,18 @@
+.account-data {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 30px;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding-top: 30px;
+}
+
+.information-wrapper {
+  width: 50%;
+}

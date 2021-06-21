@@ -8,23 +8,42 @@
 <div class="main-container-style">
     @if (_userModel != null)
     {
-        <CascadingValue Value="@_userModel">
-            <TabControl>
-                <CustomTab Name="My Account">
-                    <AccountMain />
-                </CustomTab>
-                <CustomTab Name="Orders">
-                    hi 2
-                </CustomTab>
-                <CustomTab Name="Settings">
-                    hi 3
-                </CustomTab>
-            </TabControl>
-        </CascadingValue>
+
+        if (_userModel.IsDisabled)
+        {
+            <section class="deletion">
+                The account is in Deletion Process, you cannot change any data during this process
+                <br />
+                If you haven't initiated the process, contact the Administration
+            </section>
+        }
+        else
+        {
+            <CascadingValue Value="@_userModel">
+                <CascadingValue Value="@_modal">
+                    <TabControl>
+                        <CustomTab Name="My Account">
+                            <AccountMain />
+                        </CustomTab>
+                        <CustomTab Name="Orders">
+                            <AccountOrders />
+                        </CustomTab>
+                        <CustomTab Name="Settings">
+                            <AccountSettings />
+                        </CustomTab>
+                    </TabControl>
+                </CascadingValue>
+            </CascadingValue>
+        }
     }
+
 </div>
 
+<CustomModal @ref=_modal Name="Account" ButtonText="Epic" OnCloseSuccess="@(()=>{})" OnCloseFailure="@(()=>{})" />
+@*</div> *@
+
 @code {
+    CustomModal _modal;
     private UserModel _userModel;
 
     protected override async Task OnInitializedAsync()

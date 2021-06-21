@@ -1,0 +1,17 @@
+.email {
+  display: flex;
+  justify-content: center;
+
+  align-items: stretch;
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 20px;
+
+  transition: 0.2s;
+}
+
+::deep input {
+  width: 100%;
+}
