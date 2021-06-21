@@ -7,9 +7,6 @@ using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes.Test {
     public class OrderRetrieverTest : IOrderRetriever {
-        public Task<SmallOrderModel> GetSlimOrderAsync() {
-            throw new System.NotImplementedException();
-        }
 
         public async Task<List<SmallOrderModel>> GetSlimOrdersAsync() {
             await Task.Run(() => Thread.Sleep(5));
