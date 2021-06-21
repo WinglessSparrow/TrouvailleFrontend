@@ -26,3 +26,25 @@ b {
   margin: 0;
   border-bottom: solid 1px var(--accent);
 }
+
+
+
+
+button {
+  border: none;
+  border-bottom: solid 1px var(--accent);
+  width: 55%;
+}
+
+
+button:hover {
+  background-color: var(--foreground-contrast);
+}
+
+button:hover span {
+  color: white;
+}
+
+button:focus {
+  outline: none;
+}

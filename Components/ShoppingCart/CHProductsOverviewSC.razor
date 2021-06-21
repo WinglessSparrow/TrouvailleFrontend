@@ -2,6 +2,7 @@
 
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Components.Shared
+@inject NavigationManager navMan
 
 @* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
 
@@ -18,6 +19,9 @@
         <div class="total">
             <b>Total: @_totalPrice</b>
         </div>
+        <div class="total">
+            <button @onclick="@toCheckout"><span>Checkout</span></button>
+        </div>
     </div>
 </div>
 
@@ -33,5 +37,10 @@
     protected override void OnParametersSet()
     {
         _totalPrice = String.Format("{0:C}", TotalPrice);
+    }
+
+    private void toCheckout()
+    {
+        navMan.NavigateTo("/checkout", forceLoad: true);
     }
 }
