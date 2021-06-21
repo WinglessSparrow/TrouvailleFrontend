@@ -51,6 +51,24 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
             return response;
         }
+
+        public async Task<HttpResponseMessage> PutRequestAsync<T>(string path, T putBody) {
+             HttpResponseMessage response;
+
+            TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
+
+            var request = new HttpRequestMessage(HttpMethod.Put, path);
+
+            var options = new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+            StringContent stringContent = new StringContent(JsonSerializer.Serialize(putBody, options), Encoding.UTF8, "application/json");
+            request.Content = stringContent;
+            var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
+            request.Headers.Authorization = authHeader;
+
+            response = await _http.SendAsync(request);
+
+            return response;
+        }
     }
 }
 
