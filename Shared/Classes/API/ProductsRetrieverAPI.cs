@@ -4,63 +4,82 @@ using System.Collections.Generic;
 using TrouvailleFrontend.Shared.Models;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 using System;
+using System.Net.Http;
+using System.Net;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class ProductsRetrieverAPI : IProductsRetriever {
         private IHttpRequest _httpRequest;
-
-        public ProductsRetrieverAPI(IHttpRequest httpRequest) {
+        private IErrorHandler _errorHandler;
+        public ProductsRetrieverAPI(IHttpRequest httpRequest, IErrorHandler errorHandler) {
             _httpRequest = httpRequest;
+            _errorHandler = errorHandler;
         }
 
         public async Task<List<ProductModel>> GetProductsByIdAsync(List<ShoppingCartItemModel> items) {
-
-            List<ProductModel> outputProducts;
 
             List<string> _stringItems = new();
             foreach (var item in items) {
                 _stringItems.Add(item.ProductId);
             }
 
-            var response = await _httpRequest.PostRequestAsync<List<string>>(ApiPathsCentralDefinition.API_PRODUCTS_BY_ID_ARRAY, _stringItems);
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
-            outputProducts = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
+            try {
+                var response = await _httpRequest.PostRequestAsync<List<string>>(ApiPathsCentralDefinition.API_PRODUCTS_BY_ID_ARRAY, _stringItems);
+                if (response.IsSuccessStatusCode) {
+                    var outputProduct = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
+                    return outputProduct;
+                }
+                _errorHandler.SetLastError(response);
+            } catch (HttpRequestException) {
+                _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
+            }
 
-            //use this when API actually does what it should
-            // var response = await _http.PostRequestAsync<List<Guid>>("", CreateListOfId(items));
-            // var output = response.Content.ReadFromJsonAsync<List<ProductModel>>();
-            // return await _iterator.GetNextProductsAsync();
-
-            return outputProducts;
+            return null;
         }
 
         public async Task<ProductModel> GetProductByIdAsync(string item) {
-            ProductModel outputProduct;
+            try {
+                var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCT_BY_ID}/{item}");
+                if (response.IsSuccessStatusCode) {
+                    var outputProduct = await response.Content.ReadFromJsonAsync<ProductModel>();
+                    return outputProduct;
+                }
+                _errorHandler.SetLastError(response);
+            } catch (HttpRequestException) {
+                _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
+            }
 
-            var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCT_BY_ID}/{item}");
-            outputProduct = await response.Content.ReadFromJsonAsync<ProductModel>();
-
-            return outputProduct;
+            return null;
         }
 
         public async Task<List<ProductModel>> GetProductsInRangeAsync(int start, int end) {
-            List<ProductModel> outputProducts;
+            try {
+                var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCTS_IN_RANGE}/{start}/{end}");
+                if (response.IsSuccessStatusCode) {
+                    var outputProduct = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
+                    return outputProduct;
+                }
+                _errorHandler.SetLastError(response);
+            } catch (HttpRequestException) {
+                _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
+            }
 
-            var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCTS_IN_RANGE}/{start}/{end}");
-            //TODO check for 404, ...
-            //errorHandler.Handle404
-            outputProducts = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
-
-            return outputProducts;
+            return null;
         }
 
         public async Task<int> GetNumberProductsAsync() {
-            int outputProduct;
+            try {
+                var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCT_COUNT}");
+                if (response.IsSuccessStatusCode) {
+                    int outputProduct = await response.Content.ReadFromJsonAsync<int>();
+                    return outputProduct;
+                }
+                _errorHandler.SetLastError(response);
+            } catch (HttpRequestException) {
+                _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
+            }
 
-            var response = await _httpRequest.GetRequestAsync($"{ApiPathsCentralDefinition.API_PRODUCT_COUNT}");
-            outputProduct = await response.Content.ReadFromJsonAsync<int>();
-
-            return outputProduct;
+            return 0;
         }
     }
 }
