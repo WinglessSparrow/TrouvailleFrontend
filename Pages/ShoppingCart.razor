@@ -105,7 +105,7 @@
 
                     _totalPrice += _products[i].Price;
                     _cartItems[i].Cardinality++;
-                    
+
                     await local.SetStorageAsync("shoppingCart", _cartItems);
 
                 }
@@ -124,13 +124,13 @@
                 if (_cartItems[i].ProductId == id)
                 {
 
-                    if ((_cartItems[i].Cardinality - 1) >= 1 )
+                    if ((_cartItems[i].Cardinality - 1) >= 1)
                     {
                         _totalPrice -= _products[i].Price;
                         _cartItems[i].Cardinality--;
                         await local.SetStorageAsync("shoppingCart", _cartItems);
                     }
-                    
+
 
                 }
             }
