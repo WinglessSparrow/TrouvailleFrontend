@@ -9,10 +9,12 @@
 <div class="page">
     <div class="side-panel">
         <SideMenu>
-            <SideMenuContentIndex />
-            <div class="overlay-under-construction">
+            <SideMenuContentIndex @bind-Ascending=_ascending />
+            @*
+                <div class="overlay-under-construction">
                 <p>Under Construction</p>
-            </div>
+                </div>
+            *@
 
         </SideMenu>
     </div>
@@ -49,8 +51,11 @@
 </div>
 
 @code{
+    [CascadingParameter]
+    private CustomHeader _header { get; set; }
     private List<ProductModel> _products;
     private ProductsNumbersModel _numbers;
+    private bool _ascending = false;
 
     private bool _nextButton = false;
     private bool _prevButton = false;
@@ -58,6 +63,23 @@
     {
         _numbers = await iterator.GetProductNumbersAsync();
         _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (_header != null)
+        {
+            _header.SearchTrigered += SearchAsync;
+        }
+    }
+
+
+    private async void SearchAsync(string word)
+    {
+        iterator.SearchWord = word;
+        iterator.Ascending = _ascending;
+        _products = await iterator.GetProductIndexedAsync(0);
+        Console.WriteLine($"{word} + {_ascending}");
     }
 
     private async void next()

@@ -34,23 +34,27 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
             builder.Services.AddSingleton<IErrorHandler, ErrorHandler>();
 
-            builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
-            builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
-            builder.Services.AddTransient<ILogin, LoginTest>();
-            builder.Services.AddTransient<IOrderer, OrdererTest>();
-            builder.Services.AddTransient<IRegister, RegisterTest>();
-            builder.Services.AddTransient<IUserDataGetter, UserDataGetterTest>();
-            builder.Services.AddTransient<IUserDataChanger, UserDataChangerTest>();
-            builder.Services.AddTransient<IOrderRetriever, OrderRetrieverTest>();
-            builder.Services.AddTransient<IPasswordChanger, PasswordChangerTest>();
-
+            // builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
+            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
+            // builder.Services.AddTransient<ILogin, LoginTest>();
+            // builder.Services.AddTransient<IOrderer, OrdererTest>();
+            // builder.Services.AddTransient<IRegister, RegisterTest>();
+            // builder.Services.AddTransient<IUserDataGetter, UserDataGetterTest>();
+            // builder.Services.AddTransient<IUserDataChanger, UserDataChangerTest>();
+            // builder.Services.AddTransient<IOrderRetriever, OrderRetrieverTest>();
             // builder.Services.AddTransient<IPasswordChanger, PasswordChangerTest>();
-            // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
-            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
-            // builder.Services.AddTransient<ILogin, LoginAPI>();
-            // builder.Services.AddTransient<IOrder, OrderAPI>();
-            // builder.Services.AddTransient<IRegister, RegisterAPI>();
-            // builder.Services.AddTransient<IOrderRetriever, OrderRetrieverAPI>();
+
+            builder.Services.AddTransient<IQueriedProductsRetriever, QueriedProductsRetrieverAPI>();
+            builder.Services.AddTransient<IPasswordChanger, PasswordChangerAPI>();
+            builder.Services.AddTransient<IUserDataGetter, UserDataGetterAPI>();
+            builder.Services.AddTransient<IUserDataChanger, UserDataChangerAPI>();
+            builder.Services.AddScoped<IProductIterator, ProductsIterator>();
+            builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
+            builder.Services.AddTransient<ILogin, LoginAPI>();
+            builder.Services.AddTransient<IOrderer, OrdererAPI>();
+            builder.Services.AddTransient<IRegister, RegisterAPI>();
+            builder.Services.AddTransient<IOrderRetriever, OrderRetrieverAPI>();
+
 
             //TODO -CLASSES
             // builder.Services.AddTransient<IUserDataGetter, RegisterAPI>();

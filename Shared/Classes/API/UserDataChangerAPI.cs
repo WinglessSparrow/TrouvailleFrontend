@@ -6,11 +6,10 @@ using TrouvailleFrontend.Shared.Models;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class UserDataChangerAPI : IUserDataChanger {
-
         IErrorHandler _errorHandler;
-        HttpRequest _httpRequest;
+        IHttpRequest _httpRequest;
 
-        public UserDataChangerAPI(IErrorHandler errorHandler, HttpRequest httpRequest) {
+        public UserDataChangerAPI(IErrorHandler errorHandler, IHttpRequest httpRequest) {
             _errorHandler = errorHandler;
             _httpRequest = httpRequest;
         }

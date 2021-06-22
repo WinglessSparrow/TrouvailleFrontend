@@ -10,9 +10,9 @@ namespace TrouvailleFrontend.Shared.Classes.API {
     public class UserDataGetterAPI : IUserDataGetter {
 
         IErrorHandler _errorHandler;
-        HttpRequest _httpRequest;
+        IHttpRequest _httpRequest;
 
-        public UserDataGetterAPI(IErrorHandler errorHandler, HttpRequest httpRequest) {
+        public UserDataGetterAPI(IErrorHandler errorHandler, IHttpRequest httpRequest) {
             _errorHandler = errorHandler;
             _httpRequest = httpRequest;
         }

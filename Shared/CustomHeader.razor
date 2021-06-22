@@ -10,7 +10,8 @@
         <div class="logo" @onclick="ToMain"></div>
         <div class="variable-icons">
             <div class="search-bar">
-                <input id="search" type="text" placeholder="Search" @onkeydown="Enter">
+                <input id="search" type="text" placeholder="Search" @onkeydown="Enter" @bind-value="_searchContent"
+                    @bind-value:event="oninput">
                 <a href="" @onclick=Search>
                     <Icon Name="IconName.Search" />
                 </a>
@@ -59,6 +60,13 @@
     private TokenModel _token { get; set; }
     private bool _tokenIsValid;
 
+    [Parameter]
+    public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
+    private string _searchContent = "";
+
+    public delegate void SearchEvent(string word);
+    public event SearchEvent SearchTrigered;
+
     protected override async Task OnInitializedAsync()
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
@@ -82,7 +90,7 @@
 
     private void Search()
     {
-        js.InvokeVoidAsync("alert", "Search is under construction ¯\\_(ツ)_/¯");
+        SearchTrigered?.Invoke(_searchContent);
     }
 
     private async void Logout()

@@ -84,7 +84,7 @@
     }
 </div>
 
-<CustomModal @ref="_modal" Name="Register" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+<CustomModal @ref="_modal" Name="Purchase" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
 @* </div> *@
 
 @code {
@@ -156,7 +156,7 @@
             {
                 _modal.ErrorMessage = errorHandler.GetLastErrorString();
             }
-            
+
         }
         else
         {

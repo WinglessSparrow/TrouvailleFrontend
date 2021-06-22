@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using TrouvailleFrontend.Shared.Models;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
+using System.Collections.Generic;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class HttpRequest : IHttpRequest {
@@ -52,8 +53,40 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             return response;
         }
 
+        public async Task<HttpResponseMessage> PostRequestEncodedContentAsync<T>(string path, T postBody, IEnumerable<KeyValuePair<string, string>> parameters) {
+            HttpResponseMessage response;
+
+            TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
+
+            var builder = new StringBuilder(path);
+            builder.Append("?");
+            foreach (var pair in parameters) {
+                builder.Append(pair.Key);
+                builder.Append("=");
+                builder.Append(pair.Value);
+                builder.Append("&");
+            }
+            builder.Remove(builder.Length - 1, 1);
+
+            path = builder.ToString();
+
+            var encodedParameters = new FormUrlEncodedContent(parameters);
+
+            var request = new HttpRequestMessage(HttpMethod.Post, path);
+
+            var options = new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+            StringContent stringContent = new StringContent(JsonSerializer.Serialize(postBody, options), Encoding.UTF8, "application/json");
+            request.Content = stringContent;
+            var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
+            request.Headers.Authorization = authHeader;
+
+            response = await _http.SendAsync(request);
+
+            return response;
+        }
+
         public async Task<HttpResponseMessage> PutRequestAsync<T>(string path, T putBody) {
-             HttpResponseMessage response;
+            HttpResponseMessage response;
 
             TokenModel token = await _localStorage.GetStorageAsync<TokenModel>("authToken");
 

@@ -8,11 +8,11 @@ using TrouvailleFrontend.Shared.Models.Auth;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
 
 namespace TrouvailleFrontend.Shared.Classes.API {
-    public class OrderRetriever : IOrderRetriever {
+    public class OrderRetrieverAPI : IOrderRetriever {
 
         private IHttpRequest _requester;
         private IErrorHandler _errorHandler;
-        public OrderRetriever(IHttpRequest requester, IErrorHandler errorHandler) {
+        public OrderRetrieverAPI(IHttpRequest requester, IErrorHandler errorHandler) {
             _requester = requester;
             _errorHandler = errorHandler;
         }
@@ -21,7 +21,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                 //NORMALLY YOU SHOULD CHECK THE AMOUNT OF ORDERS PER USER, BUT THERE IS NO API CALL FOR IT
                 HttpResponseMessage response = await _requester.PostRequestAsync($"{ApiPathsCentralDefinition.API_GET_HISTORY}/0/100", "");
                 if (response.IsSuccessStatusCode) {
-                    
+
                     List<SmallOrderModel> smallOrderModels = await response.Content.ReadFromJsonAsync<List<SmallOrderModel>>();
 
                     return smallOrderModels;

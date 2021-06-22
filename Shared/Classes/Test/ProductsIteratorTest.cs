@@ -11,13 +11,15 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         private ProductModel[] _products;
         private int _index = 0;
         private int _numberProductsPerIteration = 8;
-
         private ProductsNumbersModel _productsNumber = new();
         private HttpClient _http;
 
         public ProductsIteratorTest(HttpClient http) {
             _http = http;
         }
+
+        public string SearchWord { get; set; }
+        public bool Ascending { get; set; }
 
         public int GetIndex() {
             return _index;

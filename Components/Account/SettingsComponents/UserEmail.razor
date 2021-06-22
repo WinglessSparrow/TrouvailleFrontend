@@ -14,7 +14,7 @@
 
             <InputText id="Email" type="email" @bind-Value=_userData.Email @bind-Value-oninput=_userData.Email
                 placeholder="new Email" disabled="@_isChangeDone" />
-            <InputText type="password" id="password" @bind-Value=_login.Password class="not-required"
+            <InputText type="password" id="email-password" @bind-Value=_login.Password class="not-required"
                 @bind-Value-oninput=_login.Password placeholder="Password" disabled="@_isChangeDone" />
 
             <button type="submit" class="button-style button-change">@_buttonText</button>
