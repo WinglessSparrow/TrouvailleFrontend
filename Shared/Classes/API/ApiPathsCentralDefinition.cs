@@ -13,6 +13,6 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public const string API_RESET_PASSWORD = API_IP + "/api/auth/customer/resetPassword";
         public const string API_GET_HISTORY = API_IP + "/api/Orders/History";
         public const string API_SEARCH_QUERY = API_IP + "/api/Products/SearchQuery";
-        public const string API_SEARCH_QUERY_COUNT = API_IP + "/api/Products/SearchQuery/Count";
+        public const string API_SEARCH_QUERY_COUNT = API_IP + "/api/Products/SearchQueryCount";
     }
 }

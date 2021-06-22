@@ -43,7 +43,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _productsNumber.NumberProductsPerIteration = 8;
 
             Task.Run(async () => {
-                _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
+                // _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
+                _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(_parameters);
             });
         }
 
@@ -89,7 +90,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         }
 
         public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
-            _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
+            // _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
+            _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(_parameters);
             return _productsNumber;
         }
     }

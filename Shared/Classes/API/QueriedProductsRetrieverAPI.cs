@@ -16,12 +16,12 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _errorHandler = errorHandler;
         }
 
-        public async Task<List<ProductModel>> PostNumberProductsAsync(IEnumerable<KeyValuePair<string, string>> parameters) {
+        public async Task<int> PostNumberProductsAsync(IEnumerable<KeyValuePair<string, string>> parameters) {
             try {
-                var response = await _httpRequest.PostRequestEncodedContentAsync<string>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY_COUNT}", "", parameters);
+                var response = await _httpRequest.PostRequestEncodedContentAsync<string>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY_COUNT}", "[]", parameters);
 
                 if (response.IsSuccessStatusCode) {
-                    var outputProduct = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
+                    var outputProduct = await response.Content.ReadFromJsonAsync<int>();
                     return outputProduct;
                 }
                 _errorHandler.SetLastError(response);
@@ -29,7 +29,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                 _errorHandler.SetLastError(new HttpResponseMessage(HttpStatusCode.ServiceUnavailable));
             }
 
-            return null;
+            return 0;
         }
 
         public async Task<List<ProductModel>> PostProductsInRangeAsync(int start, int end, IEnumerable<KeyValuePair<string, string>> parameters) {
