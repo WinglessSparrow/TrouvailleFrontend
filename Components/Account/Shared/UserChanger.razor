@@ -28,36 +28,43 @@
 
     protected virtual async void SubmitAsync()
     {
-
         ChangeState();
 
         if (_isChangeDone)
         {
-            @* _modal.AwaitingResponse = true;
+            _modal.AwaitingResponse = true;
 
-                if (_context.Validate())
+            if (_context.Validate())
+            {
+                Console.WriteLine("/");
+                Console.WriteLine(_userData.LastName);
+                Console.WriteLine(_userData.FirstName);
+                Console.WriteLine(_userData.PhoneNumber);
+                Console.WriteLine("/");
+
                 _modal.Success = await userChanger.changeUserDataAsync(_userData);
-                else
+            }
+            else
+            {
                 ChangeState();
 
-                if (!_modal.Success)
-                _modal.ErrorMessage = errorHandler.GetLastErrorString();
-                else
-                _modal.Message = "The Information was succesufully changed";
-
-                _modal.AwaitingResponse = false; *@
-            _modal.Success = await userChanger.changeUserDataAsync(_userData);
-
+                //resseting the data
+                _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
+            }
         }
+
+        if (!_modal.Success)
+            _modal.ErrorMessage = errorHandler.GetLastErrorString();
+        else
+            _modal.Message = "The Information was succesufully changed";
+
+        _modal.AwaitingResponse = false;
     }
 
     protected void ChangeState()
     {
         _isChangeDone = !_isChangeDone;
         _buttonText = (_isChangeDone) ? "Change Data" : "Submit Changes";
-
-        //resseting the data
-        _userData = DeepCopier.DeepCopy<UserModel>(_originUserData);
 
         StateHasChanged();
     }

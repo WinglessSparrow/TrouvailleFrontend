@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
         public async Task<bool> changeUserDataAsync(UserModel userData) {
             try {
-                var response = await _httpRequest.PutRequestAsync<UserModel>(ApiPathsCentralDefinition.API_CHANGE_USER, userData);
+                var id = new Dictionary<string, string>() { { "customerId", userData.Id } };
+                var response = await _httpRequest.PutRequestEncodedContentAsync<UserModel>(ApiPathsCentralDefinition.API_CHANGE_USER, userData, id);
                 if (response.IsSuccessStatusCode) return true;
 
                 _errorHandler.SetLastError(response);

@@ -14,6 +14,7 @@ using TrouvailleFrontend.Shared.Classes.API;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using TrouvailleFrontend.Shared.Classes.Functional;
 
 namespace TrouvailleFrontend {
     public class Program {
@@ -33,6 +34,9 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<ILocalStorage, LocalStorage>();
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
             builder.Services.AddSingleton<IErrorHandler, ErrorHandler>();
+            builder.Services.AddSingleton(sp => {
+                return new GlobalStateManager();
+            });
 
             // builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
             // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();

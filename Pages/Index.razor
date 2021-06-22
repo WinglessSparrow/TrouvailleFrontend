@@ -5,6 +5,8 @@
 @using TrouvailleFrontend.Components.Shared
 
 @inject IProductIterator iterator
+@inject NavigationManager navMan
+@inject GlobalStateManager state
 
 <div class="page">
     <div class="side-panel">
@@ -63,22 +65,28 @@
     {
         _numbers = await iterator.GetProductNumbersAsync();
         _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
+
+        Console.WriteLine(state.Get<CustomHeader>());
+        var f = state.Get<CustomHeader>();
+        f.SearchTrigered += SearchAsync;
     }
 
     protected override void OnParametersSet()
     {
         if (_header != null)
         {
-            _header.SearchTrigered += SearchAsync;
+
+            @* _header.SearchTrigered += SearchAsync; *@
         }
     }
 
 
-    private async void SearchAsync(string word)
+    private async Task SearchAsync(string word)
     {
         iterator.SearchWord = word;
         iterator.Ascending = _ascending;
         _products = await iterator.GetProductIndexedAsync(0);
+        StateHasChanged();
         Console.WriteLine($"{word} + {_ascending}");
     }
 

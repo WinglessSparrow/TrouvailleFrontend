@@ -4,6 +4,7 @@
 @using TrouvailleFrontend.Components.Shared
 
 @inject IUserDataGetter userHandler
+@inject NavigationManager navMan
 
 <div class="main-container-style">
     @if (_userModel != null)
@@ -39,7 +40,9 @@
 
 </div>
 
-<CustomModal @ref=_modal Name="Account" ButtonText="Epic" OnCloseSuccess="@(()=>{})" OnCloseFailure="@(()=>{})" />
+<CustomModal @ref=_modal Name="Account" ButtonText="Epic" OnCloseSuccess='@(()=>{navMan.NavigateTo("/account");})'
+    OnCloseFailure='@(()=>{navMan.NavigateTo("/account");})' />
+
 @*</div> *@
 
 @code {

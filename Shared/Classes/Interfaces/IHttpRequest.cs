@@ -8,5 +8,6 @@ namespace TrouvailleFrontend.Shared.Classes.Interfaces {
         Task<HttpResponseMessage> PostRequestAsync<T>(string path, T postBody);
         Task<HttpResponseMessage> PostRequestEncodedContentAsync<T>(string path, T postBody, IEnumerable<KeyValuePair<string, string>> parameters);
         Task<HttpResponseMessage> PutRequestAsync<T>(string path, T putBody);
+        Task<HttpResponseMessage> PutRequestEncodedContentAsync<T>(string path, T postBody, IEnumerable<KeyValuePair<string, string>> parameters);
     }
 }
