@@ -11,17 +11,13 @@
 <div class="page">
     <div class="side-panel">
         <SideMenu>
-            <SideMenuContentIndex @bind-Ascending=_ascending />
-            @*
-                <div class="overlay-under-construction">
-                <p>Under Construction</p>
-                </div>
-            *@
-
+            <div
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 400px; gap: 20px">
+                <label>Ascending Cost: <input type="checkbox" @bind-value=_ascending></label>
+            </div>
         </SideMenu>
     </div>
     <div class="main-container">
-
         @if (_products != null)
         {
             @foreach (ProductModel p in _products)
@@ -58,58 +54,52 @@
     private List<ProductModel> _products;
     private ProductsNumbersModel _numbers;
     private bool _ascending = false;
+    public EventCallback<bool> AscendingChanged { get; set; }
 
     private bool _nextButton = false;
     private bool _prevButton = false;
     protected override async Task OnInitializedAsync()
     {
+
         _numbers = await iterator.GetProductNumbersAsync();
         _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
-
-        Console.WriteLine(state.Get<CustomHeader>());
-        var f = state.Get<CustomHeader>();
-        f.SearchTrigered += SearchAsync;
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (_header != null)
-        {
-
-            @* _header.SearchTrigered += SearchAsync; *@
-        }
-    }
-
-
-    private async Task SearchAsync(string word)
-    {
-        iterator.SearchWord = word;
-        iterator.Ascending = _ascending;
-        _products = await iterator.GetProductIndexedAsync(0);
         StateHasChanged();
-        Console.WriteLine($"{word} + {_ascending}");
+
+        var header = state.Get<CustomHeader>();
+        header.SearchTrigered += SearchAsync;
+    }
+
+
+    private async Task SearchAsync(SearchModel args)
+    {
+        iterator.SearchWord = args.SearchWord;
+        iterator.Ascending = _ascending;
+
+        Console.WriteLine(iterator.Ascending + " ascendign");
+
+        _products = await iterator.GetProductIndexedAsync(0);
+        _numbers = await iterator.GetProductNumbersAsync();
+        StateHasChanged();
     }
 
     private async void next()
     {
         var temp = await iterator.GetNextProductsAsync();
-
         if (temp == null) _nextButton = true;
         else _products = temp;
 
         if (_prevButton) _prevButton = false;
-        this.StateHasChanged();
+        StateHasChanged();
     }
 
     private async void prev()
     {
         var temp = await iterator.GetPreviousProductsAsync();
-
         if (temp == null) _prevButton = true;
         else _products = temp;
 
         if (_nextButton) _nextButton = false;
-        this.StateHasChanged();
+        StateHasChanged();
     }
 
     private async void ChangeToIndex(int index)
@@ -117,6 +107,6 @@
         _products = await iterator.GetProductIndexedAsync(index);
         if (_nextButton) _nextButton = false;
         if (_prevButton) _prevButton = false;
-        this.StateHasChanged();
+        StateHasChanged();
     }
 }

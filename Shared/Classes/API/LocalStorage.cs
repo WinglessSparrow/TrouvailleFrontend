@@ -26,10 +26,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                     //await _JSRuntime.InvokeAsync<string>("console.log", "TYPE: SIMPLE OBJECT");
                     jsonString = "{}";
                 }
-                Console.WriteLine("GetStorageAsync(): Either the Key: " + key + " or its Value does not exist");
             }
-
-            Console.WriteLine(jsonString);
 
             _localStorage = JsonSerializer.Deserialize<T>(jsonString);
 

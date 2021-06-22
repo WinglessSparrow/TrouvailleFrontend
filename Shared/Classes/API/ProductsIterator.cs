@@ -14,15 +14,17 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
         private Dictionary<string, string> _parameters = new Dictionary<string, string>(){
             {"searchWord", ""},
-            {"asc", "true"},
+            {"asc", "false"},
             {"orderBy", "Price"},
             {"onlyActive", "true"}
         };
-        public bool Asscending {
+        public bool Ascending {
             get {
                 return bool.Parse(_parameters["asc"]);
             }
             set {
+                Console.WriteLine("value string: " + value.ToString().ToLower());
+                Console.WriteLine("value: " + value);
                 _parameters["asc"] = value.ToString().ToLower();
             }
         }
@@ -34,7 +36,6 @@ namespace TrouvailleFrontend.Shared.Classes.API {
                 _parameters["searchWord"] = value;
             }
         }
-        public bool Ascending { get; set; }
 
         public ProductsIterator(IProductsRetriever retriever, IQueriedProductsRetriever queriedRetriever) {
             _retriever = retriever;
@@ -82,12 +83,10 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            // return await _retriever.GetProductsInRangeAsync(offset, limit);
             return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, _parameters);
         }
 
         public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
-            // _productsNumber.NumberOfProduct = await _retriever.GetNumberProductsAsync();
             _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(_parameters);
             return _productsNumber;
         }

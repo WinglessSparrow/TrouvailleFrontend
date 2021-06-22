@@ -16,18 +16,11 @@
 
 <div class="page">
 
-    <CustomHeader @ref=_header />
+    <CustomHeader />
 
-    <CascadingValue Value=@_header>
-        <div class="content center-flex">
-            @Body
-        </div>
-    </CascadingValue>
+    <div class="content center-flex">
+        @Body
+    </div>
 
     <CustomFooter />
 </div>
-
-
-@code{
-    private CustomHeader _header;
-}

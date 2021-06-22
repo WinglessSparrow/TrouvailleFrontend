@@ -34,10 +34,13 @@
     [Parameter]
     public ProductModel Product { get; set; }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         _cost = String.Format("{0:C}", Product.Price);
+
     }
+
+
 
     private void NavigateToProduct()
     {

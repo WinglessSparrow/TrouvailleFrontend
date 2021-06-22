@@ -119,6 +119,8 @@
         _token = await local.GetStorageAsync<TokenModel>("authToken");
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
 
+        //TODO get User, map data to Order data
+
         if (_cartItems != null && _cartItems.Count() > 0)
         {
             _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
