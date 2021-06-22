@@ -34,7 +34,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
         public async Task<List<ProductModel>> PostProductsInRangeAsync(int start, int end, IEnumerable<KeyValuePair<string, string>> parameters) {
             try {
-                var response = await _httpRequest.PostRequestEncodedContentAsync<string>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY}/{start}/{end}", "[]", parameters);
+                List<string> guid = new List<string>();
+                var response = await _httpRequest.PostRequestEncodedContentAsync<List<string>>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY}/{start}/{end}", guid, parameters);
 
                 if (response.IsSuccessStatusCode) {
                     var outputProduct = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
