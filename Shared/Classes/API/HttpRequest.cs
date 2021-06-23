@@ -112,7 +112,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
             var authHeader = new AuthenticationHeaderValue("Bearer", token.AuthToken);
             request.Headers.Authorization = authHeader;
-            
+
             response = await _http.SendAsync(request);
 
             return response;

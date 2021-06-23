@@ -18,24 +18,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             {"orderBy", "Price"},
             {"onlyActive", "true"}
         };
-        public bool Ascending {
-            get {
-                return bool.Parse(_parameters["asc"]);
-            }
-            set {
-                Console.WriteLine("value string: " + value.ToString().ToLower());
-                Console.WriteLine("value: " + value);
-                _parameters["asc"] = value.ToString().ToLower();
-            }
-        }
-        public string SearchWord {
-            get {
-                return _parameters["searchWord"];
-            }
-            set {
-                _parameters["searchWord"] = value;
-            }
-        }
+
+        public SearchModel SearchData { get; set; }
 
         public ProductsIterator(IProductsRetriever retriever, IQueriedProductsRetriever queriedRetriever) {
             _retriever = retriever;
@@ -44,7 +28,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _productsNumber.NumberProductsPerIteration = 8;
 
             Task.Run(async () => {
-                _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(_parameters);
+                _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(SearchData);
             });
         }
 
@@ -59,7 +43,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, _parameters);
+            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, SearchData);
         }
 
         public async Task<List<ProductModel>> GetPreviousProductsAsync() {
@@ -72,7 +56,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, _parameters);
+            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, SearchData);
         }
 
         public async Task<List<ProductModel>> GetProductIndexedAsync(int index) {
@@ -83,11 +67,11 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             int offset = _index * _productsNumber.NumberProductsPerIteration;
             int limit = offset + _productsNumber.NumberProductsPerIteration;
 
-            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, _parameters);
+            return await _queriedRetriever.PostProductsInRangeAsync(offset, limit, SearchData);
         }
 
         public async Task<ProductsNumbersModel> GetProductNumbersAsync() {
-            _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(_parameters);
+            _productsNumber.NumberOfProduct = await _queriedRetriever.PostNumberProductsAsync(SearchData);
             return _productsNumber;
         }
     }

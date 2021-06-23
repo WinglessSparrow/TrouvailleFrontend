@@ -4,10 +4,7 @@ using System.Threading.Tasks;
 
 namespace TrouvailleFrontend.Shared.Classes.Interfaces {
     public interface IProductIterator {
-
-        string SearchWord { get; set; }
-        bool Ascending { get; set; }
-
+        SearchModel SearchData { get; set; }
         Task<List<ProductModel>> GetNextProductsAsync();
         Task<List<ProductModel>> GetPreviousProductsAsync();
         Task<List<ProductModel>> GetProductIndexedAsync(int index);

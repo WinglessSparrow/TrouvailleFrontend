@@ -5,27 +5,14 @@
 @inject IJSRuntime js
 @inject ILocalStorage localStorage
 @inject GlobalStateManager state
-@inject ICategoriesRetriever categories
 
 <div class="header">
     <div class="header-content">
         <div class="logo" @onclick="LogoTriger"></div>
         <div class="variable-icons">
             <div class="search-bar">
-                <select id="categories" @bind="@_searchModel.Category.CategoryId">
-                    <option value="null" selected>All Categories</option>
-                    @if (_categories != null)
-                    {
-                        @foreach (var cat in _categories)
-                        {
-                            var temp = cat.CategoryId;
-                            <option value="@cat.CategoryId">@cat.Name</option>
-                        }
-                    }
-                </select>
                 <input id="search" type="text" placeholder="Search" @bind-value="_searchModel.SearchWord"
-                    @bind-value:event="oninput" @onkeydown="Enter">
-
+                    @bind-value:event="oninput" @onkeydown="Enter" />
                 <a href="" @onclick=Search>
                     <Icon Name="IconName.Search" />
                 </a>
@@ -73,28 +60,16 @@
 @code {
     private TokenModel _token { get; set; }
     private bool _tokenIsValid;
-    private List<CategoryModel> _categories;
-
-    private SearchModel _searchModel = new()
-    {
-        SearchWord = "",
-        Category = new CategoryModel()
-        {
-            Name = "All Categories",
-            CategoryId = null
-        }
-    };
+    private SearchModel _searchModel = new();
 
     [Parameter]
     public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
-
     public delegate Task SearchEvent(SearchModel args);
     public event SearchEvent SearchTrigered;
 
     protected override async Task OnInitializedAsync()
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
-        _categories = await categories.GetCategoriesAsync();
 
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
 

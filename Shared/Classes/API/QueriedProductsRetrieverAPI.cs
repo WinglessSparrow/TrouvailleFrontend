@@ -16,10 +16,12 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _errorHandler = errorHandler;
         }
 
-        public async Task<int> PostNumberProductsAsync(IEnumerable<KeyValuePair<string, string>> parameters) {
+        public async Task<int> PostNumberProductsAsync(SearchModel searchModel) {
             try {
-                List<string> guid = new List<string>();
-                var response = await _httpRequest.PostRequestEncodedContentAsync<List<string>>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY_COUNT}", guid, parameters);
+
+                var categoryIds = searchModel.GetCategoryIds();
+
+                var response = await _httpRequest.PostRequestEncodedContentAsync<List<string>>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY_COUNT}", categoryIds, searchModel.Parameteres);
 
                 if (response.IsSuccessStatusCode) {
                     var outputProduct = await response.Content.ReadFromJsonAsync<int>();
@@ -33,10 +35,11 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             return 0;
         }
 
-        public async Task<List<ProductModel>> PostProductsInRangeAsync(int start, int end, IEnumerable<KeyValuePair<string, string>> parameters) {
+        public async Task<List<ProductModel>> PostProductsInRangeAsync(int start, int end, SearchModel searchModel) {
             try {
-                List<string> guid = new List<string>();
-                var response = await _httpRequest.PostRequestEncodedContentAsync<List<string>>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY}/{start}/{end}", guid, parameters);
+                var categoryIds = searchModel.GetCategoryIds();
+
+                var response = await _httpRequest.PostRequestEncodedContentAsync<List<string>>($"{ApiPathsCentralDefinition.API_SEARCH_QUERY}/{start}/{end}", categoryIds, searchModel.Parameteres);
 
                 if (response.IsSuccessStatusCode) {
                     var outputProduct = await response.Content.ReadFromJsonAsync<List<ProductModel>>();

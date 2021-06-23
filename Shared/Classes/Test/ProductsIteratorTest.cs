@@ -17,9 +17,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public ProductsIteratorTest(HttpClient http) {
             _http = http;
         }
-
-        public string SearchWord { get; set; }
-        public bool Ascending { get; set; }
+        public SearchModel SearchData { get; set; }
 
         public int GetIndex() {
             return _index;
@@ -74,9 +72,6 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                 NumberOfProduct = (await _http.GetFromJsonAsync<ProductModel[]>("debugData/Products.json")).Length,
                 NumberProductsPerIteration = _numberProductsPerIteration
             };
-        }
-
-        public void Init() {
         }
 
         private List<ProductModel> CopyArrayToList(int from, int to) {

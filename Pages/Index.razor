@@ -7,14 +7,14 @@
 @inject IProductIterator iterator
 @inject NavigationManager navMan
 @inject GlobalStateManager state
+@inject ICategoriesRetriever categories
 
 <div class="page">
     <div class="side-panel">
         <SideMenu>
-            <div
-                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 400px; gap: 20px">
-                <label>Ascending Cost: <input type="checkbox" @bind-value=_ascending></label>
-            </div>
+            <label>Ascending Cost: <input type="checkbox" @bind-value=_searchModel.Ascending></label>
+            <CustomSelect Name="Categories" Categories=@_categories ChosenCategories=@_searchModel.Categories />
+            <button class="button-style" @onclick="ResetFilters">Reset All Filtering</button>
         </SideMenu>
     </div>
     <div class="main-container">
@@ -53,16 +53,20 @@
     private CustomHeader _header { get; set; }
     private List<ProductModel> _products;
     private ProductsNumbersModel _numbers;
-    private bool _ascending = false;
+    private List<CategoryModel> _categories;
+
+    private SearchModel _searchModel = new();
+
     public EventCallback<bool> AscendingChanged { get; set; }
 
     private bool _nextButton = false;
     private bool _prevButton = false;
     protected override async Task OnInitializedAsync()
     {
-
         _numbers = await iterator.GetProductNumbersAsync();
         _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
+        _categories = await categories.GetCategoriesAsync();
+
         StateHasChanged();
 
         var header = state.Get<CustomHeader>();
@@ -72,10 +76,11 @@
 
     private async Task SearchAsync(SearchModel args)
     {
-        iterator.SearchWord = args.SearchWord;
-        iterator.Ascending = _ascending;
+        _searchModel.SearchWord = args.SearchWord;
 
-        Console.WriteLine(iterator.Ascending + " ascendign");
+        iterator.SearchData = _searchModel;
+
+        Console.WriteLine(_searchModel.Ascending + " ascendign");
 
         _products = await iterator.GetProductIndexedAsync(0);
         _numbers = await iterator.GetProductNumbersAsync();
@@ -108,5 +113,10 @@
         if (_nextButton) _nextButton = false;
         if (_prevButton) _prevButton = false;
         StateHasChanged();
+    }
+
+    private void ResetFilters()
+    {
+        navMan.NavigateTo("/", forceLoad: true);
     }
 }

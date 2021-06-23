@@ -1,0 +1,25 @@
+@namespace TrouvailleFrontend.Components.Index
+
+<div class="select">
+    <CollapseAccordion Name="@Name">
+        <div class="content">
+            @if (Categories != null)
+            {
+                @foreach (var cat in Categories)
+                {
+                    <CategoryView Data=@cat ChosenCategories=@ChosenCategories />
+                }
+            }
+        </div>
+    </CollapseAccordion>
+</div>
+
+
+@code{
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public List<CategoryModel> Categories { get; set; }
+    [Parameter]
+    public List<CategoryModel> ChosenCategories { get; set; }
+}

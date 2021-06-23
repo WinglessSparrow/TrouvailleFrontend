@@ -1,0 +1,27 @@
+<div class="category">
+    <label for="@Data.CategoryId">@Data.Name</label>
+    <input type="checkbox" id="@Data.CategoryId" @onchange="eventArgs=>{OnCheckboxChange(eventArgs.Value);}">
+</div>
+
+@code{
+    [Parameter]
+    public CategoryModel Data { get; set; }
+    [Parameter]
+    public List<CategoryModel> ChosenCategories { get; set; }
+
+
+    private void OnCheckboxChange(object checkedValue)
+    {
+        bool isChecked = (bool)checkedValue;
+        if (isChecked)
+        {
+            if (!ChosenCategories.Contains(Data))
+                ChosenCategories.Add(Data);
+        }
+        else
+        {
+            if (ChosenCategories.Contains(Data))
+                ChosenCategories.Remove(Data);
+        }
+    }
+}

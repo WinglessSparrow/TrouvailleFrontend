@@ -1,0 +1,14 @@
+.select {
+  width: 90%;
+}
+
+.content {
+  max-height: 250px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+::deep button {
+  width: 25%;
+}
