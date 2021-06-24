@@ -4,7 +4,7 @@
 @using TrouvailleFrontend.Components.Index
 @using TrouvailleFrontend.Components.Shared
 
-@inject IProductIterator iterator
+@inject IProductIterator prodIterator
 @inject NavigationManager navMan
 @inject GlobalStateManager state
 @inject ICategoriesRetriever categories
@@ -14,7 +14,6 @@
         <SideMenu>
             <label>Ascending Cost: <input type="checkbox" @bind-value=_searchModel.Ascending></label>
             <CustomSelect Name="Categories" Categories=@_categories ChosenCategories=@_searchModel.Categories />
-            <button class="button-style" @onclick="ResetFilters">Reset All Filtering</button>
         </SideMenu>
     </div>
     <div class="main-container">
@@ -26,26 +25,29 @@
             }
         }
     </div>
-    <div class="indexed-navigation">
+
+    <IndexedNavigation @ref=_idxNav Numbers=_numbers OnNext=Next OnPrev=Prev OnIndexed=ChangeToIndex />
+
+    @* <div class="indexed-navigation">
         <button @onclick="prev" disabled="@_prevButton" class="next-prev-button">
-            <Icon Name="IconName.ArrowLeft" />
-            @* prev *@
+        <Icon Name="IconName.ArrowLeft" />
+
         </button>
         <div class="page-numbers-container">
-            @if (_numbers != null)
-            {
-                @for (int i = 1; i <= (_numbers.NumberOfProduct / _numbers.NumberProductsPerIteration) + 1; i++)
-                {
-                    var temp = i - 1;
-                    <div class="page-number" @onclick="()=>ChangeToIndex(temp)">@i</div>
-                }
-            }
+        @if (_numbers != null)
+        {
+        @for (int i = 1; i <= (_numbers.NumberOfProduct / _numbers.NumberProductsPerIteration) + 1; i++)
+        {
+        var temp = i - 1;
+        <div class="page-number" @onclick="()=>ChangeToIndex(temp)">@i</div>
+        }
+        }
         </div>
         <button @onclick="next" disabled="@_nextButton" class="next-prev-button">
-            @* next *@
-            <Icon Name="IconName.ArrowRight" />
+
+        <Icon Name="IconName.ArrowRight" />
         </button>
-    </div>
+        </div> *@
 </div>
 
 @code{
@@ -54,17 +56,15 @@
     private List<ProductModel> _products;
     private ProductsNumbersModel _numbers;
     private List<CategoryModel> _categories;
-
+    private IndexedNavigation _idxNav;
     private SearchModel _searchModel = new();
 
     public EventCallback<bool> AscendingChanged { get; set; }
 
-    private bool _nextButton = false;
-    private bool _prevButton = false;
     protected override async Task OnInitializedAsync()
     {
-        _numbers = await iterator.GetProductNumbersAsync();
-        _products = await iterator.GetProductIndexedAsync(iterator.GetIndex());
+        _numbers = await prodIterator.GetProductNumbersAsync();
+        _products = await prodIterator.GetProductIndexedAsync(prodIterator.GetIndex());
         _categories = await categories.GetCategoriesAsync();
 
         StateHasChanged();
@@ -78,40 +78,30 @@
     {
         _searchModel.SearchWord = args.SearchWord;
 
-        iterator.SearchData = _searchModel;
+        prodIterator.SearchData = _searchModel;
 
         Console.WriteLine(_searchModel.Ascending + " ascendign");
 
-        _products = await iterator.GetProductIndexedAsync(0);
-        _numbers = await iterator.GetProductNumbersAsync();
+        _products = await prodIterator.GetProductIndexedAsync(0);
+        _numbers = await prodIterator.GetProductNumbersAsync();
         StateHasChanged();
     }
 
-    private async void next()
+    private async void Next()
     {
-        var temp = await iterator.GetNextProductsAsync();
-        if (temp == null) _nextButton = true;
-        else _products = temp;
-
-        if (_prevButton) _prevButton = false;
+        _products = await prodIterator.GetNextProductsAsync();
         StateHasChanged();
     }
 
-    private async void prev()
+    private async void Prev()
     {
-        var temp = await iterator.GetPreviousProductsAsync();
-        if (temp == null) _prevButton = true;
-        else _products = temp;
-
-        if (_nextButton) _nextButton = false;
+        _products = await prodIterator.GetPreviousProductsAsync();
         StateHasChanged();
     }
 
     private async void ChangeToIndex(int index)
     {
-        _products = await iterator.GetProductIndexedAsync(index);
-        if (_nextButton) _nextButton = false;
-        if (_prevButton) _prevButton = false;
+        _products = await prodIterator.GetProductIndexedAsync(index);
         StateHasChanged();
     }
 

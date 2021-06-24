@@ -1,0 +1,85 @@
+@namespace TrouvailleFrontend.Components.Index
+
+<div class="indexed-navigation">
+    <button @onclick="Prev" disabled="@_isPrevDisable" class="next-prev-button">
+        <Icon Name="IconName.ArrowLeft" />
+    </button>
+    <div class="page-numbers-container">
+        @if (Numbers != null)
+        {
+            @for (int i = 1; i <= _numberPages + 1; i++)
+            {
+
+                var temp = i - 1;
+                @if (temp == _currentPage)
+                {
+                    <div class="page-number chosen" @onclick="()=>ChangeToIndex(temp)">@i</div>
+                }
+                else
+                {
+                    <div class="page-number" @onclick="()=>ChangeToIndex(temp)">@i</div>
+
+                }
+            }
+        }
+    </div>
+    <button @onclick="Next" disabled="@_isNextDisable" class="next-prev-button">
+        <Icon Name="IconName.ArrowRight" />
+    </button>
+</div>
+
+@code{
+    [Parameter]
+    public ProductsNumbersModel Numbers { get; set; }
+    [Parameter]
+    public Action OnNext { get; set; }
+    [Parameter]
+    public Action OnPrev { get; set; }
+    [Parameter]
+    public Action<int> OnIndexed { get; set; }
+
+    private bool _isNextDisable;
+    private bool _isPrevDisable = true;
+    private int _currentPage = 0;
+    private int _numberPages;
+
+
+    protected override void OnParametersSet()
+    {
+        if (Numbers != null)
+        {
+            _numberPages = Numbers.NumberOfProduct / Numbers.NumberProductsPerIteration;
+        }
+    }
+
+    private void Next()
+    {
+        _isPrevDisable = false;
+        if (_currentPage < _numberPages)
+        {
+            _currentPage++;
+            OnNext?.Invoke();
+            if (_currentPage == _numberPages) _isNextDisable = true;
+        }
+    }
+
+    private void Prev()
+    {
+        _isNextDisable = false;
+        if (_currentPage > 0)
+        {
+            _currentPage--;
+            OnPrev?.Invoke();
+            if (_currentPage == 0) _isPrevDisable = true;
+        }
+    }
+    private void ChangeToIndex(int index)
+    {
+        _currentPage = index;
+        _isNextDisable = (_currentPage == _numberPages) ? true : false;
+        _isPrevDisable = (_currentPage == 0) ? true : false;
+
+        OnIndexed?.Invoke(index);
+    }
+
+}
