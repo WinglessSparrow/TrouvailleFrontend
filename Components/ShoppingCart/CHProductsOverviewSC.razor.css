@@ -27,9 +27,6 @@ b {
   border-bottom: solid 1px var(--accent);
 }
 
-
-
-
 button {
   border: none;
   border-bottom: solid 1px var(--accent);
@@ -47,4 +44,10 @@ button:hover span {
 
 button:focus {
   outline: none;
+}
+
+.overview{
+  padding: 10px;
+  padding-left: 70px;
+  padding-right: 70px;
 }

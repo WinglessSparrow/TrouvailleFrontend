@@ -6,7 +6,7 @@
 .tabs {
   width: 20%;
   min-height: 100vh;
-  height: 100%;
+  height: auto;
 
   border-right: solid 1px var(--box-shadow);
 }
