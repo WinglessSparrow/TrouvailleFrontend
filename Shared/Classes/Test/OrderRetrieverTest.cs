@@ -17,7 +17,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     OrderId = "d113e066-48f7-4bcb-852f-a81d4f2c792e",
                     Date = DateTime.Now,
                     TotalCost = 20.50m,
-                    PaymentMethod = Enums.PaymentMethod.Paypal,
+                    PaymentMethod = Enums.PaymentMethod.Vorkasse,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
                     OrderState = Enums.OrderState.Storniert,
                     InvoiceAddress = new() {
@@ -46,7 +46,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     OrderId = "d113e066-48f7-4bcb-852f-a81d4f2c792e",
                     Date = DateTime.Now,
                     TotalCost = 20.50m,
-                    PaymentMethod = Enums.PaymentMethod.Paypal,
+                    PaymentMethod = Enums.PaymentMethod.Vorkasse,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
                     OrderState = Enums.OrderState.Bestellt,
                     InvoiceAddress = new() {
@@ -77,7 +77,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     OrderId = "d113f066-48f7-4bca-852f-a81d4f2c932e",
                     Date = DateTime.Now,
                     TotalCost = 300.50m,
-                    PaymentMethod = Enums.PaymentMethod.Paypal,
+                    PaymentMethod = Enums.PaymentMethod.Vorkasse,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
                     OrderState = Enums.OrderState.Unterwegs,
                     InvoiceAddress = new() {
@@ -109,7 +109,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     OrderId = "dc13f066-4ff7-4bca-452f-a81d4f2c932f",
                     Date = DateTime.Now,
                     TotalCost = 300.50m,
-                    PaymentMethod = Enums.PaymentMethod.Paypal,
+                    PaymentMethod = Enums.PaymentMethod.Vorkasse,
                     ShipmentMethod = Enums.ShipmentMethod.dhl,
                     OrderState = Enums.OrderState.Zugestellt,
                     InvoiceAddress = new() {

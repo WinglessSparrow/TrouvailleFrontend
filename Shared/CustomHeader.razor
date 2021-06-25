@@ -2,9 +2,9 @@
 
 @inject NavigationManager navMan
 @inject ILocalStorage local
-@inject IJSRuntime js
 @inject ILocalStorage localStorage
 @inject GlobalStateManager state
+@inject IUserDataGetter userGetter
 
 <div class="header">
     <div class="header-content">
@@ -20,22 +20,23 @@
             <div class="dropdown-indicator">
                 <Icon Name="IconName.ShoppingCart" />
                 <div class="dropdown-content">
-                    <a href='@(_tokenIsValid ? "/shoppingcart" : "/login")'>Shopping Cart
+                    <a href="/shoppingcart">Shopping Cart
                         <Icon Name="IconName.ShoppingBasket" />
                     </a>
-                    <a href='@(_tokenIsValid ? "/checkout" : "/login")'>Checkout
+                    <a href="/checkout">Checkout
                         <Icon Name="IconName.CreditCard" />
                     </a>
                 </div>
             </div>
             @if (_tokenIsValid)
             {
-                <div class="dropdown-indicator">
+                <div class="dropdown-indicator user-settings">
                     <Icon Name="IconName.User" />
                     <div class="dropdown-content">
                         <a href="/account">Account Settings <i class="fas fa-user-cog"></i></a>
                         <a @onclick="Logout">Logout <i class="fas fa-sign-out-alt"></i></a>
                     </div>
+                    <span>Hi @_userName!</span>
                 </div>
             }
             else
@@ -61,6 +62,8 @@
     private TokenModel _token { get; set; }
     private bool _tokenIsValid;
     private SearchModel _searchModel = new();
+    private string _userName = "user name";
+
 
     [Parameter]
     public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
@@ -72,6 +75,8 @@
         _token = await local.GetStorageAsync<TokenModel>("authToken");
 
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
+
+        _userName = (await userGetter.getUserDataAsync()).FirstName;
 
         state.Add<CustomHeader>(this);
 
