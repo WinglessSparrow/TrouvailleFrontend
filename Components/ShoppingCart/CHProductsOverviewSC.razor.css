@@ -39,7 +39,7 @@ b {
 button {
   border: none;
   border-bottom: solid 1px var(--accent);
-  width: 55%;
+  min-width: 55%;
 }
 
 button:hover {

@@ -77,7 +77,11 @@
 
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
 
-        _userName = (await userGetter.getUserDataAsync()).FirstName;
+        if (_tokenIsValid)
+        {
+            var user = await userGetter.getUserDataAsync();
+            _userName = user.FirstName;
+        }
 
         state.Add<CustomHeader>(this);
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -19,6 +20,8 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public async Task<List<CategoryModel>> GetCategoriesAsync() {
 
             try {
+                Console.WriteLine(ApiPathsCentralDefinition.API_GET_CATEGORIES);
+
                 var response = await _http.GetRequestAsync(ApiPathsCentralDefinition.API_GET_CATEGORIES);
                 if (response.IsSuccessStatusCode) {
                     var output = await response.Content.ReadFromJsonAsync<List<CategoryModel>>();

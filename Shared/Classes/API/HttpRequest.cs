@@ -18,7 +18,6 @@ namespace TrouvailleFrontend.Shared.Classes.API {
             _localStorage = localStorage;
         }
 
-
         public async Task<HttpResponseMessage> GetRequestAsync(string path) {
             HttpResponseMessage response;
 

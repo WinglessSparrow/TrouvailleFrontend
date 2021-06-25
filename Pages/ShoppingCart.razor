@@ -16,12 +16,20 @@
 <div class="page main-container-style">
     @if (_cartItems != null && _cartItems.Count() > 0)
     {
-        <h1>Your Shopping Cart</h1>
-        <div class="content">
-            <CascadingValue Value="@this">
-                <CHProductsOverviewSC Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
-            </CascadingValue>
-        </div>
+        @if (_products != null)
+        {
+
+            <h1>Your Shopping Cart</h1>
+            <div class="content">
+                <CascadingValue Value="@this">
+                    <CHProductsOverviewSC Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
+                </CascadingValue>
+            </div>
+        }
+        else
+        {
+            <LoadingIndicator />
+        }
     }
     else
     {
@@ -59,6 +67,7 @@
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        StateHasChanged();
         if (_cartItems != null && _cartItems.Count() > 0)
         {
             _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
