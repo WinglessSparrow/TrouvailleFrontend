@@ -91,8 +91,8 @@
     private CustomModal _modal;
     private EditContext _eContext;
     private TokenModel _token;
-    private double _totalPriceWithoutTax;
-    private double _totalPrice;
+    private decimal _totalPriceWithoutTax;
+    private decimal _totalPrice;
     private bool _isDeliverySameInvoice = false;
     private OrderModel _order;
     private List<ShoppingCartItemModel> _cartItems { get; set; }
@@ -129,7 +129,7 @@
             {
                 _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
                 //calculating tax
-                double tax = ((double)_products[i].Tax) / 100.0;
+                decimal tax = (_products[i].Tax) / (decimal)100.0;
                 _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
             }
         }

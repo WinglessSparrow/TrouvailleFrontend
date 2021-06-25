@@ -30,14 +30,14 @@
     [Parameter]
     public string ForForm { get; set; }
     [Parameter]
-    public double TotalPriceWithoutTax { get; set; }
+    public decimal TotalPriceWithoutTax { get; set; }
     [Parameter]
-    public double TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; }
 
     protected override void OnParametersSet()
     {
-        _pureTax = String.Format("{0:C}", TotalPrice - TotalPriceWithoutTax);
-        _totalPrice = String.Format("{0:C}", TotalPrice);
-        _totalPriceWithoutTax = String.Format("{0:C}", TotalPriceWithoutTax);
+        _pureTax = CurencyManager.ParseToCurency(TotalPrice - TotalPriceWithoutTax);
+        _totalPrice = CurencyManager.ParseToCurency(TotalPrice);
+        _totalPriceWithoutTax = CurencyManager.ParseToCurency(TotalPriceWithoutTax);
     }
 }

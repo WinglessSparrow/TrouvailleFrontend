@@ -50,10 +50,6 @@ p {
 
 .name > p {
   font-size: 1.5rem;
-  /* max-width: 100%; */
-
-  /* white-space: nowrap; */
-  /* ?  text-overflow: ellipsis; */
   overflow: clip;
 }
 

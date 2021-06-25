@@ -54,7 +54,8 @@
 
     protected override void OnParametersSet()
     {
-        _cost = String.Format("{0:C}", Order.TotalCost);
+        _cost = CurencyManager.ParseToCurency(Order.TotalCost);
+
         switch (Order.OrderState)
         {
             case OrderState.Bestellt:

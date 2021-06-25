@@ -39,8 +39,8 @@
 @code {
     private CustomModal _modal;
     private TokenModel _token;
-    private double _totalPriceWithoutTax;
-    private double _totalPrice;
+    private decimal _totalPriceWithoutTax;
+    private decimal _totalPrice;
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
 
@@ -66,7 +66,7 @@
             {
                 _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
                 //calculating tax
-                double tax = ((double)_products[i].Tax) / 100.0;
+                decimal tax = (_products[i].Tax) / (decimal)100.0;
                 _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
             }
         }
@@ -97,7 +97,7 @@
     public async Task increase(string id)
     {
         if (_cartItems != null)
-        {
+    {
             for (int i = 0; i < _cartItems.Count; i++)
             {
                 if (_cartItems[i].ProductId == id)

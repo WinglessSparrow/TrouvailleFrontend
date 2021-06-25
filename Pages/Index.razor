@@ -63,6 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        prodIterator.SearchData = _searchModel;
         _numbers = await prodIterator.GetProductNumbersAsync();
         _products = await prodIterator.GetProductIndexedAsync(prodIterator.GetIndex());
         _categories = await categories.GetCategoriesAsync();

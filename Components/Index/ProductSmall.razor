@@ -1,6 +1,7 @@
 @namespace TrouvailleFrontend.Components.Index
 
 @using Blazorise
+@using System.Globalization
 @using TrouvailleFrontend.Components.Shared
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes.Functional
@@ -36,8 +37,7 @@
 
     protected override void OnParametersSet()
     {
-        _cost = String.Format("{0:C}", Product.Price);
-
+        _cost = CurencyManager.ParseToCurency((decimal)Product.Price);
     }
 
     private void NavigateToProduct()

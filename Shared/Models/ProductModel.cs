@@ -6,10 +6,10 @@ namespace TrouvailleFrontend.Shared.Models {
         public string ProductId { get { return _id.ToString(); } set { _id = new Guid(value); } }
         public string Name { get; set; }
         public string Description { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int InStock { get; set; }
         public int Rating { get; set; }
-        public double Tax { get; set; }
+        public decimal Tax { get; set; }
         public PictureModel Picture { get; set; }
     }
 }

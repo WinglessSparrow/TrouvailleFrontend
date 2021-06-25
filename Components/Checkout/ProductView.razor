@@ -41,7 +41,7 @@
     [Parameter]
     public int Stock { get; set; }
     [Parameter]
-    public double Price { get; set; }
+    public decimal Price { get; set; }
     [Parameter]
     public int Cardinality { get; set; }
     [Parameter]
@@ -49,8 +49,8 @@
 
     protected override void OnInitialized()
     {
-        _priceCalculated = String.Format("{0:C}", Price * Cardinality);
-        _price = String.Format("{0:C}", Price);
+        _priceCalculated = CurencyManager.ParseToCurency(Price * Cardinality);
+        _price = CurencyManager.ParseToCurency(Price);
         _stock = StockConverter.ParseStockToString(Stock);
     }
 }

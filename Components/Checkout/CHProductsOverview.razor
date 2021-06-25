@@ -24,7 +24,7 @@
 @code{
     private string _totalPrice;
     [Parameter]
-    public double TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; }
     [Parameter]
     public List<ProductModel> Products { get; set; }
     [Parameter]
@@ -32,6 +32,6 @@
 
     protected override void OnParametersSet()
     {
-        _totalPrice = String.Format("{0:C}", TotalPrice);
+        _totalPrice = CurencyManager.ParseToCurency(TotalPrice);
     }
 }
