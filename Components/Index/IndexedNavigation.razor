@@ -82,4 +82,12 @@
         OnIndexed?.Invoke(index);
     }
 
+
+    public void Reset()
+    {
+        _currentPage = 0;
+        _numberPages = Numbers.NumberOfProduct / Numbers.NumberProductsPerIteration;
+        _isNextDisable = (_currentPage == _numberPages) ? true : false;
+        _isPrevDisable = (_currentPage == 0) ? true : false;
+    }
 }

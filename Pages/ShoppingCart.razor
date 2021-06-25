@@ -13,9 +13,10 @@
 @inject IJSRuntime js
 @inject IErrorHandler errorHandler
 
-<div class="page">
+<div class="page main-container-style">
     @if (_cartItems != null && _cartItems.Count() > 0)
     {
+        <h1>Your Shopping Cart</h1>
         <div class="content">
             <CascadingValue Value="@this">
                 <CHProductsOverviewSC Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
@@ -97,7 +98,7 @@
     public async Task increase(string id)
     {
         if (_cartItems != null)
-    {
+        {
             for (int i = 0; i < _cartItems.Count; i++)
             {
                 if (_cartItems[i].ProductId == id)

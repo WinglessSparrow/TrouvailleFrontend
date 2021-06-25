@@ -32,11 +32,12 @@
             {
                 <div class="dropdown-indicator user-settings">
                     <Icon Name="IconName.User" />
+                    <span>Hi @_userName!</span>
                     <div class="dropdown-content">
                         <a href="/account">Account Settings <i class="fas fa-user-cog"></i></a>
                         <a @onclick="Logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                        <a @onclick="ChangeUser">Chnange User <i class="fas fa-exchange-alt"></i></a>
                     </div>
-                    <span>Hi @_userName!</span>
                 </div>
             }
             else
@@ -79,11 +80,10 @@
         _userName = (await userGetter.getUserDataAsync()).FirstName;
 
         state.Add<CustomHeader>(this);
-
     }
     private void LogoTriger()
     {
-        navMan.NavigateTo("/", forceLoad: true);
+        navMan.NavigateTo("/");
     }
 
     private void Enter(KeyboardEventArgs e)
@@ -106,5 +106,11 @@
     {
         await localStorage.RemoveStorageAsync("authToken");
         navMan.NavigateTo("/", forceLoad: true);
+    }
+
+    private async void ChangeUser()
+    {
+        await localStorage.RemoveStorageAsync("authToken");
+        navMan.NavigateTo("/Login", forceLoad: true);
     }
 }
