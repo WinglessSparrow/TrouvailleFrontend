@@ -3,11 +3,12 @@
 @using TrouvailleFrontend.Components.Account
 @using TrouvailleFrontend.Components.Shared
 
+@inject ILocalStorage local
 @inject IUserDataGetter userHandler
 @inject NavigationManager navMan
 
 <div class="main-container-style">
-    @if (_userModel != null)
+    @if (_userModel != null && _validToken == true)
     {
 
         if (_userModel.IsDisabled)
@@ -48,9 +49,20 @@
 @code {
     CustomModal _modal;
     private UserModel _userModel;
+    private TokenModel _token;
+
+    private bool _validToken = false;
 
     protected override async Task OnInitializedAsync()
     {
+        _token = await local.GetStorageAsync<TokenModel>("authToken");
+        _validToken = _token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today;
+
+        if (!_validToken)
+        {
+            navMan.NavigateTo("/login", forceLoad: true);
+        }
+
         _userModel = await userHandler.getUserDataAsync();
     }
 }

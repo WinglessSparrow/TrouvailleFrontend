@@ -14,7 +14,7 @@
 @inject IErrorHandler errorHandler
 
 <div class="page">
-    @if (_cartItems != null && _cartItems.Count() > 0)
+    @if (_cartItems != null && _cartItems.Count() > 0 && _validToken == true)
     {
         <div class="content">
             <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="SubmitOrderAsync">
@@ -84,7 +84,7 @@
     }
 </div>
 
-<CustomModal @ref="_modal" Name="Purchase" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure="@Failure" />
+<CustomModal @ref="_modal" Name="Purchase" ButtonText="End Order" OnCloseSuccess="@Success" />
 @* </div> *@
 
 @code {
@@ -97,15 +97,11 @@
     private OrderModel _order;
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
+    private bool _validToken = false;
 
     private void Success()
     {
         navMan.NavigateTo("/", forceLoad: true);
-    }
-
-    private void Failure()
-    {
-        navMan.NavigateTo("/checkout", forceLoad: true);
     }
 
     private void SetDelivery()
@@ -118,6 +114,12 @@
     {
         _token = await local.GetStorageAsync<TokenModel>("authToken");
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        
+        _validToken = _token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today;
+
+        if(!_validToken){
+            navMan.NavigateTo("/login", forceLoad: true);
+        }
 
         //TODO get User, map data to Order data
 
