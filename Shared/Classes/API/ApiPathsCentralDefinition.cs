@@ -1,6 +1,6 @@
 namespace TrouvailleFrontend.Shared.Classes.API {
     public class ApiPathsCentralDefinition {
-        public const string API_IP = "https://141.79.34.112:5001";
+        public const string API_IP = "https://trouvaille.conveyor.cloud";
         public const string API_PRODUCTS_IN_RANGE = API_IP + "/api/Products";
         public const string API_PRODUCT_BY_ID = API_IP + "/api/Products";
         public const string API_PRODUCTS_BY_ID_ARRAY = API_IP + "/api/Products/GetMultiple";

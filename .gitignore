@@ -263,3 +263,4 @@ __pycache__/
 *.sln
 ./bin/
 omnisharp.json
+Properties/PublishProfiles/FolderProfile.pubxml
