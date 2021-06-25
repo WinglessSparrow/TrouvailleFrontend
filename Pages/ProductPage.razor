@@ -131,6 +131,6 @@
             _disabled = true;
         }
 
-        _price = String.Format("{0:C}", _product.Price);
+        _price = CurencyManager.ParseToCurency(_product.Price);
     }
 }
