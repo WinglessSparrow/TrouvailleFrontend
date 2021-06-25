@@ -1,25 +1,24 @@
-<div class="border">
-    <div class="main-wrapper">
-        <div class="cost">
-            <b>
-                Price: @_totalPrice <br />
-                <small>without tax: @_totalPriceWithoutTax</small><br />
-                <small>the tax:@_pureTax</small>
-            </b>
-        </div>
-        <div class="order-info">
-            <ul>
-                <li>By ordering you comply with our services and conditions</li>
-                <li>legal info</li>
-                <li>legal info</li>
-                <li>legal info</li>
-                <li>legal info</li>
-            </ul>
-        </div>
-
-        <button type="submit" form="@ForForm" class="button-style">Submit Order</button>
+<div class="main-wrapper">
+    <div class="cost">
+        <b>
+            Price: @_totalPrice <br />
+            <small>without tax: @_totalPriceWithoutTax</small><br />
+            <small>the tax: @_pureTax</small>
+        </b>
     </div>
+    <div class="order-info">
+        <ul>
+            <li>By ordering you comply with our services and conditions</li>
+            <li>legal info</li>
+            <li>legal info</li>
+            <li>legal info</li>
+            <li>legal info</li>
+        </ul>
+    </div>
+
+    <button type="submit" form="@ForForm" class="button-style">Submit Order</button>
 </div>
+
 
 
 @code {

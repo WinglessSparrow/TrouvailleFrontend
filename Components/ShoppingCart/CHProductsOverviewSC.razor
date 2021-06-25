@@ -1,26 +1,25 @@
 @namespace TrouvailleFrontend.Components.ShoppingCart
 
 @using TrouvailleFrontend.Shared.Models
-@using TrouvailleFrontend.Components.Shared
 @inject NavigationManager navMan
 
-@* TODO: SEPARATE MODEL FOR THE PRODUCT AND CART ITEM *@
-
-<div class="main-container-style overview">
-    @if (Products != null && ItemData != null)
-    {
-        @for (int i = 0; i < Products.Count(); i++)
+<div class="products-overview">
+    <div class="overview">
+        @if (Products != null && ItemData != null)
         {
-            <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price
-        Stock=@Products[i].InStock Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
+            @for (int i = 0; i < Products.Count(); i++)
+            {
+                <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price
+            Stock=@Products[i].InStock Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
+            }
         }
-    }
-    <div class="products-overview-under">
+    </div>
+    <div class="overview-under">
         <div class="total">
             <b>Total: @_totalPrice</b>
         </div>
         <div class="total">
-            <button @onclick="@toCheckout"><span>Checkout</span></button>
+            <button @onclick="@ToCheckout"><span>Checkout</span></button>
         </div>
     </div>
 </div>
@@ -39,7 +38,7 @@
         _totalPrice = CurencyManager.ParseToCurency(TotalPrice);
     }
 
-    private void toCheckout()
+    private void ToCheckout()
     {
         navMan.NavigateTo("/checkout", forceLoad: true);
     }

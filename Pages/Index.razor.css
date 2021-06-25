@@ -66,21 +66,22 @@
   height: 2rem;
 
   cursor: pointer;
-
-  /* transition: 0.5s; */
 }
 
 .page-number:hover {
-  /* background-color: var(--background-contrast); */
-  /* box-shadow: 0px 3px 7px 0px rgba(136, 136, 136, 0.521); */
   color: var(--foreground-contrast);
 }
 
-.next-prev-button{
+.next-prev-button {
   border: none;
   background-color: transparent;
 }
 
-.next-prev-button:hover{
+.next-prev-button:hover {
   color: var(--foreground-contrast);
+}
+
+.reset-search {
+  margin-top: auto;
+  height: 30px;
 }
