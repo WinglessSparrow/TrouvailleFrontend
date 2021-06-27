@@ -50,7 +50,7 @@ namespace TrouvailleFrontend {
             builder.Services.AddTransient<ICategoriesRetriever, CategoriesTest>();
 
             // builder.Services.AddTransient<IQueriedProductsRetriever, QueriedProductsRetrieverAPI>();
-            // builder.Services.AddTransient<IPasswordChanger, PasswordChangerAPI>();
+        // builder.Services.AddTransient<IPasswordChanger, PasswordChangerAPI>();
             // builder.Services.AddTransient<IUserDataGetter, UserDataGetterAPI>();
             // builder.Services.AddTransient<IUserDataChanger, UserDataChangerAPI>();
             // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
