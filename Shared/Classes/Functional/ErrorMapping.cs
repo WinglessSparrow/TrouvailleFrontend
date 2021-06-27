@@ -10,7 +10,8 @@ namespace TrouvailleFrontend.Shared.Classes.Functional {
             {HttpStatusCode.ServiceUnavailable, "The server is unavailable, please contact the administration"},
             //this one will only be shown when the standart Object is used!
             {HttpStatusCode.OK, "Somebody forgot to set The Error String"},
-            {HttpStatusCode.NotFound, "404"}
+            {HttpStatusCode.NotFound, "404"},
+            {HttpStatusCode.Forbidden, "403"}
         };
     }
 }

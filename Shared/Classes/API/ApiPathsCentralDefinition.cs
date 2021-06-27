@@ -14,6 +14,6 @@ namespace TrouvailleFrontend.Shared.Classes.API {
         public const string API_GET_HISTORY = API_IP + "/api/Orders/History";
         public const string API_SEARCH_QUERY = API_IP + "/api/Products/SearchQuery";
         public const string API_SEARCH_QUERY_COUNT = API_IP + "/api/Products/SearchQueryCount";
-        public const string API_GET_CATEGORIES = API_IP + "api/Categories";
+        public const string API_GET_CATEGORIES = API_IP + "/api/Categories";
     }
 }

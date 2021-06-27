@@ -16,35 +16,37 @@
 <div class="page">
     @if (_cartItems != null && _cartItems.Count() > 0 && _validToken == true)
     {
-        <div class="content">
-            <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="SubmitOrderAsync">
-                <ObjectGraphDataAnnotationsValidator />
+        @if (_products != null)
+        {
+            <div class="content">
+                <EditForm id="order-form" EditContext=@_eContext OnValidSubmit="SubmitOrderAsync">
+                    <ObjectGraphDataAnnotationsValidator />
 
-                <div class="addresses main-container-style">
-                    <h4><i class="fas fa-address-card"></i> Address</h4>
-                    <div class="addresses-input-wrapper">
-                        <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
-                        <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
+                    <div class="addresses main-container-style">
+                        <h4><i class="fas fa-address-card"></i> Address</h4>
+                        <div class="addresses-input-wrapper">
+                            <Address AddressFor="Invoice Address" @bind-AddressM="_order.InvoiceAddress" />
+                            <Address AddressFor="Delivery Address" @bind-AddressM="_order.DeliveryAddress"
                         IsDisabled=@_isDeliverySameInvoice />
+                        </div>
+                        <label for="address-equal-chck">
+                            <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
+                            Delivery address same as Invoivce address
+                        </label>
                     </div>
-                    <label for="address-equal-chck">
-                        <InputCheckbox id="address-equal-chck" @bind-Value=_isDeliverySameInvoice @onclick="SetDelivery" />
-                        Delivery address same as Invoivce address
-                    </label>
-                </div>
 
-                <div class="radio-group-container main-container-style">
-                    <h4><i class="fas fa-money-bill-wave"></i> Payment Method</h4>
-                    <div class="radio-container">
-                        <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
-                            @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
-                            {
-                                var temp = method;
+                    <div class="radio-group-container main-container-style">
+                        <h4><i class="fas fa-money-bill-wave"></i> Payment Method</h4>
+                        <div class="radio-container">
+                            <InputRadioGroup Name="radio-grp-payment" @bind-Value=_order.PaymentMethod>
+                                @foreach (var method in (PaymentMethod[])Enum.GetValues(typeof(PaymentMethod)))
+                                {
+                                    var temp = method;
                             <div class="radio-wraper">
                                 <InputRadio id=@temp Value="temp" Name="radio-grp-payment" />
                                 <label for=@temp>@temp</label>
                             </div>
-                            }
+                                }
                     </InputRadioGroup>
                 </div>
             </div>
@@ -54,24 +56,30 @@
                 <div class="radio-container">
                     <InputRadioGroup Name="radio-grp-shipping" @bind-Value=_order.ShipmentMethod>
                         @foreach (var method in (ShipmentMethod[])Enum.GetValues(typeof(ShipmentMethod)))
-                            {
-                                var temp = method;
+                                {
+                                    var temp = method;
                             <div class="radio-wraper">
                                 <InputRadio id=@temp Value="temp" Name="radio-grp-shipping" />
                                 <label for=@temp>@temp</label>
                             </div>
-                            }
+                                }
                     </InputRadioGroup>
                 </div>
             </div>
             <CHProductsOverview Products=@_products ItemData=@_cartItems TotalPrice=@_totalPrice />
         </EditForm>
     </div>
-        <div class="side-menu">
-            <SideMenu>
-                <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
-            </SideMenu>
-        </div>
+            <div class="side-menu">
+                <SideMenu>
+                    <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
+                </SideMenu>
+            </div>
+        }
+        else
+        {
+            <LoadingIndicator />
+        }
+
     }
     else
     {
@@ -112,20 +120,23 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //user validation
         _token = await local.GetStorageAsync<TokenModel>("authToken");
-        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
-        
+
         _validToken = _token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today;
 
-        if(!_validToken){
+        if (!_validToken)
+        {
             navMan.NavigateTo("/login", forceLoad: true);
         }
 
-        //TODO get User, map data to Order data
-
+        //setting up the page
+        _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+        StateHasChanged();
         if (_cartItems != null && _cartItems.Count() > 0)
         {
             _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+            StateHasChanged();
 
             for (int i = 0; i < _cartItems.Count(); i++)
             {

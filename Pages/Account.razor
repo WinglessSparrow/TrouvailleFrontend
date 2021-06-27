@@ -41,8 +41,9 @@
 
 </div>
 
-<CustomModal @ref=_modal Name="Account" ButtonText="Epic" OnCloseSuccess='@(()=>{navMan.NavigateTo("/account");})'
-    OnCloseFailure='@(()=>{navMan.NavigateTo("/account");})' />
+<CustomModal @ref=_modal Name="Account" ButtonText="Epic"
+    OnCloseFailure='@(()=>{navMan.NavigateTo("/account", forceLoad: true);})' />
+@* OnCloseSuccess='@(()=>{_modal.Modal.Hide();})' *@
 
 @*</div> *@
 

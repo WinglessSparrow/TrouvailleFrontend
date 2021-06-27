@@ -64,6 +64,8 @@
 
         prodIterator.SearchData = _searchModel;
 
+        TriggerLoading();
+
         _products = await prodIterator.GetProductIndexedAsync(0);
         _numbers = await prodIterator.GetProductNumbersAsync();
 
@@ -73,34 +75,40 @@
 
     private async void Next()
     {
+        TriggerLoading();
         _products = await prodIterator.GetNextProductsAsync();
         StateHasChanged();
     }
 
     private async void Prev()
     {
+        TriggerLoading();
         _products = await prodIterator.GetPreviousProductsAsync();
         StateHasChanged();
     }
 
     private async void ChangeToIndex(int index)
     {
+        TriggerLoading();
         _products = await prodIterator.GetProductIndexedAsync(index);
         StateHasChanged();
-    }
-
-    private void ResetFilters()
-    {
-        navMan.NavigateTo("/", forceLoad: true);
     }
     private async void ResetSearch()
     {
         _searchModel = new();
 
+        TriggerLoading();
+
         _products = await prodIterator.GetProductIndexedAsync(0);
         _numbers = await prodIterator.GetProductNumbersAsync();
 
         _idxNav.Reset();
+        StateHasChanged();
+    }
+
+    private void TriggerLoading()
+    {
+        _products = null;
         StateHasChanged();
     }
 }
