@@ -72,13 +72,12 @@
   grid-row: 1;
 
   display: flex;
-  
+
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  
-  padding: 0;
 
+  padding: 0;
 
   max-height: 100px;
 }
@@ -115,7 +114,7 @@
   border-right: solid 1px var(--accent);
 }
 
-.stock > *{
+.stock > * {
   color: var(--foreground-contrast);
   font-weight: 600;
 }

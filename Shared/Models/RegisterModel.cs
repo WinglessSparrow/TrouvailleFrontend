@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TrouvailleFrontend.Shared.Models {
     public class RegisterModel {
@@ -11,14 +7,15 @@ namespace TrouvailleFrontend.Shared.Models {
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password Code is required")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "password must be at least 8 characters long")]
+        [Required(ErrorMessage = "Password is required")]
+        [RegularExpression(@"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+-=|]).{6,}$", ErrorMessage = "Password Must be at least 6 characters long and containt one lower-, one uppercase letter and one special character")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm your Password")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "password must be at least 8 characters long")]
-        [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
+        [RegularExpression(@"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/~_+-=|]).{6,}$", ErrorMessage = " ")]
+        [CompareProperty("Password", ErrorMessage = "Passwords do not match")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]

@@ -5,7 +5,6 @@
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes.Interfaces
 
-
 @inject IJSRuntime JSRuntime
 @inject ILocalStorage localStorage
 @inject IHttpRequest httpRequest
@@ -17,7 +16,7 @@
         {
             <div class="product-image main-container-style">
                 <img class="product-picture center-flex" src="data:image/png;base64,@_product.Picture.ImageData"
-                alt="Image loading Error">
+                alt="Image loading Error" />
             </div>
 
             <div class="product-controls main-container-style">
@@ -64,6 +63,7 @@
             </div>
         </div>
     </div>
+
     <div class="rating">
         <!-- Not Implemented -->
     </div>
