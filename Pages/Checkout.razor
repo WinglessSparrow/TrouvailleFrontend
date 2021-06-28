@@ -10,6 +10,7 @@
 @inject IProductsRetriever productsRetriever
 @inject NavigationManager navMan
 @inject IOrderer orderer
+@inject IUserDataGetter userHandler
 @inject IJSRuntime js
 @inject IErrorHandler errorHandler
 
@@ -103,6 +104,8 @@
     private decimal _totalPrice;
     private bool _isDeliverySameInvoice = false;
     private OrderModel _order;
+    private UserModel _userModel;
+
     private List<ShoppingCartItemModel> _cartItems { get; set; }
     private List<ProductModel> _products { get; set; }
     private bool _validToken = false;
@@ -129,6 +132,10 @@
         {
             navMan.NavigateTo("/login", forceLoad: true);
         }
+
+        _userModel = await userHandler.getUserDataAsync();
+        _order.InvoiceAddress = _userModel.InvoiceAddress;
+        _order.DeliveryAddress = _userModel.DeliveryAddress;
 
         //setting up the page
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
