@@ -55,7 +55,17 @@
         }
         else
         {
-            <LoadingIndicator />
+            @if (_itemExist)
+            {
+                <LoadingIndicator />
+            }
+            else
+            {
+                <ErrorMessage>
+                    <iframe width="400" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
+                allowfullscreen frameborder="0"></iframe>
+                </ErrorMessage>
+            }
         }
         <div class="product-rating main-container-style">
             <div class="overlay-under-construction">
@@ -77,6 +87,7 @@
     public string Id { get; set; }
     public int Amount { get; set; } = 1;
 
+    private bool _itemExist = true;
     private string _stock;
     private string _price;
     private ProductModel _product;
@@ -118,23 +129,29 @@
     protected override async Task OnInitializedAsync()
     {
         _product = await productRetriever.GetProductByIdAsync(Id);
-        _shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
 
-        foreach (var sc in _shoppingCart)
+        _itemExist = _product != null;
+
+        if (_itemExist)
         {
-            if (sc.ProductId.Equals(_product.ProductId))
+            _shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
+
+            foreach (var sc in _shoppingCart)
             {
-                _amountInShoppingCart = sc.Cardinality;
+                if (sc.ProductId.Equals(_product.ProductId))
+                {
+                    _amountInShoppingCart = sc.Cardinality;
+                }
             }
+
+            _stock = StockConverter.ParseStockToString(_product.InStock);
+
+            if (_product.InStock == 0)
+            {
+                _disabled = true;
+            }
+
+            _price = CurencyManager.ParseToCurency(_product.Price);
         }
-
-        _stock = StockConverter.ParseStockToString(_product.InStock);
-
-        if (_product.InStock == 0)
-        {
-            _disabled = true;
-        }
-
-        _price = CurencyManager.ParseToCurency(_product.Price);
     }
 }

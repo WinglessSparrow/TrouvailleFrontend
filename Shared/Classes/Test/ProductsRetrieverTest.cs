@@ -39,7 +39,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public async Task<ProductModel> GetProductByIdAsync(string item) {
 
             var allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
-            ProductModel outputProduct = new();
+            ProductModel outputProduct = null;
 
             foreach (ProductModel p in allProducts) {
                 if (p.ProductId.Equals(item)) {

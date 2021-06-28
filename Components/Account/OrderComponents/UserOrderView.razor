@@ -4,6 +4,7 @@
 @using TrouvailleFrontend.Shared.Enums
 
 @inject IProductsRetriever productsRetriever
+@inject NavigationManager navMan
 
 <div class="order-view main-container-style">
 
@@ -26,11 +27,13 @@
             }
             else
             {
-
                 @for (int i = 0; i < _products.Count(); i++)
                 {
-                    <ProductView Name=@_products[i].Name Price=@_products[i].Price Stock=@_products[i].InStock
-                Cardinality=@_itemData[i].Cardinality Picture=@_products[i].Picture />
+                    string temp = _products[i].ProductId;
+                    <div @onclick=@(()=>{navMan.NavigateTo($"/product/{temp}");}) class="clickable">
+                        <ProductView Name=@_products[i].Name Price=@_products[i].Price Stock=@_products[i].InStock
+                    Cardinality=@_itemData[i].Cardinality Picture=@_products[i].Picture />
+                    </div>
                 }
             }
         </div>
