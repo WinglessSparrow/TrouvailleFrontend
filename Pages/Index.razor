@@ -51,11 +51,19 @@
         _products = await prodIterator.GetProductIndexedAsync(prodIterator.GetIndex());
         _categories = await categories.GetCategoriesAsync();
 
-        var header = state.Get<CustomHeader>();
-        header.SearchTrigered += SearchAsync;
-
         StateHasChanged();
     }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        
+        var header = state.Get<CustomHeader>();
+        header.SearchTrigered += SearchAsync;
+    }
+
+
+
 
 
     private async Task SearchAsync(SearchModel args)
