@@ -11,7 +11,7 @@
 
 <div class="page">
     <div class="side-panel">
-    <SideMenu Header="Additional Filtering Options">
+        <SideMenu Header="Additional Filtering Options">
             <label>Ascending Cost: <input type="checkbox" @bind-value=_searchModel.Ascending></label>
             <CustomSelect Name="Categories" Categories=@_categories ChosenCategories=@_searchModel.Categories />
             <button class="button-style reset-search" @onclick="ResetSearch">reset search filters</button>
@@ -40,6 +40,8 @@
     private List<CategoryModel> _categories;
     private IndexedNavigation _idxNav;
     private SearchModel _searchModel = new();
+
+    private CustomSelect cs;
 
     public EventCallback<bool> AscendingChanged { get; set; }
 
@@ -93,17 +95,9 @@
         _products = await prodIterator.GetProductIndexedAsync(index);
         StateHasChanged();
     }
-    private async void ResetSearch()
+    private void ResetSearch()
     {
-        _searchModel = new();
-
-        TriggerLoading();
-
-        _products = await prodIterator.GetProductIndexedAsync(0);
-        _numbers = await prodIterator.GetProductNumbersAsync();
-
-        _idxNav.Reset();
-        StateHasChanged();
+        navMan.NavigateTo("/", forceLoad: true);
     }
 
     private void TriggerLoading()

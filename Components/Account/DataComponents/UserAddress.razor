@@ -25,9 +25,6 @@
             <Address AddressFor="Delivery Address" @bind-AddressM=_userData.DeliveryAddress IsDisabled=@_isChangeDone />
             <Address AddressFor="Invoice Address" @bind-AddressM=_userData.InvoiceAddress IsDisabled=@_isChangeDone />
 
-            <ValidationMessage For="@(() => _userData.DeliveryAddress.CityName)" />
-            <ValidationMessage For="@(() => _userData.InvoiceAddress.CityName)" />
-
             <button form="user-data-form" class="button-style button-change">@_buttonText</button>
             @if (!_isChangeDone)
             {
