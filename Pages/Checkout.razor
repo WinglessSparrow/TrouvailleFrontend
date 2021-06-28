@@ -13,9 +13,11 @@
 @inject IUserDataGetter userHandler
 @inject IJSRuntime js
 @inject IErrorHandler errorHandler
+@inject GlobalStateManager stateManager
 
 <div class="page">
-    @if (_cartItems != null && _cartItems.Count() > 0 && _validToken == true)
+    @if (_cartItems != null && _cartItems.Count() > 0 && _validToken == true && _userModel != null &&
+    !_userModel.IsDisabled)
     {
         @if (_products != null)
         {
@@ -71,7 +73,7 @@
         </EditForm>
     </div>
             <div class="side-menu">
-                <SideMenu>
+                <SideMenu Header="Checkout Summary">
                     <SideMenuContent TotalPriceWithoutTax=@_totalPriceWithoutTax TotalPrice=@_totalPrice ForForm="order-form" />
                 </SideMenu>
             </div>
@@ -85,7 +87,12 @@
     else
     {
         <ErrorMessage>
-            @if (_cartItems != null && _cartItems.Count() <= 0)
+            @if (_userModel != null && _userModel.IsDisabled)
+            {
+                <b>The account is in deletion process <br /> please contact the administration if you haven't initiated the
+                    process</b>
+            }
+            else if (_cartItems != null && _cartItems.Count() <= 0)
             {
                 <b>Your shopping cart is empty <br /> please fill it with stuff</b>
             }
@@ -117,8 +124,10 @@
 
     private void SetDelivery()
     {
-        _order.DeliveryAddress = (!_isDeliverySameInvoice) ? _order.InvoiceAddress : new AddressModel();
-        this.StateHasChanged();
+        _order.DeliveryAddress = (!_isDeliverySameInvoice) ? _order.InvoiceAddress :
+        DeepCopier.DeepCopy<AddressModel>(_userModel.DeliveryAddress);
+
+        StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
@@ -128,18 +137,12 @@
 
         _validToken = _token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today;
 
-        if (!_validToken)
-        {
-            navMan.NavigateTo("/login", forceLoad: true);
-        }
-
-        _userModel = await userHandler.getUserDataAsync();
-        _order.InvoiceAddress = _userModel.InvoiceAddress;
-        _order.DeliveryAddress = _userModel.DeliveryAddress;
+        if (!_validToken) navMan.NavigateTo("/login", forceLoad: true);
 
         //setting up the page
         _cartItems = await local.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
         StateHasChanged();
+
         if (_cartItems != null && _cartItems.Count() > 0)
         {
             _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
@@ -157,6 +160,7 @@
             for (int i = 0; i < _cartItems.Count(); i++)
             {
                 _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
+
                 //calculating tax
                 decimal tax = (_products[i].Tax) / (decimal)100.0;
                 _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
@@ -168,6 +172,7 @@
     {
         _order = new();
         _eContext = new(_order);
+
     }
 
     protected async Task SubmitOrderAsync()
@@ -197,6 +202,23 @@
         _modal.AwaitingResponse = false;
 
         StateHasChanged();
+    }
+
+    private void SetUser()
+    {
+        if (stateManager.Contains<UserModel>())
+        {
+            _userModel = stateManager.Get<UserModel>();
+
+            _order.InvoiceAddress = DeepCopier.DeepCopy<AddressModel>(_userModel.InvoiceAddress);
+            _order.DeliveryAddress = DeepCopier.DeepCopy<AddressModel>(_userModel.DeliveryAddress);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        //god bless me with correct rendering queue
+        SetUser();
     }
 
     private bool CheckStock()

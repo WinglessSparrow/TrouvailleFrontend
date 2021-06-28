@@ -1,11 +1,13 @@
 @namespace TrouvailleFrontend.Components.Shared
 
 <div class="main-container main-container-style">
-    <h4>Additional Filtering Options</h4>
+    <h4>@Header</h4>
     @ChildContent
 </div>
 
 @code{
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Header { get; set; } = "Header";
 }

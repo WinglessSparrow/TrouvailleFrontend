@@ -5,6 +5,7 @@
 @inject ILocalStorage localStorage
 @inject GlobalStateManager state
 @inject IUserDataGetter userGetter
+@inject GlobalStateManager stateManager
 
 <div class="header">
     <div class="header-content">
@@ -81,6 +82,10 @@
         {
             var user = await userGetter.getUserDataAsync();
             _userName = user.FirstName;
+
+            Console.WriteLine("User save");
+
+            stateManager.Add<UserModel>(user);
         }
 
         state.Add<CustomHeader>(this);

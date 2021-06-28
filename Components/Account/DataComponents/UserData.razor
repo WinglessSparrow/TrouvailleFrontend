@@ -14,7 +14,9 @@
         <InputText type="phone" id="phone-number" @bind-Value=_userData.PhoneNumber class="not-required"
             @bind-Value-oninput=_userData.PhoneNumber placeholder="Phonenumber" disabled="@_isChangeDone" />
 
-        <Microsoft.AspNetCore.Components.Forms.ValidationSummary />
+        <ValidationMessage For="@(() => _userData.FirstName)"/>
+        <ValidationMessage For="@(() => _userData.LastName)"/>
+        <ValidationMessage For="@(() => _userData.PhoneNumber)"/>
 
         <button type="submit" class="button-style button-change">@_buttonText</button>
         @if (!_isChangeDone)

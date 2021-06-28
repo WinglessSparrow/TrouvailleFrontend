@@ -11,7 +11,8 @@ namespace TrouvailleFrontend.Shared.Classes.Functional {
             //this one will only be shown when the standart Object is used!
             {HttpStatusCode.OK, "Somebody forgot to set The Error String"},
             {HttpStatusCode.NotFound, "404"},
-            {HttpStatusCode.Forbidden, "403"}
+            {HttpStatusCode.Forbidden, "403: Oops, You cannot do that"},
+            {HttpStatusCode.Conflict, "409"}
         };
     }
 }
