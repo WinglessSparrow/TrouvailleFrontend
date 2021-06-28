@@ -8,6 +8,7 @@ namespace TrouvailleFrontend.Shared.Models {
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         public string Email { get; set; } = "";
+        [Required(ErrorMessage="Phone Number is required")]
         [RegularExpression(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$", ErrorMessage = "The number is not in a valid Format")]
         public string PhoneNumber { get; set; } = "";
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First name is required and must be bigger than 3 symbols long")]

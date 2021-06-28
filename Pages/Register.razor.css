@@ -62,7 +62,3 @@
 ::deep .validation-message {
   font-size: 12px;
 }
-
-::deep .not-required {
-  border-left: solid 3px var(--accent);
-}

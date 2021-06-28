@@ -22,12 +22,8 @@
                     @bind-Value-oninput=_registerData.RegisterModel.FirstName placeholder="First Name" />
                 <InputText id="last-name" @bind-Value=_registerData.RegisterModel.LastName
                     @bind-Value-oninput=_registerData.RegisterModel.LastName placeholder="Surname" />
-                <div class="tooltip-trigger">
-                    <InputText type="phone" id="phone-number" @bind-Value=_registerData.RegisterModel.PhoneNumber
-                        class="not-required" @bind-Value-oninput=_registerData.RegisterModel.PhoneNumber
-                        placeholder="Phonenumber" />
-                    <div class="tooltip-custom"><b>Not Required</b></div>
-                </div>
+                <InputText type="phone" id="phone-number" @bind-Value=_registerData.RegisterModel.PhoneNumber
+                    @bind-Value-oninput=_registerData.RegisterModel.PhoneNumber placeholder="Phonenumber" />
                 <div>
                     <ValidationMessage For="@(() => _registerData.RegisterModel.FirstName)" />
                     <ValidationMessage For="@(() => _registerData.RegisterModel.LastName)" />

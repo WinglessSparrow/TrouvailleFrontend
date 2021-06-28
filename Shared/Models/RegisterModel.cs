@@ -19,13 +19,14 @@ namespace TrouvailleFrontend.Shared.Models {
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "The first name must be longer then 3 Characters")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required")]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "The last must be longer then 3 Characters")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Phone Number is required")]
         [RegularExpression(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$", ErrorMessage = "The number is not in a valid Format")]
         public string PhoneNumber { get; set; }
 

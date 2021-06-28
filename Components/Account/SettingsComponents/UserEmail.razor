@@ -9,7 +9,7 @@
 <div>
     <div class='email @(_isChangeDone? " " : "changing")'>
         <h4>Email</h4>
-        <EditForm EditContext="@_context" OnSubmit="SubmitAsync">
+        <EditForm EditContext="@_context" OnSubmit="@SubmitAsync">
             <DataAnnotationsValidator />
 
             <InputText id="Email" type="email" @bind-Value=_userData.Email @bind-Value-oninput=_userData.Email
