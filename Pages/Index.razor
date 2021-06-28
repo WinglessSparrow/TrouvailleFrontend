@@ -22,7 +22,7 @@
         {
             @foreach (ProductModel p in _products)
             {
-                <ProductSmall Product=p />
+                <ProductSmall Product=@p />
             }
         }
         else
@@ -31,7 +31,10 @@
         }
     </div>
 
-    <IndexedNavigation @ref=_idxNav Numbers=_numbers OnNext=Next OnPrev=Prev OnIndexed=ChangeToIndex />
+    @if (_numbers != null)
+    {
+        <IndexedNavigation @ref=_idxNav Numbers=_numbers OnNext=Next OnPrev=Prev OnIndexed=ChangeToIndex />
+    }
 </div>
 
 @code{
@@ -49,6 +52,7 @@
 
         _numbers = await prodIterator.GetProductNumbersAsync();
         _products = await prodIterator.GetProductIndexedAsync(prodIterator.GetIndex());
+
         _categories = await categories.GetCategoriesAsync();
 
         StateHasChanged();
@@ -56,15 +60,12 @@
 
     protected override void OnParametersSet()
     {
-        base.OnParametersSet();
-        
-        var header = state.Get<CustomHeader>();
-        header.SearchTrigered += SearchAsync;
+        if (state.Contains<CustomHeader>())
+        {
+            var header = state.Get<CustomHeader>();
+            header.SearchTrigered += SearchAsync;
+        }
     }
-
-
-
-
 
     private async Task SearchAsync(SearchModel args)
     {

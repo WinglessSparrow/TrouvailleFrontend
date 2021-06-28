@@ -1,7 +1,5 @@
 @namespace TrouvailleFrontend.Components.Index
 
-@using Blazorise
-@using System.Globalization
 @using TrouvailleFrontend.Components.Shared
 @using TrouvailleFrontend.Shared.Models
 @using TrouvailleFrontend.Shared.Classes.Functional
@@ -11,8 +9,11 @@
 <div class="size-wrapper" @onclick="NavigateToProduct">
     <div class="product main-container-style">
         <div class="product-picture-wrapper">
+            @* @if (Product.Picture != null) *@
+            @* { *@
             <img class="product-picture center-flex" src="data:image/png;base64,@Product.Picture.ImageData"
                 alt="image loading error" onerror="this.src='/assets/images/imageError.png';" style="overflow: hidden;">
+            @* } *@
         </div>
         <div class="info-wrapper">
             <div class="product-name info-field">
@@ -37,7 +38,11 @@
 
     protected override void OnParametersSet()
     {
-        _cost = CurencyManager.ParseToCurency((decimal)Product.Price);
+        if (Product != null)
+        {
+            _cost = CurencyManager.ParseToCurency((decimal)Product.Price);
+            if (Product.Picture == null) Product.Picture = new() { ImageData = "fucking fuck" };
+        }
     }
 
     private void NavigateToProduct()

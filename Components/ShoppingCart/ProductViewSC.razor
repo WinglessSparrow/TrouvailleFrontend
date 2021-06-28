@@ -2,8 +2,10 @@
 
 @using TrouvailleFrontend.Pages
 @inject ILocalStorage local
+@inject NavigationManager navMan
 
 <div class="product-view main-container-style">
+
     <img class="product-picture center-flex" src="data:image/png;base64,@Picture.ImageData" alt="Image loading Error"
         onerror="this.src='/assets/images/imageError.png';" />
     <div class="name">
@@ -78,7 +80,10 @@
         _stock = StockConverter.ParseStockToString(Stock);
 
     }
-
+    protected override void OnParametersSet()
+    {
+        if (Picture == null) Picture = new() { ImageData = "fucking fuck" };
+    }
 
     public async void increase()
     {

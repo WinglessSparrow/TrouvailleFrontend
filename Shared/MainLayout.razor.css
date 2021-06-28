@@ -196,10 +196,11 @@
   padding: 0;
   border-radius: 10px;
   transition: 0.5s;
+  width: 100%;
 }
 
 ::deep .clickable:hover {
-  box-shadow: 1px 1px 4px 5px rgba(209, 208, 208, 0.349);
+  /* box-shadow: 1px 1px 4px 5px rgba(209, 208, 208, 0.349); */
 
   transform: translateY(-5px);
 }

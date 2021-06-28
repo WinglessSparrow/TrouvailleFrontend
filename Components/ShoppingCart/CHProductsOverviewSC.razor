@@ -10,10 +10,8 @@
             @for (int i = 0; i < Products.Count(); i++)
             {
                 string temp = Products[i].ProductId;
-                <div @onclick=@(()=>{navMan.NavigateTo($"/product/{temp}");}) class="clickable">
                     <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price
                 Stock=@Products[i].InStock Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
-                </div>
             }
         }
     </div>

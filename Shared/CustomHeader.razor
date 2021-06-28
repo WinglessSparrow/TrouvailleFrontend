@@ -74,6 +74,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        state.Add<CustomHeader>(this);
+
         _token = await local.GetStorageAsync<TokenModel>("authToken");
 
         _tokenIsValid = (_token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today);
@@ -81,14 +83,13 @@
         if (_tokenIsValid)
         {
             var user = await userGetter.getUserDataAsync();
-            _userName = user.FirstName;
+            if (user != null)
+            {
+                _userName = user.FirstName;
 
-            Console.WriteLine("User save");
-
-            stateManager.Add<UserModel>(user);
+                stateManager.Add<UserModel>(user);
+            }
         }
-
-        state.Add<CustomHeader>(this);
     }
     private void LogoTriger()
     {

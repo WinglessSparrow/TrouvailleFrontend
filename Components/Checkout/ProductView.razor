@@ -52,4 +52,9 @@
         _price = CurencyManager.ParseToCurency(Price);
         _stock = StockConverter.ParseStockToString(Stock);
     }
+
+    protected override void OnParametersSet()
+    {
+        if (Picture == null) Picture = new() { ImageData = "fucking fuck" };
+    }
 }

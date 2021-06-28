@@ -129,6 +129,7 @@
     protected override async Task OnInitializedAsync()
     {
         _product = await productRetriever.GetProductByIdAsync(Id);
+        if (_product.Picture == null) _product.Picture = new() { ImageData = "fucking fuck" };
 
         _itemExist = _product != null;
 
