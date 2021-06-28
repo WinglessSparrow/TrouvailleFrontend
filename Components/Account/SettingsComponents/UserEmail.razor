@@ -15,6 +15,8 @@
             <InputText id="Email" type="email" @bind-Value=_userData.Email @bind-Value-oninput=_userData.Email
                 placeholder="new Email" disabled="@_isChangeDone" />
 
+            <ValidationMessage For="@(() => _userData.Email)" />
+
             <button type="submit" class="button-style button-change">@_buttonText</button>
             @if (!_isChangeDone)
             {
@@ -36,19 +38,23 @@
 
         if (_isChangeDone)
         {
-            _modal.AwaitingResponse = true;
-
             if (_context.Validate())
+            {
+                _modal.AwaitingResponse = true;
+
                 _modal.Success = await userChanger.changeUserDataAsync(_userData);
+
+                if (!_modal.Success)
+                    _modal.ErrorMessage = errorHandler.GetLastErrorString();
+                else
+                    _modal.Message = "The Email was succesufully changed";
+
+                _modal.AwaitingResponse = false;
+            }
             else
+            {
                 ChangeState();
-
-            if (!_modal.Success)
-                _modal.ErrorMessage = errorHandler.GetLastErrorString();
-            else
-                _modal.Message = "The Email was succesufully changed";
-
-            _modal.AwaitingResponse = false;
+            }
         }
     }
 

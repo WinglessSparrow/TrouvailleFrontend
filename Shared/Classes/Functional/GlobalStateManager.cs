@@ -16,5 +16,9 @@ namespace TrouvailleFrontend.Shared.Classes.Functional {
                 _state.Add(typeof(T), value);
             }
         }
+
+        public bool Contains<T>() {
+            return _state.ContainsKey(typeof(T));
+        }
     }
 }

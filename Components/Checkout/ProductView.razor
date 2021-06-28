@@ -1,9 +1,8 @@
 @namespace TrouvailleFrontend.Components.Checkout
 
 <div class="product-view main-container-style">
-    @* <div class="image"> *@
-    <img src="data:image/png;base64,@Picture.ImageData" alt="image error" class="image">
-    @* </div> *@
+    <img class="product-picture center-flex" src="data:image/png;base64,@Picture.ImageData" alt="Image loading Error"
+        onerror="this.src='/assets/images/imageError.png';" />
     <div class="name">
         <p>@Name</p>
     </div>

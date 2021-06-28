@@ -36,7 +36,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
                     Street = "Lenin Strasse",
                     StreetNumber = 1
                 },
-                IsDisabled = false
+                IsDisabled = true
             };
         }
     }

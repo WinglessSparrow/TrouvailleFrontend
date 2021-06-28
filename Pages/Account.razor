@@ -13,11 +13,13 @@
 
         if (_userModel.IsDisabled)
         {
-            <section class="deletion">
-                The account is in Deletion Process, you cannot change any data during this process
-                <br />
-                If you haven't initiated the process, contact the Administration
-            </section>
+            <ErrorMessage>
+                <b>
+                    The account is in Deletion Process, you cannot change any data during this process
+                    <br />
+                    If you haven't initiated the process, contact the Administration
+                </b>
+            </ErrorMessage>
         }
         else
         {
@@ -42,9 +44,8 @@
 </div>
 
 <CustomModal @ref=_modal Name="Account" ButtonText="Epic"
-    OnCloseFailure='@(()=>{navMan.NavigateTo("/account", forceLoad: true);})' />
-@* OnCloseSuccess='@(()=>{_modal.Modal.Hide();})' *@
-
+    OnCloseFailure='@(()=>{navMan.NavigateTo("/account", forceLoad: true);})'
+    OnCloseSuccess='@(()=>{navMan.NavigateTo("/account", forceLoad: true);})' />
 @*</div> *@
 
 @code {
@@ -59,11 +60,9 @@
         _token = await local.GetStorageAsync<TokenModel>("authToken");
         _validToken = _token != null && _token.AuthToken != "" && _token.expireDate > DateTime.Today;
 
-        if (!_validToken)
-        {
-            navMan.NavigateTo("/login", forceLoad: true);
-        }
+        if (!_validToken) navMan.NavigateTo("/login", forceLoad: true);
 
         _userModel = await userHandler.getUserDataAsync();
     }
+
 }

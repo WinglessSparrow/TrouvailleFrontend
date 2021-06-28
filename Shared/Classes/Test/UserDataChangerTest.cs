@@ -12,7 +12,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         public async Task<bool> changeUserDataAsync(UserModel userData) {
             await Task.Run(() => { Thread.Sleep(1000); });
 
-            return false;
+            return true;
         }
     }
 }

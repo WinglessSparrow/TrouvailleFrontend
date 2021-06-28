@@ -16,7 +16,7 @@
         {
             <div class="product-image main-container-style">
                 <img class="product-picture center-flex" src="data:image/png;base64,@_product.Picture.ImageData"
-                alt="Image loading Error" />
+                alt="Image loading Error" onerror="this.src='/assets/images/imageError.png';" />
             </div>
 
             <div class="product-controls main-container-style">
@@ -27,7 +27,7 @@
                     <StarsView Product=_product Classes="product-stars" />
                 </div>
                 <div class="price">
-                    <h2><b>Price: @_price</b></h2>
+                    <h3><b>Price: @_price</b></h3>
                 </div>
                 <div class="stock">
                     <h4>@_stock</h4>

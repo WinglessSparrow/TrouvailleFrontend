@@ -11,7 +11,7 @@
 
 <div class="page">
     <div class="side-panel">
-        <SideMenu>
+    <SideMenu Header="Additional Filtering Options">
             <label>Ascending Cost: <input type="checkbox" @bind-value=_searchModel.Ascending></label>
             <CustomSelect Name="Categories" Categories=@_categories ChosenCategories=@_searchModel.Categories />
             <button class="button-style reset-search" @onclick="ResetSearch">reset search filters</button>

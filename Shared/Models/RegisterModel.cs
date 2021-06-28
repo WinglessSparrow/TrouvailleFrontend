@@ -26,7 +26,7 @@ namespace TrouvailleFrontend.Shared.Models {
         [StringLength(50)]
         public string LastName { get; set; }
 
-        [StringLength(50)]
+        [RegularExpression(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$", ErrorMessage = "The number is not in a valid Format")]
         public string PhoneNumber { get; set; }
 
         public string Country { get; set; }
