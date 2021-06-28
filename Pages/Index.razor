@@ -43,7 +43,6 @@
     private List<CategoryModel> _categories;
     private IndexedNavigation _idxNav;
     private SearchModel _searchModel = new();
-
     public EventCallback<bool> AscendingChanged { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -55,16 +54,13 @@
 
         _categories = await categories.GetCategoriesAsync();
 
-        StateHasChanged();
-    }
-
-    protected override void OnParametersSet()
-    {
         if (state.Contains<CustomHeader>())
         {
             var header = state.Get<CustomHeader>();
             header.SearchTrigered += SearchAsync;
         }
+
+        StateHasChanged();
     }
 
     private async Task SearchAsync(SearchModel args)

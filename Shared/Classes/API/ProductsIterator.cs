@@ -61,7 +61,7 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
         public async Task<List<ProductModel>> GetProductIndexedAsync(int index) {
 
-            if (index < 0 || index >= _productsNumber.NumberOfProduct) return null;
+            if (index < 0 || index > _productsNumber.NumberOfProduct) return null;
             _index = index;
 
             int offset = _index * _productsNumber.NumberProductsPerIteration;

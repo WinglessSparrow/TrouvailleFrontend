@@ -41,6 +41,7 @@
         if (Product != null)
         {
             _cost = CurencyManager.ParseToCurency((decimal)Product.Price);
+
             if (Product.Picture == null) Product.Picture = new() { ImageData = "fucking fuck" };
         }
     }

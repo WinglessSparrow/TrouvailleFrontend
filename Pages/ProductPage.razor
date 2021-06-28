@@ -129,12 +129,11 @@
     protected override async Task OnInitializedAsync()
     {
         _product = await productRetriever.GetProductByIdAsync(Id);
-        if (_product.Picture == null) _product.Picture = new() { ImageData = "fucking fuck" };
 
         _itemExist = _product != null;
-
         if (_itemExist)
         {
+            if (_product.Picture == null) _product.Picture = new() { ImageData = "fucking fuck" };
             _shoppingCart = await localStorage.GetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart");
 
             foreach (var sc in _shoppingCart)
@@ -154,5 +153,6 @@
 
             _price = CurencyManager.ParseToCurency(_product.Price);
         }
+
     }
 }

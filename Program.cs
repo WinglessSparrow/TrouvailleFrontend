@@ -1,3 +1,8 @@
+///<authors>
+/// Stefan Heneberger
+/// Pavel Smirnov
+///</authors>
+
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
