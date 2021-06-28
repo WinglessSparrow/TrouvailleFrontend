@@ -109,12 +109,14 @@
     private async void Logout()
     {
         await localStorage.RemoveStorageAsync("authToken");
+        await localStorage.RemoveStorageAsync("shoppingCart");
         navMan.NavigateTo("/", forceLoad: true);
     }
 
     private async void ChangeUser()
     {
         await localStorage.RemoveStorageAsync("authToken");
+        await localStorage.RemoveStorageAsync("shoppingCart");
         navMan.NavigateTo("/Login", forceLoad: true);
     }
 }
