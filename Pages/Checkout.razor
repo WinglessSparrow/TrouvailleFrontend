@@ -143,6 +143,15 @@
         if (_cartItems != null && _cartItems.Count() > 0)
         {
             _products = await productsRetriever.GetProductsByIdAsync(_cartItems);
+            //RELOAD WHEN WRONG PRODUCT ID IS SEND
+            if (_products == null)
+            {
+                if (errorHandler.GetLastErrorString().Equals("404"))
+                {
+                    await local.RemoveStorageAsync("shoppingCart");
+                    navMan.NavigateTo("/checkout", forceLoad: true);
+                }
+            }
             StateHasChanged();
 
             for (int i = 0; i < _cartItems.Count(); i++)
