@@ -28,8 +28,6 @@ namespace TrouvailleFrontend {
             .AddBootstrapProviders()
             .AddFontAwesomeIcons();
 
-            // builder.Services.AddBlazorise().AddBootstrapProviders().AddFontAwesomeIcons();
-
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddTransient<ILocalStorage, LocalStorage>();
             builder.Services.AddTransient<IHttpRequest, HttpRequest>();
@@ -38,28 +36,28 @@ namespace TrouvailleFrontend {
                 return new GlobalStateManager();
             });
 
-            builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
-            builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
-            builder.Services.AddTransient<ILogin, LoginTest>();
-            builder.Services.AddTransient<IOrderer, OrdererTest>();
-            builder.Services.AddTransient<IRegister, RegisterTest>();
-            builder.Services.AddTransient<IUserDataGetter, UserDataGetterTest>();
-            builder.Services.AddTransient<IUserDataChanger, UserDataChangerTest>();
-            builder.Services.AddTransient<IOrderRetriever, OrderRetrieverTest>();
-            builder.Services.AddTransient<IPasswordChanger, PasswordChangerTest>();
-            builder.Services.AddTransient<ICategoriesRetriever, CategoriesTest>();
+            // builder.Services.AddScoped<IProductIterator, ProductsIteratorTest>();
+            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverTest>();
+            // builder.Services.AddTransient<ILogin, LoginTest>();
+            // builder.Services.AddTransient<IOrderer, OrdererTest>();
+            // builder.Services.AddTransient<IRegister, RegisterTest>();
+            // builder.Services.AddTransient<IUserDataGetter, UserDataGetterTest>();
+            // builder.Services.AddTransient<IUserDataChanger, UserDataChangerTest>();
+            // builder.Services.AddTransient<IOrderRetriever, OrderRetrieverTest>();
+            // builder.Services.AddTransient<IPasswordChanger, PasswordChangerTest>();
+            // builder.Services.AddTransient<ICategoriesRetriever, CategoriesTest>();
 
-            // builder.Services.AddTransient<IQueriedProductsRetriever, QueriedProductsRetrieverAPI>();
-            // builder.Services.AddTransient<IPasswordChanger, PasswordChangerAPI>();
-            // builder.Services.AddTransient<IUserDataGetter, UserDataGetterAPI>();
-            // builder.Services.AddTransient<IUserDataChanger, UserDataChangerAPI>();
-            // builder.Services.AddScoped<IProductIterator, ProductsIterator>();
-            // builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
-            // builder.Services.AddTransient<ILogin, LoginAPI>();
-            // builder.Services.AddTransient<IOrderer, OrdererAPI>();
-            // builder.Services.AddTransient<IRegister, RegisterAPI>();
-            // builder.Services.AddTransient<IOrderRetriever, OrderRetrieverAPI>();
-            // builder.Services.AddTransient<ICategoriesRetriever, CategoriesRetrieverAPI>();
+            builder.Services.AddTransient<IQueriedProductsRetriever, QueriedProductsRetrieverAPI>();
+            builder.Services.AddTransient<IPasswordChanger, PasswordChangerAPI>();
+            builder.Services.AddTransient<IUserDataGetter, UserDataGetterAPI>();
+            builder.Services.AddTransient<IUserDataChanger, UserDataChangerAPI>();
+            builder.Services.AddScoped<IProductIterator, ProductsIterator>();
+            builder.Services.AddTransient<IProductsRetriever, ProductsRetrieverAPI>();
+            builder.Services.AddTransient<ILogin, LoginAPI>();
+            builder.Services.AddTransient<IOrderer, OrdererAPI>();
+            builder.Services.AddTransient<IRegister, RegisterAPI>();
+            builder.Services.AddTransient<IOrderRetriever, OrderRetrieverAPI>();
+            builder.Services.AddTransient<ICategoriesRetriever, CategoriesRetrieverAPI>();
 
             await builder.Build().RunAsync();
         }
