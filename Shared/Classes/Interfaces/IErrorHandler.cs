@@ -8,5 +8,7 @@ namespace TrouvailleFrontend.Shared.Classes.Interfaces {
         string GetLastErrorString();
         HttpStatusCode GetLastErrorCode();
         HttpResponseMessage GetLastErrorResponse();
+
+        public string GetLastErrorCodeString();
     }
 }
