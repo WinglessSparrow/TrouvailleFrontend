@@ -1,5 +1,5 @@
 ///<authors>
-/// Stefan Heneberger
+/// Stefan Henneberger
 /// Pavel Smirnov
 ///</authors>
 
