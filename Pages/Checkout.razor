@@ -116,7 +116,7 @@
     }
 </div>
 
-<CustomModal @ref="_modal" Name="Purchase" ButtonText="End Order" OnCloseSuccess="@Success" />
+<CustomModal @ref="_modal" Name="Purchase" ButtonText="End Order" OnCloseSuccess="@Success" OnCloseFailure='@(()=>{navMan.NavigateTo("/checkout", forceLoad:true);})' />
 @* </div> *@
 
 @code {
@@ -224,6 +224,8 @@
         if (CheckStock())
         {
             _modal.Success = await orderer.OrderAsync(PrepareOrder());
+
+            Console.WriteLine(_modal.Success + " su");
 
             if (_modal.Success)
             {
