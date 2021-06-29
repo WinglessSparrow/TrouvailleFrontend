@@ -22,10 +22,19 @@
         </p>
     </div>
 
-    @if (Stock <= 0)
+    @if (Stock < Cardinality)
     {
-        <div class="warning">
+        <div class="warning tooltip-trigger">
             <i class="fas fa-exclamation-triangle"></i>
+            <div class="tooltip-custom">The item is not in stock</div>
+        </div>
+    }
+    @if (IsDisabled)
+    {
+
+        <div class="warning tooltip-trigger">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="tooltip-custom">Product is no longer available</div>
         </div>
     }
 
@@ -45,6 +54,8 @@
     public int Cardinality { get; set; }
     [Parameter]
     public PictureModel Picture { get; set; }
+    [Parameter]
+    public bool IsDisabled { get; set; }
 
     protected override void OnInitialized()
     {

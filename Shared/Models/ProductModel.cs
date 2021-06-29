@@ -10,6 +10,7 @@ namespace TrouvailleFrontend.Shared.Models {
         public int InStock { get; set; }
         public int Rating { get; set; }
         public decimal Tax { get; set; }
+        public bool IsDisabled { get; set; } = false;
         public PictureModel Picture { get; set; }
     }
 }
