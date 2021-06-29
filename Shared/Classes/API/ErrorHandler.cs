@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using TrouvailleFrontend.Shared.Classes.Functional;
 using TrouvailleFrontend.Shared.Classes.Interfaces;
@@ -19,6 +20,10 @@ namespace TrouvailleFrontend.Shared.Classes.API {
 
         public HttpStatusCode GetLastErrorCode() {
             return _lastResponse.StatusCode;
+        }
+
+        public string GetLastErrorCodeString() {
+            return _lastResponse.Content.ReadAsStringAsync().Result;
         }
 
         public HttpResponseMessage GetLastErrorResponse() {
