@@ -17,7 +17,7 @@
 
 <div class="page">
     @if (_cartItems != null && _cartItems.Count() > 0 && _validToken == true && _userModel != null &&
-    !_userModel.IsDisabled)
+    !_userModel.IsDisabled && !_areAnyDisabled && !_areAnyNotInStock)
     {
         @if (_products != null)
         {
@@ -96,6 +96,22 @@
             {
                 <b>Your shopping cart is empty <br /> please fill it with stuff</b>
             }
+            else if (_areAnyDisabled)
+            {
+                <b>Some items in your cart are no longer available</b>
+                <button type="buttom" class="button-style" @onclick=RemoveDisabledItems>Remove these items form shopping
+                    cart</button>
+            }
+            else if (_areAnyNotInStock)
+            {
+                <b>Some items in your cart are not in Stock</b>
+                <button type="buttom" class="button-style" @onclick=@(()=>{navMan.NavigateTo("/shoppingcart");})>Go To Shoping
+                    Cart</button>
+            }
+            else
+            {
+                <p>Something went wrong, our code monkeys are working hard on fixing it</p>
+            }
         </ErrorMessage>
     }
 </div>
@@ -110,6 +126,9 @@
     private decimal _totalPriceWithoutTax;
     private decimal _totalPrice;
     private bool _isDeliverySameInvoice = false;
+    private bool _areAnyDisabled = false;
+    private bool _areAnyNotInStock = false;
+
     private OrderModel _order;
     private UserModel _userModel;
 
@@ -157,6 +176,10 @@
             }
             StateHasChanged();
 
+            _areAnyDisabled = AreAnyDisabled();
+            _areAnyNotInStock = AreAnyNotInStock();
+            Console.WriteLine(_areAnyNotInStock + " not in stock");
+
             for (int i = 0; i < _cartItems.Count(); i++)
             {
                 _totalPrice += _cartItems[i].Cardinality * _products[i].Price;
@@ -166,6 +189,25 @@
                 _totalPriceWithoutTax += (_products[i].Price - _products[i].Price * tax) * _cartItems[i].Cardinality;
             }
         }
+    }
+
+    private bool AreAnyDisabled()
+    {
+        foreach (var p in _products)
+            if (p.IsDisabled) return true;
+
+        return false;
+    }
+
+    private bool AreAnyNotInStock()
+    {
+        for (int i = 0; i < _cartItems.Count; i++)
+        {
+            Console.WriteLine(_products[i].InStock + " in stock nr " + i);
+            if (_products[i].InStock < _cartItems[i].Cardinality) return true;
+        }
+
+        return false;
     }
 
     protected override void OnInitialized()
@@ -247,5 +289,19 @@
         if (_isDeliverySameInvoice) objectToSend.DeliveryAddress = null;
 
         return objectToSend;
+    }
+
+    private void RemoveDisabledItems()
+    {
+        var tempList = new List<ShoppingCartItemModel>();
+
+        for (int i = 0; i < _cartItems.Count; i++)
+        {
+            if (!_products[i].IsDisabled) tempList.Add(_cartItems[i]);
+        }
+
+        local.SetStorageAsync<List<ShoppingCartItemModel>>("shoppingCart", tempList);
+
+        navMan.NavigateTo("/checkout", forceLoad: true);
     }
 }

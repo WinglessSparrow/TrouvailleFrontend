@@ -15,12 +15,7 @@ namespace TrouvailleFrontend.Shared.Classes.Test {
         }
 
         public async Task<List<ProductModel>> GetProductsByIdAsync(List<ShoppingCartItemModel> items) {
-
-            //use this when API actually does what it should
-            // var response = await _http.PostRequestAsync<List<Guid>>("", CreateListOfId(items));
-            // var output = response.Content.ReadFromJsonAsync<List<ProductModel>>();
-            // return await _iterator.GetNextProductsAsync();
-
+            
             var allProducts = await _http.GetFromJsonAsync<List<ProductModel>>("debugData/Products.json");
             var outputProducts = new List<ProductModel>();
 

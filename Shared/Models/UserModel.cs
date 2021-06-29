@@ -19,7 +19,6 @@ namespace TrouvailleFrontend.Shared.Models {
         public AddressModel InvoiceAddress { get; set; } = new();
         [ValidateComplexType]
         public AddressModel DeliveryAddress { get; set; } = new();
-
         public ICollection<Guid> Orders { get; set; }
         public bool IsDisabled { get; set; } = false;
     }

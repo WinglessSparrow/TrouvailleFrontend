@@ -5,14 +5,16 @@
 
 <div class="main-container-style">
     <CollapseAccordion Name="Products Overview" IconClasses="fas fa-shopping-basket" IconEnable=true>
-        @if (Products != null && ItemData != null)
-        {
-            @for (int i = 0; i < Products.Count(); i++)
+        <div class="content">
+            @if (Products != null && ItemData != null)
             {
-                <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
-            Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
+                @for (int i = 0; i < Products.Count(); i++)
+                {
+                    <ProductView Name=@Products[i].Name Price=@Products[i].Price Stock=@Products[i].InStock
+                Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture IsDisabled=@Products[i].IsDisabled />
+                }
             }
-        }
+        </div>
     </CollapseAccordion>
     <div class="products-overview-under">
         <div class="total">

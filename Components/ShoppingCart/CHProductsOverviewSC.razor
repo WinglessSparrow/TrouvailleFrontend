@@ -10,8 +10,9 @@
             @for (int i = 0; i < Products.Count(); i++)
             {
                 string temp = Products[i].ProductId;
-                    <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price
-                Stock=@Products[i].InStock Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture />
+                <ProductViewSC CartID="@ItemData[i].ProductId" Name=@Products[i].Name Price=@Products[i].Price
+            Stock=@Products[i].InStock Cardinality=@ItemData[i].Cardinality Picture=@Products[i].Picture
+            IsDisabled=@Products[i].IsDisabled />
             }
         }
     </div>
