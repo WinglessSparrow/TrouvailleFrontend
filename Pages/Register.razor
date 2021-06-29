@@ -23,7 +23,7 @@
                 <InputText id="last-name" @bind-Value=_registerData.RegisterModel.LastName
                     @bind-Value-oninput=_registerData.RegisterModel.LastName placeholder="Surname" />
                 <InputText type="phone" id="phone-number" @bind-Value=_registerData.RegisterModel.PhoneNumber
-                    @bind-Value-oninput=_registerData.RegisterModel.PhoneNumber placeholder="Phonenumber" />
+                    @bind-Value-oninput=_registerData.RegisterModel.PhoneNumber placeholder="Phone Number" />
                 <div>
                     <ValidationMessage For="@(() => _registerData.RegisterModel.FirstName)" />
                     <ValidationMessage For="@(() => _registerData.RegisterModel.LastName)" />
